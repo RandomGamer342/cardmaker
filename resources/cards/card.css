@@ -1,0 +1,114 @@
+* {
+    margin: 0; padding: 0; border: 0;
+}
+
+@page {
+  size: A4;
+  margin: 1.2cm;
+}
+:root {
+    font-family: sans-serif;
+    font-size: 3mm;
+    font-weight: 300;
+}
+body {
+    width: 21cm;
+    height: 29.7cm;
+}
+
+article {
+    margin: 3mm 5mm;
+    display: block;
+    float: left;
+    width: 5.5cm;
+    height: 8.9cm;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 2em 18mm 1.3em auto 1.5em;
+    grid-template-areas:
+        "header header"
+        "figure figure"
+        "cost cost"
+        "info info"
+        "power cp";
+
+    border-radius: 2mm;
+    grid-gap: 2mm 2mm;
+    border-style: solid;
+    border-width: 2mm;
+    border-color: #333;
+    background-color: #333;
+
+}
+
+article >* {
+    background-color: #ddd;
+    text-align: center;
+    line-height: 1.4em;
+    padding: 0 1mm;
+}
+
+article h1 {
+    grid-area: header;
+    font-size: 1em;
+    padding: 1mm 0;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+article figure {
+    grid-area: figure;
+    background: #333;
+}
+
+article figure img{
+    height: 100%;
+    width: auto;
+}
+article figure .material-icons.figure {
+    font-size: 1.7cm;
+    color: #999;
+}
+
+article main {
+    padding: 2mm 0;
+    grid-area: info;
+    position: relative;
+}
+article main ol {
+    margin-top: 1mm;
+    text-align: left;
+    padding-left: 6mm;
+}
+article main ol li + li{
+    margin-top: 0.5mm;
+}
+article main big{
+    font-size: 1.5em;
+}
+article main .bottom {
+    width: 100%;
+    position: absolute;
+    bottom: 2mm;
+}
+
+article .power {
+    grid-area: power;
+    text-align: left;
+}
+article .power:before{
+    content: "Power: ";
+    font-size: 0.7em;
+}
+article .cost {
+    grid-area: cost;
+}
+article .cp {
+    grid-area: cp;
+    text-align: right;
+}
+article .cp:after{
+    content: " CP";
+    font-size: 0.7em;
+}

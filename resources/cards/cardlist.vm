@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="cardlist.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<form action="show" method="get">
+    #foreach($card in $cards)
+    <input type="checkbox" name="card" value="$escape_html($card.filename)">$escape_html($card.title)<br>
+    #end
+    <br>
+    <input type="submit" value="Submit">
+</form>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="card.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+#foreach($card in $cards)
+    <article>
+        <h1>
+            $escape_html($card.title)
+        </h1>
+        <figure>
+            <!--https://material.io/icons/-->
+            <i class="material-icons figure">$escape_html($card.figure)</i>
+        </figure>
+        <main>
+            $escape_html($card.description)
+            <ol>
+                #foreach($item in $card.steps)
+                    <li>$escape_html($item)</li>
+                #end
+            </ol>
+            #if($card.flags)
+                <div class="bottom">
+                    <small>-
+                        #foreach($flag in $card.flags)
+                            $escape_html($flag.capitalize()) -
+                        #end
+                    </small>
+                    <br>
+                    #if($card.has_flag("mastery"))
+                        <big>
+                            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+                            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+                        </big>
+                    #end
+                </div>
+            #end
+        </main>
+        <div class="cost">$escape_html($card.cost)</div>
+        <div class="power">$escape_html($card.power)</div>
+        <div class="cp">$escape_html($card.cp)</div>
+    </article>
+#end
