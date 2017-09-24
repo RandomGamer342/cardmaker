@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 #foreach($card in $cards)
-    <article>
+    <article #if($card.effects) class="effects"#end>
         <h1>
             $escape_html($card.title)
         </h1>
@@ -11,13 +11,22 @@
             <!--https://material.io/icons/-->
             <i class="material-icons figure">$escape_html($card.figure)</i>
         </figure>
-        <main>
-            $escape_html($card.description)
-            <ol>
-                #foreach($item in $card.steps)
+        #if($card.effects)
+            <ul>
+                #foreach($item in $card.effects)
                     <li>$escape_html($item)</li>
                 #end
-            </ol>
+            </ul>
+        #end
+        <main>
+            $escape_html($card.description)
+            #if($card.steps)
+                <ol>
+                    #foreach($item in $card.steps)
+                        <li>$escape_html($item)</li>
+                    #end
+                </ol>
+            #end
             #if($card.flags)
                 <div class="bottom">
                     <small>-
@@ -36,7 +45,11 @@
             #end
         </main>
         <div class="cost">$escape_html($card.cost)</div>
-        <div class="power">$escape_html($card.power)</div>
-        <div class="cp">$escape_html($card.cp)</div>
+        #if($card.power)
+            <div class="power">$escape_html($card.power)</div>
+        #end
+        #if($card.power)
+            <div class="cp">$escape_html($card.cp)</div>
+        #end
     </article>
 #end

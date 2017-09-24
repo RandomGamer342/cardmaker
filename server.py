@@ -18,6 +18,11 @@ async def show_cardlist(request, template={}):
 
     return response.html(template["cardlist.vm"].merge(locals()))
 
+@app.get('/cards/creator')
+@withTemplate("cards/creator.vm")
+async def preview_card(request, template={}):
+    return response.html(template["creator.vm"].merge(locals()))
+
 @app.get('/cards/show')
 @withTemplate("cards/card.vm")
 async def show_cards(request, template={}):
@@ -31,6 +36,19 @@ async def show_cards(request, template={}):
         cards.append(card.from_file(i+".yaml"))
     return response.html(template["card.vm"].merge(locals()))
 
+@app.post('/cards/preview')
+@withTemplate("cards/card.vm")
+async def preview_card(request, template={}):
+    cards = [card.Card()]
+
+    for key, val in request.form.items():
+        if not val[0]: continue
+        if type(getattr(card.Card, key)) in (tuple, list):
+            setattr(cards[0], key, val)
+        else:
+            setattr(cards[0], key, val[0])
+
+    return response.html(template["card.vm"].merge(locals()))
 
 #add static files:
 for i in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):

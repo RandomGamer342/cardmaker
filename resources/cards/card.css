@@ -6,14 +6,16 @@
   size: A4;
   margin: 1.2cm;
 }
+@media print {
+    body {
+        width: 21cm;
+        height: 29.7cm;
+    }
+}
 :root {
     font-family: sans-serif;
     font-size: 3mm;
     font-weight: 300;
-}
-body {
-    width: 21cm;
-    height: 29.7cm;
 }
 
 article {
@@ -39,7 +41,15 @@ article {
     border-width: 2mm;
     border-color: #333;
     background-color: #333;
-
+}
+article.effects {
+    grid-template-columns: 4fr 3fr;
+    grid-template-areas:
+        "header header"
+        "figure effects"
+        "cost cost"
+        "info info"
+        "power cp";
 }
 
 article >* {
@@ -69,6 +79,12 @@ article figure img{
 article figure .material-icons.figure {
     font-size: 1.7cm;
     color: #999;
+}
+
+article ul {
+    grid-area: effects;
+    list-style-type: none;
+    padding: 1mm 0;
 }
 
 article main {
