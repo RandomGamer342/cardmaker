@@ -22,7 +22,40 @@ async def show_cardlist(request, template={}):
 @app.get('/cards/creator')
 @withTemplate("cards/creator.vm")
 async def preview_card(request, template={}):
-    return response.html(template["creator.vm"].merge(locals()))
+    if "filename" in request.args:
+        initialcard = card.from_file(str(request.args["filename"][0])+".yaml")
+    else:
+        initialcard = card.Card()
+        
+        #find vacant fileame:
+        i = 1
+        while 1:
+            if card.is_filename_vacant("card-%s" % str(i).zfill(4)):
+                initialcard.filename = "card-%s" % str(i).zfill(4)
+                break
+            i += 1
+        #initialcard.power = ""
+        #initialcard.cp = ""
+        #initialcard.steps = ""
+        #initialcard.effects = ""
+        #initialcard.flags = ""
+    
+    return response.html(template["creator.vm"].merge({"card":initialcard}))
+
+@app.post('/cards/creator')
+@withTemplate("cards/creator.vm")
+async def preview_card(request, template={}):
+    initialcard = card.from_form(request.form)
+    
+    #find vacant fileame:
+    if not initialcard.filename:
+        i = 1
+        while 1:
+            if card.is_filename_vacant("card-%s" % str(i).zfill(4)):
+                initialcard.filename = "card-%s" % str(i).zfill(4)
+                break
+            i += 1
+    return response.html(template["creator.vm"].merge({"card":initialcard}))
 
 @app.get('/cards/show')
 @withTemplate("cards/card.vm")

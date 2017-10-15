@@ -1,37 +1,94 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="creator.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="creator.js"></script>
 
 <iframe name="preview"></iframe>
 
-<form action="preview" method="post" target="preview">
-    Title:
-    <input type="text" name="title"><br>
-
-    Figure:
-    <input type="text" name="figure"><br>
-
-    Description:
-    <input type="text" name="description"><br>
-
-    Steps:
-    <input type="text" name="steps"><br>
-
-    Effects:
-    <input type="text" name="effects"><br>
-
-    Cost:
-    <input type="text" name="cost"><br>
-
-    Power
-    <input type="text" name="power"><br>
-
-    CP:
-    <input type="text" name="cp"><br>
-
-    Flags:
-    <input type="text" name="flags"><br>
-
-    <br>
-    <input type="submit" value="preview">
+<form id="cardform" action="preview" method="post" target="preview">
+    <a href="../" style="opacity:0.6;">Return to cardlist</a>
+    <ul>
+        <li>
+            Title:<br>
+            <input type="text" name="title" size="39" value="$escape_html($card.title)" onchange="this.form.submit()">
+        </li>
+        <li>
+            Figure:<br>
+            <input type="text" name="figure" size="39" value="$escape_html($card.figure)"onchange="this.form.submit()"><br>
+            
+            Source:
+            #if($card.figure_source=="material-icons")
+                <input checked type="radio" name="figure_source" value="material-icons" onchange="this.form.submit()">
+            #else
+                <input type="radio" name="figure_source" value="material-icons" onchange="this.form.submit()">
+            #end
+            <a href="https://material.io/icons/">material-icons</a>
+            
+            #if($card.figure_source=="mdi")
+                <input checked type="radio" name="figure_source" value="mdi" onchange="this.form.submit()">
+            #else
+                <input type="radio" name="figure_source" value="mdi" onchange="this.form.submit()">
+            #end
+            <a href="https://materialdesignicons.com/">mdi</a>
+            
+            #if($card.figure_source=="fe")
+                <input checked type="radio" name="figure_source" value="fa" onchange="this.form.submit()">
+            #else
+                <input type="radio" name="figure_source" value="fa" onchange="this.form.submit()">
+            #end
+            <a href="http://fontawesome.io/icons/">fa</a>
+            
+            #if($card.figure_source=="svg")
+                <input checked type="radio" name="figure_source" value="svg" onchange="this.form.submit()">
+            #else
+                <input type="radio" name="figure_source" value="svg" onchange="this.form.submit()">
+            #end
+            <a href="svg">svg</a>
+        </li>
+        <li>
+            Description:<br>
+            <textarea name="description" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.description, False)</textarea>
+        </li>
+        <li>
+            Steps:<br>
+            <textarea name="steps" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.steps, False)</textarea>
+        </li>
+        <li>
+            Effects:<br>
+            <textarea name="effects" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.effects, False)</textarea>
+        </li>
+        <li>
+            Flags/Properties:<br>
+            <textarea name="flags" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.flags, False)</textarea>
+        </li>
+        <li>
+            Cost:<br>
+            <input type="text" name="cost" size="39" value="$escape_html($card.cost)" onchange="this.form.submit()">
+        </li>
+        <li>
+            Power<br>
+            <input type="text" name="power" size="39" value="$escape_html($card.power)" onchange="this.form.submit()">
+        </li>
+        <li>
+            Notes:<span style="opacity:0.4;">(Not shown)</span><br>
+            <textarea name="notes" cols="40" rows="5">$escape_html($card.notes, False)</textarea>
+        </li>
+        <li>
+            Worth: CP or Gold<span style="opacity:0.4;">(GP)</span>:<br>
+            <input type="text" name="cp" size="19" value="$escape_html($card.cp)" placeholder="CP" onchange="this.form.submit()">
+            <input type="text" name="gp" size="19" value="$escape_html($card.gp)" placeholder="gold" onchange="this.form.submit()">
+        </li>
+        <li>
+            <br>
+            <input type="submit" value="Update preview">
+            <input type="submit" name="save" value="Save as">
+             -> 
+            <input type="text" name="filename" size="15" value="$escape_html($card.filename)" placeholder="filename">
+            <input type="submit" name="delete" value="Delete">
+            <br>
+            
+            <a href="../">Return to cardlist</a>
+            <br>
+        </li>
+    </ul>
 </form>

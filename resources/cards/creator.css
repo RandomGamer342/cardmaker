@@ -1,8 +1,28 @@
 iframe {
-    width: 8cm;
-    height: 12cm;
+    width: 7cm;
+    height: 11cm;
     display: block;
     position: absolute;
     top: 0;
     right: 0;
+    border: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    width: calc(100% - 9cm);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0.5em;
+}
+ul li {
+    float: left;
+    margin: 0.6em;
+    margin-bottom: 0.1em;
 }
