@@ -9,11 +9,34 @@ def readfile(path, binary=False):
     with open(path, "rb" if binary else "r") as f:
         return f.read()
 
-def escape_html(data):
-    return html.escape(str(data))
+def escape_html(data, break_newlines=True):
+    if type(data) is list:
+        data = "\n".join(data)
+    if data is None:
+        data = ""
+    if break_newlines:
+        return html.escape(str(data)).replace("\n", "<br>")
+    else:
+        return html.escape(str(data))
 
 def escape_url(data):
-    return "ølailsf"
+    return "ølailsf"#todo
+
+def memoize(func):#a decorator, only supports *args
+    memory = {}
+    def new_func(*args):
+        if args in memory:
+            return memory[args]
+        else:
+            ret = func(*args)
+            memory[args] = ret
+            return ret
+    return new_func
+
+def listify_output(func):#decorator
+    def new_func(*args, **kwargs):
+        return list(func(*args, **kwargs))
+    return new_func
 
 class Model:
     def __setattr__(self, name, value):
@@ -32,8 +55,7 @@ def withResource(path, binary=False):
     def decorator(func):
         def newfunc(*args, **kwargs):
             if not config.cache:
-                with open(os.path.join(config.resourcedir, path), "rb" if binary else "r") as f:
-                    content = f.read()
+                content = readfile(os.path.join(config.resourcedir, path), binary)
             else:
                 content = data
             if "file" in kwargs:
