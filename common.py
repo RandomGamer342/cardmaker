@@ -1,4 +1,9 @@
-import airspeed, config, os, html
+import airspeed, os, html
+try:
+    from html5print import HTMLBeautifier
+except ModuleNotfoundError:
+    pass
+import config
 
 def readfile(path, binary=False):
     with open(path, "rb" if binary else "r") as f:
@@ -39,7 +44,7 @@ def withResource(path, binary=False):
         return newfunc
     return decorator
 
-def withTemplate(path):
+def withTemplate(path, isHTML=True):
     template = airspeed.Template(readfile(os.path.join(config.resourcedir, path)))
 
     def decorator(func):
@@ -52,7 +57,10 @@ def withTemplate(path):
             class T:
                 def merge(self, objects):
                     objects.update({"escape_html":escape_html, "escape_url":escape_url})
-                    return t.merge(objects)
+                    if config.prettifyHTML and isHTML:
+                        return HTMLBeautifier.beautify(t.merge(objects), indent=4)#.replace("/>", ">")
+                    else:
+                        return t.merge(objects)
 
             if "template" in kwargs:
                 kwargs["template"][os.path.basename(path)] = T()
