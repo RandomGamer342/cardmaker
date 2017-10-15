@@ -1,0 +1,24 @@
+button {
+    min-width: 3.5em;
+}
+button.small {
+    min-width: 0;
+}
+
+button,
+input[type=checkbox],
+label {
+cursor: pointer;
+}
+
+th,
+td {
+    text-align: left;
+}
+th +th+th,
+td +td+td {
+    padding-left: 1em;
+}
+td +td+td {
+    opacity: 0.6;
+}

@@ -13,10 +13,39 @@ async def root(request):
     return response.redirect('/cards/')
 
 @app.get("/cards/")
+@app.post("/cards/")
 @withTemplate("cards/cardlist.vm")
 async def show_cardlist(request, template={}):
+    if "action" in request.form and "filename" in request.form:
+        with card.open_file(request.form.get("filename")) as c:
+            if request.form.get("action") == "increment_stock":
+                c.copies_owned += 1
+            elif request.form.get("action") == "decrement_stock":
+                c.copies_owned -= 1
+        
     cards = card.from_dir(config.carddir)
-
+    
+    sorting_key = None
+    if "sort" in request.args:
+        sorting_key = request.args["sort"][0]
+    if "sort" in request.form:
+        sorting_key = request.form["sort"][0]
+    
+    if sorting_key:
+        if sorting_key == "filename":
+            cards = sorted(cards, key=lambda x: x.filename.lower())
+        elif sorting_key == "cp":
+            cards = sorted(cards, key=lambda x: -int(x.cp or 0))
+        elif sorting_key == "description":
+            cards = sorted(cards, key=lambda x: x.description or "")
+        elif sorting_key == "copies":
+            cards = sorted(cards, key=lambda x: -int(x.copies_owned))
+        elif sorting_key == "title":
+            cards = sorted(cards, key=lambda x: x.title.lower())
+    
+    sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
+    sum_copies = sum(int(i.copies_owned) for i in cards)
+    
     return response.html(template["cardlist.vm"].merge(locals()))
 
 @app.get('/cards/creator')

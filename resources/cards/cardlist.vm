@@ -1,11 +1,84 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="cardlist.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-<form action="show" method="get">
-    #foreach($card in $cards)
-    <input type="checkbox" name="card" value="$escape_html($card.filename)">$escape_html($card.title)<br>
+<script>
+    function toggle() {
+        checkboxes = document.getElementsByName('card');
+        var target = ! checkboxes[0].checked;
+        for(var i=0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = target;
+        }
+    }
+</script>
+
+#foreach($card in $cards)
+<form id="$escape_html($card.filename)_inc" action="" method="post">
+    <input type="hidden" name="filename" value="$escape_html($card.filename)">
+    <input type="hidden" name="action" value="increment_stock">
+    #if($sorting_key)
+        <input type="hidden" name="sort" value="$sorting_key">
     #end
-    <br>
-    <input type="submit" value="Submit">
+</form>
+<form id="$escape_html($card.filename)_dec" action="" method="post">
+    <input type="hidden" name="filename" value="$escape_html($card.filename)">
+    <input type="hidden" name="action" value="decrement_stock">
+    #if($sorting_key)
+        <input type="hidden" name="sort" value="$sorting_key">
+    #end
+</form>
+#end
+
+<form action="show" method="get" id="cardlist">
+    <table>
+        <tr>
+            <th></th>
+            <th><a href="../cards/?sort=title">Title</a></th>
+            <th><a href="../cards/?sort=filename" >Filename</a></th>
+            <th style="text-align: center;"><a href="../cards/?sort=cp">CP</a></th>
+            <th><a href="../cards/?sort=copies">Copies owned</a></th>
+            <th><a href="../cards/?sort=description">Description</a></th>
+        </tr>
+
+    #foreach($card in $cards)
+        <tr>
+            <td>
+                <button type="button" onclick="location.href='creator?filename=$escape_html($card.filename)'">Edit</button>
+                <input type="checkbox" name="card" value="$escape_html($card.filename)" id="$escape_html($card.filename)_check">
+            </td>
+            <td><label for="$escape_html($card.filename)_check">$escape_html($card.title)</label></td>
+            <td>$escape_html($card.filename)</td>
+            #if($card.cp)
+                <td style="text-align: right;">$escape_html($card.cp) CP</td>
+            #else
+                <td style="text-align: right;">0 CP</td>
+            #end
+            <td style="text-align: center;">
+                <button type="button" class="small" onclick="document.getElementById('$escape_html($card.filename)_dec').submit()">-</button>
+                $escape_html($card.copies_owned)
+                <button type="button" class="small" onclick="document.getElementById('$escape_html($card.filename)_inc').submit()">+</button>
+            </td>
+            <td>$escape_html($card.description.split("\n").get(0))</td>
+        </tr>
+    #end
+        <tr>
+            <td><button type="button" onclick="location.href='creator'">New</button></td>
+        </tr>
+        
+        <tr>
+            <td></td>
+            <td>Total:</td>
+            <td>N/A</td>
+            <td>$escape_html($sum_cp)</td>
+            <td>$escape_html($sum_copies)</td>
+            <td>N/A</td>
+        </tr>
+            
+        <tr>
+            <td></td>
+            <td><br>
+                <button type="button" onclick="toggle();">Toggle all</button>
+                <input type="submit" value="View selected">
+            </td>
+        </tr>
+    </table>
 </form>
