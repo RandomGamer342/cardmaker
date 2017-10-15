@@ -3,6 +3,7 @@ import sys, os, airspeed, glob
 from sanic import Sanic, response
 from common import withTemplate, withResource
 import card
+import svg
 import config
 
 app = Sanic()
@@ -39,26 +40,53 @@ async def show_cards(request, template={}):
 @app.post('/cards/preview')
 @withTemplate("cards/card.vm")
 async def preview_card(request, template={}):
-    cards = [card.Card()]
-
-    for key, val in request.form.items():
-        if not val[0]: continue
-        if type(getattr(card.Card, key)) in (tuple, list):
-            setattr(cards[0], key, val)
-        else:
-            setattr(cards[0], key, val[0])
-
+    cards = [card.from_form(request.form)]
+    if "save" in request.form:
+        card.to_file(cards[0])
+        was_saved = True
+    if "delete" in request.form:
+        card.del_file(cards[0])
+        was_deleted = True
     return response.html(template["card.vm"].merge(locals()))
 
-#add static files:
+@app.get("/cards/svg")
+@withTemplate("cards/svg.vm")
+async def svg_list(request, template={}):
+    svgs = svg.list_all()
+    svgs.sort()
+    return response.html(template["svg.vm"].merge(locals()))
+
+@app.post("/cards/svg")
+@withTemplate("cards/svg.vm")
+async def svg_add(request, template={}):
+    file = request.files.get("file")
+    name = request.form.get("name") or file.name
+    if name[-4:] == ".svg": name = name[:-4]
+    
+    svg.store(name, file.body)
+    
+    uploaded = True
+    svgs = svg.list_all()
+    return response.html(template["svg.vm"].merge(locals()))
+
+#add static resources:
 for i in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
-    if i.split(".")[-1] in ("html", "css", "js"):
+    filetype = i.split('.')[-1]
+    if filetype in ("html", "css", "js"):
         i = os.path.relpath(i, config.resourcedir)
-        print(i)
+        print("Adding static resource", repr(i))
+        if filetype == "js": filetype = "javascript"
+        
         @app.get(f"/{i}")
         @withResource(i)
         async def card_style(request, file={}):
-            return response.text(tuple(file.values())[0], headers={"Content-Type": f"text/{i.split('.')[-1]}"})
+            file = tuple(file.values())[0]
+            return response.text(file, headers={"Content-Type": f"text/{filetype}"})
+
+#add svgs:
+@app.get(f"/svg/<name>.svg")
+async def get_svg(request, name):
+    return response.text(svg.get(name), headers={"Content-Type": "image/svg+xml"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

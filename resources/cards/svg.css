@@ -1,0 +1,43 @@
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+    width: 10em;
+    height: 10em;
+    padding: 0;
+    margin: 1em 0.3em;
+    overflow: hidden;
+    border: solid 1px black;
+    border-radius: 0.2em;
+}
+li:hover {
+    border-color: #888;
+    background-color: #ddf;
+}
+
+li h1 {
+    text-align: center;
+    font-size: 1em;
+    line-height: 1em;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    max-height: 6.8em;
+    width: auto;
+    height: 6.8em;
+    margin: 0 auto;
+    
+    /*filter: invert(1) opacity(0.8);*/
+    filter: opacity(0.8);
+}
+
+body >h1,
+form {
+    text-align: center;
+}

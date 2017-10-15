@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="svg.css">
+
+#macro(form)
+<form action="svg" method="post" enctype="multipart/form-data">
+    <h3>Upload SVG:</h3>
+    <p>
+        <input type="file" name="file" accept="image/svg+xml"><br/>
+        <input type="text" name="name" placeholder="name">
+        <input type="submit">
+    
+        #if($uploaded)
+        <i>Upload was successfull!</i>
+        #end
+    </p>
+</form>
+#end
+
+<a href="../" style="opacity:0.6;">Return to cardlist</a>
+
+#form()
+
+<h1>Available SVGs:</h1>
+
+<ul>
+#foreach($name in $svgs)
+    <li><!--todo: add "copy to clipboard" feature-->
+        <h1>$name</h1>
+        <img src="/svg/${escape_html($name)}.svg">
+    </li>
+#end
+</ul>
+
+#form()
+
+<a href="../" style="opacity:0.6;">Return to cardlist</a>
