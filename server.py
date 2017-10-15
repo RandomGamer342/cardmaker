@@ -152,3 +152,4 @@ async def get_svg(request, name):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
+    print("Exiting...\n")
