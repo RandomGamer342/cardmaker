@@ -1,55 +1,87 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="card.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 #foreach($card in $cards)
-    <article #if($card.effects) class="effects"#end>
-        <h1>
-            $escape_html($card.title)
-        </h1>
-        <figure>
+<article #if($card.effects) class="effects"#end onclick="location.href='creator?filename=$escape_html($card.filename)'">
+    <h1>
+        $escape_html($card.title)
+    </h1>
+    <figure>
+        #if($card.figure_source == "material-icons")
             <!--https://material.io/icons/-->
             <i class="material-icons figure">$escape_html($card.figure)</i>
-        </figure>
-        #if($card.effects)
-            <ul>
-                #foreach($item in $card.effects)
+        #elseif($card.figure_source == "mdi")
+            <!--https://materialdesignicons.com/-->
+            <i class="mdi mdi-$escape_html($card.figure)"></i>
+        #elseif($card.figure_source == "fa")
+            <!--http://fontawesome.io/icons/-->
+            <i class="fa fa-$escape_html($card.figure)"></i>
+        #elseif($card.figure_source == "svg")
+            <!--/cards/svg-->
+            <img class="svg" src="/svg/${escape_html($card.figure)}.svg">
+        #end
+    </figure>
+    #if($card.effects)
+        <ul>
+            #foreach($item in $card.effects)
+                #if($item)
                     <li>$escape_html($item)</li>
                 #end
-            </ul>
-        #end
-        <main>
-            $escape_html($card.description)
-            #if($card.steps)
-                <ol>
-                    #foreach($item in $card.steps)
+            #end
+        </ul>
+    #end
+    <main>
+        $escape_html($card.description)
+        #if($card.steps)
+            <ol>
+                #foreach($item in $card.steps)
+                    #if($item)
                         <li>$escape_html($item)</li>
                     #end
-                </ol>
-            #end
-            #if($card.flags)
-                <div class="bottom">
-                    <small>-
-                        #foreach($flag in $card.flags)
-                            $escape_html($flag.capitalize()) -
+                #end
+            </ol>
+        #end
+        #if($card.flags)
+            <div class="bottom">
+                <small>
+                    -
+                    #foreach($flag in $card.flags)
+                        #if(!$flag && $foreach.hasNext)
+                            - <br> -
+                        #else
+                            $escape_html($flag.capitalize())#if($foreach.hasNext), #end
                         #end
-                    </small>
-                    <br>
-                    #if($card.has_flag("mastery"))
-                        <big>
-                            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
-                            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
-                        </big>
                     #end
-                </div>
-            #end
-        </main>
-        <div class="cost">$escape_html($card.cost)</div>
-        #if($card.power)
-            <div class="power">$escape_html($card.power)</div>
+                    -
+                </small>
+                <br>
+                #if($card.has_flag("mastery"))
+                    <big>
+                        &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+                        &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+                    </big>
+                #end
+            </div>
         #end
-        #if($card.power)
-            <div class="cp">$escape_html($card.cp)</div>
-        #end
-    </article>
+    </main>
+    <div class="cost">$escape_html($card.cost)</div>
+    #if($card.power)
+        <div class="power">$escape_html($card.power)</div>
+    #end
+    #if($card.cp)
+        <div class="cp">$escape_html($card.cp)</div>
+    #elseif($card.gp)
+        <div class="gp">$escape_html($card.gp)</div>
+    #end
+</article>
+#end
+
+#if($was_saved)
+<center style="position: absolute; bottom:0; width: 100%;">The card has been saved</center>
+#end
+#if($was_deleted)
+<center style="position: absolute; bottom:0; width: 100%;">The card has been removed from storage</center>
 #end

@@ -5,23 +5,48 @@ from common import Model
 import config
 
 class Card(Model):
-    filename = "[[filename_without_file_extention]]"
-    title = "[[title]]"
-    figure = "code"#https://material.io/icons/
-    description = "[[description]]"
+    filename = ""#filename without extentions
+    title = "title"
+    figure = "code"
+    figure_source = "material-icons"
+        #material-icons = https://material.io/icons/
+        #mdi            = https://materialdesignicons.com/
+        #fa             = http://fontawesome.io/icons/
+        #svg            = the svgs/ folder
+    description = ""
     steps = []
     effects = []
     cost = "free action"
     power = None
     cp = None
+    gp = None#gold
     flags = []
+    notes = ""#not shown, but used to keep track of things
+    copies_owned = 1
 
-    def has_flag(self, flag): return flag in self.flags
+    def has_flag(self, flag):
+        return flag.lower() in map(lambda x: x.lower(), self.flags)
+
+#todo: make the relevant ones into coroutines:
 
 def from_file(filename, in_carddir=True):#yaml syntax
+    if filename[-5:] != ".yaml":
+        filename += ".yaml"
     name = ".".join(os.path.basename(filename).split(".")[:-1])
     with open(os.path.join(config.carddir, filename) if in_carddir else filename, "r") as f:
         return from_yaml(f.read(), name)
+
+def to_file(card, in_carddir=True):
+    assert card.filename, "no filename set"
+    filename = card.filename+".yaml"
+    
+    with open(os.path.join(config.carddir, filename) if in_carddir else filename, "w") as f:
+        f.write(to_yaml(card))
+
+def del_file(card, in_carddir=True):
+    assert card.filename, "no filename set"
+    filename = card.filename+".yaml"
+    os.remove(os.path.join(config.carddir, filename) if in_carddir else filename)
 
 def from_yaml(data, filename="from_yaml"):
     card = Card()
@@ -30,5 +55,44 @@ def from_yaml(data, filename="from_yaml"):
         setattr(card, key, val)
     return card
 
+def to_yaml(card):
+    out = {}
+    for key in dir(card):
+        if "_" not in key[0] and key not in ("filename","has_flag"):
+            val = getattr(card, key)
+            if (val or val==0) and val != getattr(Card, key):
+                out[key] = val
+    return dump(out, default_flow_style=False)
+
 def from_dir(path):
     return [from_file(i, in_carddir=False) for i in glob.glob(os.path.join(path, "*.yaml"))]
+
+def from_form(form):
+    card = Card()
+    for key, val in form.items():
+        if not val[0]: continue
+        if key in ("save", "delete"): continue
+        if type(getattr(Card, key)) in (tuple, list):
+            if len(val) == 1 and "\n" in val[0]:
+                val = val[0].strip().replace("\r\n", "\n").split("\n")
+                #val = [i for i in val if i]
+            setattr(card, key, val)
+        else:
+            setattr(card, key, val[0].strip().replace("\r\n", "\n"))
+    return card
+
+def is_filename_vacant(filename, in_carddir=True):
+    if in_carddir:
+        filename = os.path.join(config.carddir, filename)
+    if filename[-5:] != ".yaml":
+        filename += ".yaml"
+    return not os.path.exists(filename)
+
+class open_file:#contextmanager
+    def __init__(self, filename):
+        self.filename = filename
+    def __enter__(self):
+        self.card = from_file(self.filename)
+        return self.card
+    def __exit__(self, *args):
+        to_file(self.card)

@@ -22,11 +22,11 @@ article {
     margin: 3mm 5mm;
     display: block;
     float: left;
-    width: 5.5cm;
+    width: 5.6cm;
     height: 8.9cm;
 
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 2fr;
     grid-template-rows: 2em 18mm 1.3em auto 1.5em;
     grid-template-areas:
         "header header"
@@ -36,11 +36,12 @@ article {
         "power cp";
 
     border-radius: 2mm;
-    grid-gap: 2mm 2mm;
+    grid-gap: 1.5mm 1.5mm;
     border-style: solid;
     border-width: 2mm;
     border-color: #333;
     background-color: #333;
+    cursor: pointer;
 }
 article.effects {
     grid-template-columns: 4fr 3fr;
@@ -57,28 +58,40 @@ article >* {
     text-align: center;
     line-height: 1.4em;
     padding: 0 1mm;
+    border-radius: 1mm;
 }
 
 article h1 {
     grid-area: header;
-    font-size: 1em;
     padding: 1mm 0;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    line-height: 1.1em;
     font-weight: 600;
 }
 
 article figure {
     grid-area: figure;
-    background: #333;
+    background: none;
+    overflow: hidden;
 }
 
-article figure img{
-    height: 100%;
-    width: auto;
+article figure * {
+    color: #999;
 }
+article figure img{
+    display: block;
+    height: 97%;
+    margin: auto auto;
+}
+article figure img.svg{
+    filter: invert(1) opacity(0.6);
+}
+article figure .mdi,
+article figure .fa,
 article figure .material-icons.figure {
     font-size: 1.7cm;
-    color: #999;
+    line-height: 1.7cm;
+    
 }
 
 article ul {
@@ -88,14 +101,14 @@ article ul {
 }
 
 article main {
-    padding: 2mm 0;
+    padding: 2mm 1mm;
     grid-area: info;
     position: relative;
 }
 article main ol {
     margin-top: 1mm;
     text-align: left;
-    padding-left: 6mm;
+    padding-left: 5mm;
 }
 article main ol li + li{
     margin-top: 0.5mm;
@@ -107,6 +120,7 @@ article main .bottom {
     width: 100%;
     position: absolute;
     bottom: 2mm;
+    left: 0;
 }
 
 article .power {
@@ -120,11 +134,16 @@ article .power:before{
 article .cost {
     grid-area: cost;
 }
-article .cp {
+article .cp,
+article .gp {
     grid-area: cp;
     text-align: right;
 }
 article .cp:after{
     content: " CP";
     font-size: 0.7em;
+}
+article .gp:after{
+    content: " Gold";
+    font-size: 0.6em;
 }
