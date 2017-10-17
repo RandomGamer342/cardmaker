@@ -44,6 +44,15 @@ async def show_cardlist(request, template={}):
         elif sorting_key == "tag":
             cards = sorted(cards, key=lambda x: x.tag or "\0")
     
+    filter_key = None
+    if "filter" in request.args:
+        filter_key = request.args["filter"][0]
+    if "filter" in request.form:
+        filter_key = request.form["filter"][0]
+    
+    if filter_key:
+        cards = [i for i in cards if i.tag.lower() == filter_key.lower()]
+    
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)
     
