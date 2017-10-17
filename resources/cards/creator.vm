@@ -5,19 +5,20 @@
 
 <title>Card Creator</title>
 
+<a href="../" style="opacity:0.6;">Return to cardlist</a>
+
 <iframe name="preview"></iframe>
 
 <form id="cardform" action="preview" method="post" target="preview">
-    <a href="../" style="opacity:0.6;">Return to cardlist</a>
     <input type="hidden" name="copies_owned" value="$card.copies_owned">
     <ul>
         <li>
             Title:<br>
-            <input type="text" name="title" size="39" value="$escape_html($card.title)" onchange="this.form.submit()">
+            <input type="text" name="title" value="$escape_html($card.title)" onchange="this.form.submit()">
         </li>
         <li>
             Figure:<br>
-            <input type="text" name="figure" size="39" value="$escape_html($card.figure)"onchange="this.form.submit()"><br>
+            <input type="text" name="figure" value="$escape_html($card.figure)"onchange="this.form.submit()"><br>
             
             Source:
             #if($card.figure_source=="material-icons")
@@ -50,36 +51,36 @@
         </li>
         <li>
             Description:<br>
-            <textarea name="description" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.description, False)</textarea>
+            <textarea name="description" rows="5" onchange="this.form.submit()">$escape_html($card.description, False)</textarea>
         </li>
         <li>
             Steps:<br>
-            <textarea name="steps" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.steps, False)</textarea>
+            <textarea name="steps" rows="5" onchange="this.form.submit()">$escape_html($card.steps, False)</textarea>
         </li>
         <li>
             Effects:<br>
-            <textarea name="effects" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.effects, False)</textarea>
+            <textarea name="effects" rows="5" onchange="this.form.submit()">$escape_html($card.effects, False)</textarea>
         </li>
         <li>
             Flags/Properties:<br>
-            <textarea name="flags" cols="40" rows="5" onchange="this.form.submit()">$escape_html($card.flags, False)</textarea>
+            <textarea name="flags" rows="5" onchange="this.form.submit()">$escape_html($card.flags, False)</textarea>
         </li>
         <li>
             Cost:<br>
-            <input type="text" name="cost" size="39" value="$escape_html($card.cost)" onchange="this.form.submit()">
+            <input type="text" name="cost" value="$escape_html($card.cost)" onchange="this.form.submit()">
         </li>
         <li>
             Power<br>
-            <input type="text" name="power" size="39" value="$escape_html($card.power)" onchange="this.form.submit()">
+            <input type="text" name="power" value="$escape_html($card.power)" onchange="this.form.submit()">
         </li>
         <li>
             Notes:<span style="opacity:0.4;">(Not shown)</span><br>
-            <textarea name="notes" cols="40" rows="5">$escape_html($card.notes, False)</textarea>
+            <textarea name="notes" rows="10">$escape_html($card.notes, False)</textarea>
         </li>
         <li>
             Worth: CP or Gold<span style="opacity:0.4;">(GP)</span>:<br>
-            <input type="text" name="cp" size="19" value="$escape_html($card.cp)" placeholder="CP" onchange="this.form.submit()">
-            <input type="text" name="gp" size="19" value="$escape_html($card.gp)" placeholder="gold" onchange="this.form.submit()">
+            <input type="text" name="cp" value="$escape_html($card.cp)" placeholder="CP" onchange="this.form.submit()">
+            <input type="text" name="gp" value="$escape_html($card.gp)" placeholder="gold" onchange="this.form.submit()">
         </li>
         <li>
             <br>

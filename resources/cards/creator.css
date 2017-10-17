@@ -1,28 +1,43 @@
 iframe {
-    width: 7cm;
     height: 11cm;
+    width: 6.1cm;
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.35cm;
+    right: 0.35cm;
     border: none;
 }
 
-* {
+ul {
     margin: 0;
     padding: 0;
 }
 
 form {
-    width: calc(100% - 9cm);
+    width: calc(100% - 6.5cm);
+    width: 19cm;
 }
-
 ul {
     list-style-type: none;
-    margin: 0.5em;
+    margin: 2mm;
 }
 ul li {
     float: left;
-    margin: 0.6em;
-    margin-bottom: 0.1em;
+    margin: 3mm;
+    margin-bottom: 1mm;
+    width: 8.5cm;
+}
+
+ul li input[type=text],
+ul li textarea {
+    width: 100%;
+}
+
+ul li input[type=text][name=gp],
+ul li input[type=text][name=cp] {
+    width: 4.09cm;
+}
+ul li input[type=text][name=tag],
+ul li input[type=text][name=filename] {
+    width: 3.8cm;
 }
