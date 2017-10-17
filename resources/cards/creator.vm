@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="creator.js"></script>
 
+<title>Card Creator</title>
+
 <iframe name="preview"></iframe>
 
 <form id="cardform" action="preview" method="post" target="preview">
@@ -81,13 +83,14 @@
         <li>
             <br>
             <input type="submit" value="Update preview">
+            <a href="../">Return to cardlist</a>
+            <br>
             <input type="submit" name="save" value="Save as">
              -> 
             <input type="text" name="filename" size="15" value="$escape_html($card.filename)" placeholder="filename">
             <input type="submit" name="delete" value="Delete">
             <br>
             
-            <a href="../">Return to cardlist</a>
             <br>
         </li>
     </ul>

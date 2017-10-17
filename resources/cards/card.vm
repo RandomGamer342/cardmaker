@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<title>Cards</title>
+
 #foreach($card in $cards)
 <article #if($card.effects) class="effects"#end onclick="location.href='creator?filename=$escape_html($card.filename)'">
     <h1>

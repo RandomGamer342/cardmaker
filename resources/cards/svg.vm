@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="svg.css">
 
+<title>SVG list</title>
+
 #macro(form)
 <form action="svg" method="post" enctype="multipart/form-data">
     <h3>Upload SVG:</h3>

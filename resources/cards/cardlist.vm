@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="cardlist.css">
 
+<title>Card list</title>
+
 <script>
     function toggle() {
         checkboxes = document.getElementsByName('card');
