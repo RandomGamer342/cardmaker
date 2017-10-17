@@ -9,6 +9,7 @@
 
 <form id="cardform" action="preview" method="post" target="preview">
     <a href="../" style="opacity:0.6;">Return to cardlist</a>
+    <input type="hidden" name="copies_owned" value="$card.copies_owned">
     <ul>
         <li>
             Title:<br>
@@ -87,11 +88,14 @@
             <br>
             <input type="submit" name="save" value="Save as">
              -> 
-            <input type="text" name="filename" size="15" value="$escape_html($card.filename)" placeholder="filename">
+             <input type="text"  name="filename" value="$escape_html($card.filename)" placeholder="filename">
             <input type="submit" name="delete" value="Delete">
-            <br>
             
             <br>
+        </li>
+        <li>
+            Tag:
+            <input type="text" name="tag" value="$escape_html($card.tag)">
         </li>
     </ul>
 </form>

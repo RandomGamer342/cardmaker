@@ -16,14 +16,15 @@ class Card(Model):
     description = ""
     steps = []
     effects = []
-    cost = "free action"
+    cost = ""
     power = None
     cp = None
     gp = None#gold
     flags = []
     notes = ""#not shown, but used to keep track of things
     copies_owned = 1
-
+    tag = ""
+    
     def has_flag(self, flag):
         return flag.lower() in map(lambda x: x.lower(), self.flags)
 

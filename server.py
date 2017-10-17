@@ -19,10 +19,9 @@ async def show_cardlist(request, template={}):
     if "action" in request.form and "filename" in request.form:
         with card.open_file(request.form.get("filename")) as c:
             if request.form.get("action") == "increment_stock":
-                c.copies_owned += 1
+                c.copies_owned = int(c.copies_owned) + 1
             elif request.form.get("action") == "decrement_stock":
-                c.copies_owned -= 1
-        
+                c.copies_owned = int(c.copies_owned) - 1
     cards = card.from_dir(config.carddir)
     
     sorting_key = None
@@ -42,6 +41,8 @@ async def show_cardlist(request, template={}):
             cards = sorted(cards, key=lambda x: -int(x.copies_owned))
         elif sorting_key == "title":
             cards = sorted(cards, key=lambda x: x.title.lower())
+        elif sorting_key == "tag":
+            cards = sorted(cards, key=lambda x: x.tag or "\0")
     
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)
