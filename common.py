@@ -50,7 +50,8 @@ class Model:
 
 #decorators with parameters:
 def withResource(path, binary=False):
-    data = readfile(os.path.join(config.resourcedir, path), binary)
+    if config.cache:
+        data = readfile(os.path.join(config.resourcedir, path), binary)
 
     def decorator(func):
         def newfunc(*args, **kwargs):
@@ -67,7 +68,8 @@ def withResource(path, binary=False):
     return decorator
 
 def withTemplate(path, isHTML=True):
-    template = airspeed.Template(readfile(os.path.join(config.resourcedir, path)))
+    if config.cache:
+        template = airspeed.Template(readfile(os.path.join(config.resourcedir, path)))
 
     def decorator(func):
         def newfunc(*args, **kwargs):
