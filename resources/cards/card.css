@@ -84,7 +84,16 @@ article figure img{
     margin: auto auto;
 }
 article figure img.svg{
-    filter: invert(1) opacity(0.6);
+    filter: brightness(0) invert(1) opacity(0.6);
+}
+article figure div.svg {
+    display: block;
+    height: 97%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: brightness(0) invert(1) opacity(0.6);
 }
 article figure .mdi,
 article figure .fa,
