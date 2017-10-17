@@ -83,7 +83,7 @@
 #end
 
 #if($was_saved)
-<center style="position: absolute; bottom:0; width: 100%;">The card has been saved</center>
+<center style="font-size: 1.3em;position: absolute; bottom:0; width: 100%;">The card has been saved</center>
 #end
 #if($was_deleted)
 <center style="position: absolute; bottom:0; width: 100%;">The card has been removed from storage</center>
