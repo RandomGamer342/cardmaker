@@ -39,6 +39,7 @@
             <th style="text-align: center;"><a href="../cards/?sort=cp">CP</a></th>
             <th><a href="../cards/?sort=copies">Copies owned</a></th>
             <th><a href="../cards/?sort=description">Description</a></th>
+            <th><a href="../cards/?sort=tag">Tag</a></th>
         </tr>
 
     #foreach($card in $cards)
@@ -60,6 +61,7 @@
                 <button type="button" class="small" onclick="document.getElementById('$escape_html($card.filename)_inc').submit()">+</button>
             </td>
             <td>$escape_html($card.description.split("\n").get(0))</td>
+            <td><a href="../cards/?sort=${sorting_key}&amp;filter=$escape_html($card.tag).lower()">$escape_html($card.tag).lower()</a></td>
         </tr>
     #end
         <tr>
