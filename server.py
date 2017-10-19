@@ -24,7 +24,7 @@ async def show_cardlist(request, template={}):
                 c.copies_owned = int(c.copies_owned) - 1
     cards = card.from_dir(config.carddir)
     
-    sorting_key = None
+    sorting_key = ""
     if "sort" in request.args:
         sorting_key = request.args["sort"][0]
     if "sort" in request.form:
@@ -43,8 +43,8 @@ async def show_cardlist(request, template={}):
             cards = sorted(cards, key=lambda x: x.title.lower())
         elif sorting_key == "tag":
             cards = sorted(cards, key=lambda x: x.tag or "\0")
-    
-    filter_key = None
+
+    filter_key = ""
     if "filter" in request.args:
         filter_key = request.args["filter"][0]
     if "filter" in request.form:

@@ -20,12 +20,18 @@
     #if($sorting_key)
         <input type="hidden" name="sort" value="$sorting_key">
     #end
+    #if($filter_key)
+        <input type="hidden" name="filter" value="$filter_key">
+    #end
 </form>
 <form id="$escape_html($card.filename)_dec" action="" method="post">
     <input type="hidden" name="filename" value="$escape_html($card.filename)">
     <input type="hidden" name="action" value="decrement_stock">
     #if($sorting_key)
         <input type="hidden" name="sort" value="$sorting_key">
+    #end
+    #if($filter_key)
+        <input type="hidden" name="filter" value="$filter_key">
     #end
 </form>
 #end
@@ -34,12 +40,12 @@
     <table>
         <tr>
             <th></th>
-            <th><a href="../cards/?sort=title">Title</a></th>
-            <th><a href="../cards/?sort=filename" >Filename</a></th>
-            <th style="text-align: center;"><a href="../cards/?sort=cp">CP</a></th>
-            <th><a href="../cards/?sort=copies">Copies owned</a></th>
-            <th><a href="../cards/?sort=description">Description</a></th>
-            <th><a href="../cards/?sort=tag">Tag</a></th>
+            <th><a href="../cards/?sort=title&amp;filter=$escape_html($filter_key).lower()">Title</a></th>
+            <th><a href="../cards/?sort=filename&amp;filter=$escape_html($filter_key).lower()" >Filename</a></th>
+            <th style="text-align: center;"><a href="../cards/?sort=cp&apm;filter=$escape_html($filter_key).lower()">CP</a></th>
+            <th><a href="../cards/?sort=copies&amp;filter=$escape_html($filter_key).lower()">Copies owned</a></th>
+            <th><a href="../cards/?sort=description&amp;filter=$escape_html($filter_key).lower()">Description</a></th>
+            <th><a href="../cards/?sort=tag&amp;filter=$escape_html($filter_key).lower()">Tag</a></th>
         </tr>
 
     #foreach($card in $cards)
@@ -72,9 +78,12 @@
             <td></td>
             <td>Total:</td>
             <td>N/A</td>
-            <td>$escape_html($sum_cp)</td>
-            <td>$escape_html($sum_copies)</td>
+            <td style="text-align: right;">$escape_html($sum_cp) CP</td>
+            <td style="text-align: center;">$escape_html($sum_copies)</td>
             <td>N/A</td>
+            #if($filter_key)
+                <td><a href="../cards/?sort=${sorting_key}&amp;filter=">(remove filter)</a></td>
+            #end
         </tr>
             
         <tr>
