@@ -68,6 +68,11 @@
                         &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
                     </big>
                 #end
+                #if($card.has_flag("pokehum"))
+                    <big>
+                        Name: ______________
+                    </big>
+                #end
             </div>
         #end
     </main>
