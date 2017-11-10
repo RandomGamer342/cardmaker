@@ -25,6 +25,7 @@
             <!--/cards/svg-->
             <img class="svg" src="/svg/${escape_html($card.figure)}.svg">
             <!--<div class="svg" style="background-image:url('/svg/${escape_html($card.figure)}.svg');"></div>-->
+            ## #include("${card.figure}.svg") **
         #end
     </figure>
     #if($card.effects)

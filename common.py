@@ -48,6 +48,24 @@ class Model:
             ", ".join(f"{i}={getattr(self, i)!r}" for i in dir(self) if "_" not in i)
     __str__ = __repr__
 
+class VelocityFileLoader:
+    _cache = {}#static cache, shared between instances
+    def get_file(self, filename):
+        file = readfile(filename)
+        if filename[-4:] == ".svg":
+            pass#file = file.replace("fill:#", "")#a nasty hack
+        return file
+    def load_text(self, name):
+        if name[-4:] == ".svg":
+            filename = os.path.join(config.svgdir, name)
+        else:
+            filename = os.path.join(config.resourcedir, name)
+        if config.cache:
+            if filename not in self.memory:
+                self._cache[filename] = self.get_file(filename)
+            return self._cache[filename]
+        return self.get_file(filename)
+
 #decorators with parameters:
 def withResource(path, binary=False):
     if config.cache:
@@ -68,13 +86,14 @@ def withResource(path, binary=False):
     return decorator
 
 def withTemplate(path, isHTML=True):
+    filename = os.path.join(config.resourcedir, path)
     if config.cache:
-        template = airspeed.Template(readfile(os.path.join(config.resourcedir, path)))
+        template = airspeed.Template(readfile(filename), filename)
 
     def decorator(func):
         def newfunc(*args, **kwargs):
             if not config.cache:
-                t = airspeed.Template(readfile(os.path.join(config.resourcedir, path)))
+                t = airspeed.Template(readfile(filename), filename)
             else:
                 t = template
 
@@ -82,9 +101,11 @@ def withTemplate(path, isHTML=True):
                 def merge(self, objects):
                     objects.update({"escape_html":escape_html, "escape_url":escape_url})
                     if config.prettifyHTML and isHTML:
-                        return HTMLBeautifier.beautify(t.merge(objects), indent=4)#.replace("/>", ">")
+                        return HTMLBeautifier.beautify(
+                            t.merge(objects, loader=VelocityFileLoader()),
+                            indent=4)#.replace("/>", ">")
                     else:
-                        return t.merge(objects)
+                        return t.merge(objects, loader=VelocityFileLoader())
 
             if "template" in kwargs:
                 kwargs["template"][os.path.basename(path)] = T()
