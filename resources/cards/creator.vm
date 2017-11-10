@@ -35,7 +35,7 @@
             #end
             <a href="https://materialdesignicons.com/">mdi</a>
             
-            #if($card.figure_source=="fe")
+            #if($card.figure_source=="fa")
                 <input checked type="radio" name="figure_source" value="fa" onchange="this.form.submit()">
             #else
                 <input type="radio" name="figure_source" value="fa" onchange="this.form.submit()">
