@@ -38,6 +38,9 @@ def listify_output(func):#decorator
         return list(func(*args, **kwargs))
     return new_func
 
+def call(func):#decorator
+    return func()
+
 class Model:
     def __setattr__(self, name, value):
         if not hasattr(self, name):

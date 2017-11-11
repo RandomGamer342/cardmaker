@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys, os, airspeed, glob
 from sanic import Sanic, response
-from common import withTemplate, withResource
+from common import withTemplate, withResource, call
 import card
 import svg
 import config
@@ -142,18 +142,20 @@ async def svg_add(request, template={}):
     return response.html(template["svg.vm"].merge(locals()))
 
 #add static resources:
-for i in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
-    filetype = i.split('.')[-1]
-    if filetype in ("html", "css", "js"):
-        i = os.path.relpath(i, config.resourcedir)
-        print("Adding static resource", repr(i))
-        if filetype == "js": filetype = "javascript"
-        
-        @app.get(f"/{i}")
-        @withResource(i)
-        async def card_style(request, file={}):
-            file = tuple(file.values())[0]
-            return response.text(file, headers={"Content-Type": f"text/{filetype}"})
+for j in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
+    @call
+    def temp():#namespace hack
+        filetype = j.split('.')[-1]
+        if filetype in ("html", "css", "js"):
+            i = os.path.relpath(j, config.resourcedir)
+            print("Adding static resource", repr(i))
+            if filetype == "js": filetype = "javascript"
+            
+            @app.get(f"/{i}")
+            @withResource(i)
+            async def card_style(request, file={}):
+                file = tuple(file.values())[0]
+                return response.text(file, headers={"Content-Type": f"text/{filetype}"})
 
 #add svgs:
 @app.get(f"/svg/<name>.svg")
