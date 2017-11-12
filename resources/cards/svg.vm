@@ -1,37 +1,73 @@
 <!DOCTYPE html>
+<title>SVG list</title>
 <link rel="stylesheet" href="svg.css">
 
-<title>SVG list</title>
-
 #macro(form)
-<form action="svg" method="post" enctype="multipart/form-data">
-    <h3>Upload SVG:</h3>
-    <p>
-        <input type="file" name="file" accept="image/svg+xml"><br/>
-        <input type="text" name="name" placeholder="name">
-        <input type="submit">
-    
-        #if($uploaded)
-        <i>Upload was successfull!</i>
-        #end
-    </p>
-</form>
+    <form action="svg" method="post" enctype="multipart/form-data">
+        <h3>Upload SVG:</h3>
+        <p>
+            <input type="file" name="file" accept="image/svg+xml"><br/>
+            <input type="text" name="name" placeholder="name">
+            <input type="submit">
+        
+            #if($uploaded)
+            <i>Upload was successfull!</i>
+            #end
+        </p>
+    </form>
+#end
+#macro(pagination)
+	<center>
+		#set($self = "svg?")
+	    #if($current_collection)
+	        #set($self = "${self}collection=$escape_html($current_collection)&amp;")
+	    #end
+	    #if($filter)
+	        #set($self = "${self}filter=$escape_html($filter)&amp;")
+	    #end
+	    #if($page>1)<a href="${self}page=$page.__sub__(1)">Previous page</a> - #end
+	    <a href="${self}page=$page.__add__(1)">Next page</a>
+	</center>
 #end
 
 <a href="../" style="opacity:0.6;">Return to cardlist</a>
-
-#form()
+<div class="splitcontainer">
+	<div class="splitl">
+		#form()
+	</div>
+	<div class="splitr">
+		<form method="get" action="svg">
+			<h3>filter</h3>
+			<input type="text" name="filter" value="$escape_html($filter)">
+		    #if($current_collection)
+				<input type="hidden" name="collection" value="$escape_html($current_collection)">
+		    #end
+			<input type="submit">
+		</form>
+		<center>
+			<h4>Collections:</h4>
+			<a href="svg">No collection</a>
+			#foreach($collection in $collections)
+			- <a href="svg?collection=$escape_html($collection)">$escape_html($collection)</a>
+			#end
+		</center>
+	</div>
+</div>
 
 <h1>Available SVGs:</h1>
 
+#pagination()
+
 <ul>
 #foreach($name in $svgs)
-    <li><!--todo: add "copy to clipboard" feature-->
-        <h1>$name</h1>
+    <li>
+        <h1>$escape_html($name)</h1>
         <img src="/svg/${escape_html($name)}.svg">
     </li>
 #end
 </ul>
+
+#pagination()
 
 #form()
 

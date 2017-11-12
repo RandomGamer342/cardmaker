@@ -41,3 +41,20 @@ body >h1,
 form {
     text-align: center;
 }
+
+h4 {
+    margin:0;
+}
+
+.splitcontainer {
+    width: 100%;
+    overflow: hidden;
+}
+.splitl {
+    width: 45%;
+    float:left;
+}
+.splitr {
+    width: 45%;
+    float:right;
+}

@@ -124,8 +124,19 @@ async def preview_card(request, template={}):
 @app.get("/cards/svg")
 @withTemplate("cards/svg.vm")
 async def svg_list(request, template={}):
-    svgs = svg.list_all()
+    filter = request.args.get("filter")
+    page = int(request.args.get("page") or 1)
+    current_collection = request.args.get("collection")
+    
+    collections = svg.list_collections()
+    svgs = svg.list_all(current_collection)
+    
+    if filter:
+        svgs = [i for i in svgs if filter in i]
+    
     svgs.sort()
+    svgs = svgs[(page-1)*100:page*100]
+    
     return response.html(template["svg.vm"].merge(locals()))
 
 @app.post("/cards/svg")
@@ -161,6 +172,9 @@ for j in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
 @app.get(f"/svg/<name>.svg")
 async def get_svg(request, name):
     return response.text(svg.get(name), headers={"Content-Type": "image/svg+xml"})
+@app.get(f"/svg/<collection>/<name>.svg")
+async def get_svg(request, collection, name):
+    return response.text(svg.get(os.path.join(collection, name)), headers={"Content-Type": "image/svg+xml"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
