@@ -4,6 +4,37 @@
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+#macro(figure $card)
+    #if($card.figure_source == "material-icons")
+        <!--https://material.io/icons/-->
+        <i class="material-icons figure">$escape_html($card.figure)</i>
+    #elseif($card.figure_source == "mdi")
+        <!--https://materialdesignicons.com/-->
+        <i class="mdi mdi-$escape_html($card.figure)"></i>
+    #elseif($card.figure_source == "fa")
+        <!--http://fontawesome.io/icons/-->
+        <i class="fa fa-$escape_html($card.figure)"></i>
+    #elseif($card.figure_source == "svg")
+        <!--/cards/svg-->
+        <img class="svg" src="/svg/${escape_html($card.figure)}.svg">
+        <!--<div class="svg" style="background-image:url('/svg/${escape_html($card.figure)}.svg');"></div>-->
+        ## #include("${card.figure}.svg") **
+    #end
+#end
+#macro(specialFlags $card)
+    #if($card.has_flag("mastery"))
+        <big>
+            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+            &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
+        </big>
+    #end
+    #if($card.has_flag("pokehum"))
+        <big>
+            Name: ______________
+        </big>
+    #end
+#end
+
 <title>Cards</title>
 
 #foreach($card in $cards)
@@ -12,21 +43,7 @@
         $escape_html($card.title)
     </h1>
     <figure>
-        #if($card.figure_source == "material-icons")
-            <!--https://material.io/icons/-->
-            <i class="material-icons figure">$escape_html($card.figure)</i>
-        #elseif($card.figure_source == "mdi")
-            <!--https://materialdesignicons.com/-->
-            <i class="mdi mdi-$escape_html($card.figure)"></i>
-        #elseif($card.figure_source == "fa")
-            <!--http://fontawesome.io/icons/-->
-            <i class="fa fa-$escape_html($card.figure)"></i>
-        #elseif($card.figure_source == "svg")
-            <!--/cards/svg-->
-            <img class="svg" src="/svg/${escape_html($card.figure)}.svg">
-            <!--<div class="svg" style="background-image:url('/svg/${escape_html($card.figure)}.svg');"></div>-->
-            ## #include("${card.figure}.svg") **
-        #end
+        #figure($card)
     </figure>
     #if($card.effects)
         <ul>
@@ -62,17 +79,7 @@
                     -
                 </small>
                 <br>
-                #if($card.has_flag("mastery"))
-                    <big>
-                        &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
-                        &#x274F; &#x274F; &#x274F; &#x274F; &#x274F;
-                    </big>
-                #end
-                #if($card.has_flag("pokehum"))
-                    <big>
-                        Name: ______________
-                    </big>
-                #end
+                #specialFlags($card)
             </div>
         #end
     </main>
@@ -89,8 +96,12 @@
 #end
 
 #if($was_saved)
-<center style="font-size: 1.3em;position: absolute; bottom:0; width: 100%;">The card has been saved</center>
+<center style="font-size: 1.3em;position: absolute; bottom:0; width: 100%;">
+    The card has been saved
+</center>
 #end
 #if($was_deleted)
-<center style="position: absolute; bottom:0; width: 100%;">The card has been removed from storage</center>
+<center style="position: absolute; bottom:0; width: 100%;">
+    The card has been removed from storage
+</center>
 #end
