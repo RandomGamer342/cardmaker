@@ -134,8 +134,11 @@ async def svg_list(request, template={}):
     if filter:
         svgs = [i for i in svgs if filter in i]
     
+    if len(svgs) > page*config.svg_page_size:
+        has_next = True
+    
     svgs.sort()
-    svgs = svgs[(page-1)*100:page*100]
+    svgs = svgs[(page-1)*config.svg_page_size:page*config.svg_page_size]
     
     return response.html(template["svg.vm"].merge(locals()))
 
