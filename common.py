@@ -38,12 +38,12 @@ def memoize_singlearg(func):#a decorator
             return ret
     return Memoizer().__getitem__
 
-
-
-def listify_output(func):#decorator
-    def new_func(*args, **kwargs):
-        return list(func(*args, **kwargs))
-    return new_func
+def wrap_output(type):#decorator with parameters
+    def decorator(func):#decorator
+        def new_func(*args, **kwargs):
+            return type(func(*args, **kwargs))
+        return new_func
+    return decorator
 
 def call(func):#decorator
     return func()

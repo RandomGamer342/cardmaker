@@ -1,8 +1,8 @@
 import glob, os
 import config
-from common import memoize, listify_output
+from common import memoize, wrap_output
 
-@listify_output
+@wrap_output(list)
 def list_all(collection = None):
     if collection:
         for i in glob.glob(os.path.join(config.svgdir, collection, "*.svg")):
@@ -11,7 +11,7 @@ def list_all(collection = None):
         for i in glob.glob(os.path.join(config.svgdir, "*.svg")):
             yield os.path.basename(i)[:-4]
 
-@listify_output
+@wrap_output(list)
 def list_collections():
     for i in glob.glob(os.path.join(config.svgdir, "*")):
         if not i.endswith(".svg"):
