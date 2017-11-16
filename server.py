@@ -174,10 +174,12 @@ for j in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
 #add svgs:
 @app.get(f"/svg/<name>.svg")
 async def get_svg(request, name):
-    return response.text(svg.get(name), headers={"Content-Type": "image/svg+xml"})
+    color = request.args.get("color")
+    return response.text(svg.get(name, color), headers={"Content-Type": "image/svg+xml"})
 @app.get(f"/svg/<collection>/<name>.svg")
 async def get_svg(request, collection, name):
-    return response.text(svg.get(os.path.join(collection, name)), headers={"Content-Type": "image/svg+xml"})
+    color = request.args.get("color")
+    return response.text(svg.get(os.path.join(collection, name), color), headers={"Content-Type": "image/svg+xml"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

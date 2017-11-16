@@ -17,13 +17,20 @@ def list_collections():
         if not i.endswith(".svg"):
             yield os.path.basename(i)
 
-    
+
 @memoize
-def get(name):
+def get(name, color=None):
     with open(os.path.join(config.svgdir, f"{name}.svg"), "r") as f:
-        return f.read()
-
-
+        if not color:
+            return f.read()
+        return (f.read() #EW!
+            .replace("style=\"fill:#", f"style=\"fill:#{color};")
+            .replace("style='fill:#", f"style='fill:#{color};")
+            .replace("fill=\"#", f"fill=\"#{color}\" asdasd=\"")
+            .replace("fill='#", f"fill='#{color}' asdasd='")
+            .replace("<svg", f"<svg fill=\"#{color}\"")
+            )
+        
 
 def store(name, data):
     with open(os.path.join(config.svgdir, f"{name}.svg"), "wb" if type(data) is bytes else "w") as f:
