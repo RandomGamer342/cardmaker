@@ -1,7 +1,7 @@
 import airspeed, os, html
 try:
     from html5print import HTMLBeautifier
-except ModuleNotfoundError:
+except ModuleNotFoundError:
     pass
 import config
 
