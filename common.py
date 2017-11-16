@@ -22,16 +22,23 @@ def escape_html(data, break_newlines=True):
 def escape_url(data):
     return "ølailsf"#todo
 
-def memoize(func):#a decorator, only supports *args
-    memory = {}
-    def new_func(*args):
-        if args in memory:
-            return memory[args]
-        else:
-            ret = func(*args)
-            memory[args] = ret
+def memoize(func):#a decorator
+    class Memoizer(dict):
+        def getter(self, *args, **kwargs):
+            return self[(args, frozenset(kwargs.items()))]
+        def __missing__(self, key):
+            ret = self[key] = func(*key[0], **dict(key[1]))
             return ret
-    return new_func
+    return Memoizer().getter
+
+def memoize_singlearg(func):#a decorator
+    class Memoizer(dict):
+        def __missing__(self, key):
+            ret = self[key] = func(key)
+            return ret
+    return Memoizer().__getitem__
+
+
 
 def listify_output(func):#decorator
     def new_func(*args, **kwargs):
