@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <script src="creator.js"></script>
 
-#macro(update_preview)onkeyup="this.form.submit()" onchange="this.form.submit()"#end
+#macro(update_preview)onkeyup="submit_preview(this.form)" onchange="submit_preview(this.form)"#end
 
 <title>Card Creator</title>
 
