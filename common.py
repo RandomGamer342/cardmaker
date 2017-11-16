@@ -1,4 +1,5 @@
 import airspeed, os, html
+from sanic import response
 try:
     from html5print import HTMLBeautifier
 except ModuleNotFoundError:
@@ -87,40 +88,33 @@ def withResource(path, binary=False):
                 content = readfile(os.path.join(config.resourcedir, path), binary)
             else:
                 content = data
-            if "file" in kwargs:
-                kwargs["file"][os.path.basename(path)] = content
-            else:
-                kwargs["file"] = {os.path.basename(path): content}
-            return func(*args, **kwargs)
+            return func(*args, content, **kwargs)
         return newfunc
     return decorator
 
-def withTemplate(path, isHTML=True):
+def mergeTemplate(path):
     filename = os.path.join(config.resourcedir, path)
     if config.cache:
         template = airspeed.Template(readfile(filename), filename)
 
     def decorator(func):
-        def newfunc(*args, **kwargs):
-            if not config.cache:
-                t = airspeed.Template(readfile(filename), filename)
+        async def newfunc(*args, **kwargs):
+            if config.cache:
+                tem = template
             else:
-                t = template
-
-            class T:
-                def merge(self, objects):
-                    objects.update({"escape_html":escape_html, "escape_url":escape_url})
-                    if config.prettifyHTML and isHTML:
-                        return HTMLBeautifier.beautify(
-                            t.merge(objects, loader=VelocityFileLoader()),
-                            indent=4)#.replace("/>", ">")
-                    else:
-                        return t.merge(objects, loader=VelocityFileLoader())
-
-            if "template" in kwargs:
-                kwargs["template"][os.path.basename(path)] = T()
+                tem = airspeed.Template(readfile(filename), filename)
+                    
+            objects = await func(*args, **kwargs)
+            
+            objects.update({
+                "escape_html": escape_html,
+                "escape_url":escape_url})
+            
+            if config.prettifyHTML:
+                return response.html(HTMLBeautifier.beautify(
+                    tem.merge(objects, loader=VelocityFileLoader()),
+                    indent = 4))#.replace("/>", ">")
             else:
-                kwargs["template"] = {os.path.basename(path): T()}
-            return func(*args, **kwargs)
+                return response.html(tem.merge(objects, loader=VelocityFileLoader()))
         return newfunc
     return decorator

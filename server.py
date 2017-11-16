@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys, os, airspeed, glob
 from sanic import Sanic, response
-from common import withTemplate, withResource, call
+from common import mergeTemplate, withResource, call
 import card
 import svg
 import config
@@ -14,8 +14,8 @@ async def root(request):
 
 @app.get("/cards/")
 @app.post("/cards/")
-@withTemplate("cards/cardlist.vm")
-async def show_cardlist(request, template={}):
+@mergeTemplate("cards/cardlist.vm")
+async def show_cardlist(request):
     if "action" in request.form and "filename" in request.form:
         with card.open_file(request.form.get("filename")) as c:
             if request.form.get("action") == "increment_stock":
@@ -56,11 +56,11 @@ async def show_cardlist(request, template={}):
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)
     
-    return response.html(template["cardlist.vm"].merge(locals()))
+    return locals()
 
 @app.get('/cards/creator')
-@withTemplate("cards/creator.vm")
-async def preview_card(request, template={}):
+@mergeTemplate("cards/creator.vm")
+async def show_creator(request):
     if "filename" in request.args:
         initialcard = card.from_file(str(request.args["filename"][0])+".yaml")
     else:
@@ -79,11 +79,11 @@ async def preview_card(request, template={}):
         #initialcard.effects = ""
         #initialcard.flags = ""
     
-    return response.html(template["creator.vm"].merge({"card":initialcard}))
+    return {"card":initialcard}
 
 @app.post('/cards/creator')
-@withTemplate("cards/creator.vm")
-async def preview_card(request, template={}):
+@mergeTemplate("cards/creator.vm")
+async def show_creator(request):#not used atm
     initialcard = card.from_form(request.form)
     
     #find vacant fileame:
@@ -94,11 +94,11 @@ async def preview_card(request, template={}):
                 initialcard.filename = "card-%s" % str(i).zfill(4)
                 break
             i += 1
-    return response.html(template["creator.vm"].merge({"card":initialcard}))
+    return {"card":initialcard}
 
 @app.get('/cards/show')
-@withTemplate("cards/card.vm")
-async def show_cards(request, template={}):
+@mergeTemplate("cards/card.vm")
+async def show_cards(request):
     if "card" not in request.args:
         return response.redirect('/cards/')
 
@@ -107,11 +107,11 @@ async def show_cards(request, template={}):
         if "/" in i or "\\" in i:
             return response.redirect('/cards/')
         cards.append(card.from_file(i+".yaml"))
-    return response.html(template["card.vm"].merge(locals()))
+    return locals()
 
 @app.post('/cards/preview')
-@withTemplate("cards/card.vm")
-async def preview_card(request, template={}):
+@mergeTemplate("cards/card.vm")
+async def preview_card(request):
     cards = [card.from_form(request.form)]
     if "save" in request.form:
         card.to_file(cards[0])
@@ -119,11 +119,11 @@ async def preview_card(request, template={}):
     if "delete" in request.form:
         card.del_file(cards[0])
         was_deleted = True
-    return response.html(template["card.vm"].merge(locals()))
+    return locals()
 
 @app.get("/cards/svg")
-@withTemplate("cards/svg.vm")
-async def svg_list(request, template={}):
+@mergeTemplate("cards/svg.vm")
+async def svg_list(request):
     filter = request.args.get("filter")
     page = int(request.args.get("page") or 1)
     current_collection = request.args.get("collection")
@@ -140,11 +140,11 @@ async def svg_list(request, template={}):
     svgs.sort()
     svgs = svgs[(page-1)*config.svg_page_size:page*config.svg_page_size]
     
-    return response.html(template["svg.vm"].merge(locals()))
+    return locals()
 
 @app.post("/cards/svg")
-@withTemplate("cards/svg.vm")
-async def svg_add(request, template={}):
+@mergeTemplate("cards/svg.vm")
+async def svg_add(request):
     file = request.files.get("file")
     name = request.form.get("name") or file.name
     if name[-4:] == ".svg": name = name[:-4]
@@ -153,7 +153,7 @@ async def svg_add(request, template={}):
     
     uploaded = True
     svgs = svg.list_all()
-    return response.html(template["svg.vm"].merge(locals()))
+    return locals()
 
 #add static resources (with caching):
 for file in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
@@ -168,8 +168,7 @@ for file in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=Tru
             
             @app.get(f"/{route}")
             @withResource(route)
-            async def card_style(request, file={}):
-                file = tuple(file.values())[0]
+            async def card_style(request, file):
                 return response.text(file, headers={"Content-Type": f"text/{filetype}"})
 
 #add svgs:
