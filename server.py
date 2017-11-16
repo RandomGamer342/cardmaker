@@ -155,18 +155,19 @@ async def svg_add(request, template={}):
     svgs = svg.list_all()
     return response.html(template["svg.vm"].merge(locals()))
 
-#add static resources:
-for j in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
+#add static resources (with caching):
+for file in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
     @call
-    def temp():#namespace hack
-        filetype = j.split('.')[-1]
+    def temp():#namespace hack to store filetype
+        filetype = file.split('.')[-1]
         if filetype in ("html", "css", "js"):
-            i = os.path.relpath(j, config.resourcedir)
-            print("Adding static resource", repr(i))
+            route = os.path.relpath(file, config.resourcedir)
             if filetype == "js": filetype = "javascript"
             
-            @app.get(f"/{i}")
-            @withResource(i)
+            print("Adding static resource", repr(route))
+            
+            @app.get(f"/{route}")
+            @withResource(route)
             async def card_style(request, file={}):
                 file = tuple(file.values())[0]
                 return response.text(file, headers={"Content-Type": f"text/{filetype}"})
@@ -176,6 +177,7 @@ for j in glob.iglob(os.path.join(config.resourcedir, "**","*"), recursive=True):
 async def get_svg(request, name):
     color = request.args.get("color")
     return response.text(svg.get(name, color), headers={"Content-Type": "image/svg+xml"})
+
 @app.get(f"/svg/<collection>/<name>.svg")
 async def get_svg(request, collection, name):
     color = request.args.get("color")
