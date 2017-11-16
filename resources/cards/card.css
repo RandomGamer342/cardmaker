@@ -105,7 +105,6 @@ article figure .fa,
 article figure .material-icons.figure {
     font-size: 1.7cm;
     line-height: 1.7cm;
-    
 }
 
 article ul {
@@ -160,4 +159,11 @@ article .cp:after{
 article .gp:after{
     content: " Gold";
     font-size: 0.6em;
+}
+
+center.message {
+    font-size: 1.3em;
+    position: absolute;
+    bottom:0;
+    width: 100%;
 }
