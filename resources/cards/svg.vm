@@ -24,14 +24,15 @@
             <input type="hidden" name="collection" value="$escape_html($current_collection)">
         #end
         <input type="submit">
+        
+        <center>
+            <h4>Collections:</h4>
+            <a href="svg">No collection</a>
+            #foreach($collection in $collections)
+            - <a href="svg?collection=$escape_html($collection)">$escape_html($collection)</a>
+            #end
+        </center>
     </form>
-    <center>
-        <h4>Collections:</h4>
-        <a href="svg">No collection</a>
-        #foreach($collection in $collections)
-        - <a href="svg?collection=$escape_html($collection)">$escape_html($collection)</a>
-        #end
-    </center>
 #end
 #macro(pagination)
     #if($has_next || $page>1)
@@ -53,13 +54,9 @@
 #end
 
 <a href="../" style="opacity:0.6;">Return to cardlist</a>
-<div class="splitcontainer">
-	<div class="splitl">
-		#upload_svgs_form()
-	</div>
-	<div class="splitr">
-		#filter_and_collection_forms()
-	</div>
+<div class="vsplit">
+	#upload_svgs_form()
+	#filter_and_collection_forms()
 </div>
 
 <h1>Available SVGs:</h1>
@@ -77,13 +74,9 @@
 
 #pagination()
 
-<div class="splitcontainer">
-	<div class="splitl">
-		#upload_svgs_form()
-	</div>
-	<div class="splitr">
-		#filter_and_collection_forms()
-	</div>
+<div class="vsplit">
+	#upload_svgs_form()
+	#filter_and_collection_forms()
 </div>
 
 <a href="../" style="opacity:0.6;">Return to cardlist</a>

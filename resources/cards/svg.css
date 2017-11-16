@@ -46,15 +46,14 @@ h4 {
     margin:0;
 }
 
-.splitcontainer {
+.vsplit {
     width: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
-.splitl {
-    width: 45%;
-    float:left;
-}
-.splitr {
-    width: 45%;
-    float:right;
+.vsplit >* {
+    flex-grow: 1;
 }
