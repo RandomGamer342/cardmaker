@@ -94,31 +94,11 @@ article figure img{
     height: 97%;
     margin: auto auto;
 }
-article figure img.svg{
+article figure img.svg_filter{
     filter:
         brightness(0)
         invert(1)
         opacity(0.5);
-}
-article figure div.svg {
-    display: block;
-    height: 97%;
-    width: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter:
-        brightness(0)
-        invert(1)
-        opacity(0.5);  
-
-}
-article figure >svg {
-    height: 97%;
-    fill: #999;
-}
-article figure >svg * {
-    fill: #999;
 }
 article figure .mdi,
 article figure .fa,

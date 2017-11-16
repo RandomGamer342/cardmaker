@@ -67,7 +67,7 @@
 #foreach($name in $svgs)
     <li>
         <h1>$escape_html($name)</h1>
-        <img src="/svg/${escape_html($name)}.svg">
+        <img src="/svg/${escape_html($name)}.svg?color=333">
     </li>
 #end
 </ul>
