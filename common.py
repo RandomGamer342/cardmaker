@@ -24,6 +24,11 @@ def escape_html(data, break_newlines=True):
 def escape_url(data):
     return "ølailsf"#todo
 
+def strip_unit(data, unit):
+    if data.lower().strip().endswith(unit.lower()):
+        return data.strip()[:-len(unit)].strip()
+    return data.strip()
+
 #decorators:
 def memoize(func):#a decorator
     class Memoizer(dict):
@@ -111,6 +116,7 @@ def mergeTemplate(path):
             objects = await func(*args, **kwargs)
             
             objects.update({
+                "strip_unit": strip_unit,
                 "escape_html": escape_html,
                 "escape_url":escape_url})
             
