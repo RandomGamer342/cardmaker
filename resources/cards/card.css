@@ -102,9 +102,8 @@ article figure img.svg_filter{
 article figure .mdi,
 article figure .fa,
 article figure .material-icons.figure {
-    padding: 1mm 0;
-    font-size: 19mm;
-    line-height: 19mm;
+    font-size: 20mm;
+    line-height: 22mm;
 }
 
 article ul {
