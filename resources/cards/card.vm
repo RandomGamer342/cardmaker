@@ -33,26 +33,72 @@
         </big>
     #end
 #end
+#macro(statIcons $text)
+    #foreach($word in $text.split())
+        #if($word == "BODY")
+            <i class="mdi mdi-human"></i>
+        #elseif($word == "TEC")
+            <i class="fa fa-wrench"></i>
+        #elseif($word == "MAG")
+            <i class="fa fa-magic"></i>
+        #elseif($word == "ATT")
+            <small>ATT</small>
+        #else
+            $word
+        #end
+    #end
+#end
+#macro(handleCostUnit $cost $match)
+    <div class="costunit">
+        $escape_html($strip_unit($cost, $match))<br/>
+        <small>$escape_html($match)</small>
+    </div>
+#end
 
 <title>Cards</title>
 
 #foreach($card in $cards)
 <article #if($card.effects) class="effects"#end onclick="location.href='creator?filename=$escape_html($card.filename)'">
-    <h1>
-        $escape_html($card.title)
-    </h1>
+    <h1>$escape_html($card.title)</h1>
     <figure>
         #figure($card)
     </figure>
     #if($card.effects)
         <ul>
-            #foreach($item in $card.effects)
-                #if($item)
-                    <li>$escape_html($item)</li>
+            #foreach($effect in $card.effects)
+                #if($effect)
+                    <li>$escape_html($effect)</li>
                 #end
             #end
         </ul>
     #end
+    
+    <section>
+        #if($card.cp)
+            <div class="cp">$escape_html($card.cp)</div>
+        #elseif($card.gp)
+            <div class="gp">$escape_html($card.gp)</div>
+        #end
+        #foreach($cost in $card.cost.split(","))
+            #if($cost.upper().endswith(" ACT"))
+                #handleCostUnit($cost, "ACT")
+            #elseif($cost.upper().endswith(" OVERDRIVE"))
+                #handleCostUnit($cost, "OVERDRIVE")
+            #elseif($cost.upper().endswith(" COMBO"))
+                #handleCostUnit($cost, "COMBO")
+            #elseif($cost.upper().endswith(" DIFFICULTY"))
+                #handleCostUnit($cost, "DIFFICULTY")
+            #else
+                #if($cost.strip())
+                    <div class="cost">$escape_html($cost.split())</div>
+                #end
+            #end
+        #end
+        #if($card.power)
+            <div class="power">#statIcons($escape_html($card.power))</div>
+        #end
+    </section>
+    
     <main>
         $escape_html($card.description)
         #if($card.steps)
@@ -82,15 +128,7 @@
             </div>
         #end
     </main>
-    <div class="cost">$escape_html($card.cost)</div>
-    #if($card.power)
-        <div class="power">$escape_html($card.power)</div>
-    #end
-    #if($card.cp)
-        <div class="cp">$escape_html($card.cp)</div>
-    #elseif($card.gp)
-        <div class="gp">$escape_html($card.gp)</div>
-    #end
+    
 </article>
 #end
 

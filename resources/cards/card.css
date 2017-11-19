@@ -31,27 +31,24 @@
 
 article {
     margin: 0.1mm 0.1mm;
-    display: block;
     float: left;
     width: 5.6cm;
     height: 8.9cm;
 
     display: grid;
-    grid-template-columns: 5fr 2fr;
-    grid-template-rows: 2em 18mm 1.3em auto 1.5em;
+    grid-template-rows: 2em 18mm 2.5em auto;
     grid-template-areas:
-        "header header"
-        "figure figure"
-        "cost cost"
-        "info info"
-        "power cp";
+        "header"
+        "figure"
+        "bar"
+        "info";
 
     border-radius: 2mm;
     grid-gap: 1.5mm 1.5mm;
     border-style: solid;
     border-width: 2mm;
-    border-color: #333;
-    background-color: #333;
+    border-color: #4a4a4a;
+    background-color: #4a4a4a;
     cursor: pointer;
 }
 article.effects {
@@ -59,9 +56,8 @@ article.effects {
     grid-template-areas:
         "header header"
         "figure effects"
-        "cost cost"
-        "info info"
-        "power cp";
+        "bar bar"
+        "info info";
 }
 
 article >* {
@@ -82,7 +78,9 @@ article h1 {
 
 article figure {
     grid-area: figure;
-    background: none;
+    background: #2f2f2f;
+    border-radius: 0;
+    margin: -1.5mm 1.5mm;
     overflow: hidden;
 }
 
@@ -90,8 +88,9 @@ article figure * {
     color: #999;
 }
 article figure img{
+    padding: 1mm 0;
     display: block;
-    height: 97%;
+    height: calc(100% - 2mm);
     margin: auto auto;
 }
 article figure img.svg_filter{
@@ -103,20 +102,75 @@ article figure img.svg_filter{
 article figure .mdi,
 article figure .fa,
 article figure .material-icons.figure {
-    font-size: 1.7cm;
-    line-height: 1.7cm;
+    padding: 1mm 0;
+    font-size: 19mm;
+    line-height: 19mm;
 }
 
 article ul {
     grid-area: effects;
     list-style-type: none;
     padding: 1mm 0;
+    margin-left: -1.5mm;
 }
+
+article section {
+    grid-area: bar;
+    background-color: #111;
+    border-radius: 0;
+    margin: 0 -2mm;
+    color: #eee;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+article section .cost {
+    align-self: center; 
+    margin: 0 1.5mm;
+    line-height: 1.25em;
+}
+article section .costunit,
+article section .power,
+article section .cp,
+article section .gp {
+    flex: none;
+    padding-top: 1mm;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 0.8em;
+    margin: 0 1mm;
+}
+article section >* small {
+    font-size: 0.8em;
+    line-height: 0.8em;
+}
+
+article section .fa,
+article section .mdi,
+article section .material-icons.figure {
+    font-size: inherit;
+    line-height: inherit;
+}
+article section .costunit small {
+    font-size: 0.5em;
+}
+article section >*:after {
+    font-size: 0.5em;
+    line-height: 0.8em;
+    white-space: pre;
+}
+
+article section .power:after { content: "\APOWER";}
+article section .cp:after { content: "\A CP "; }
+article section .gp:after { content: "\AGold"; }
+
 
 article main {
     padding: 2mm 1mm;
     grid-area: info;
     position: relative;
+    font-size: 0.9em;
 }
 article main ol {
     margin-top: 1mm;
@@ -127,38 +181,13 @@ article main ol li + li{
     margin-top: 0.5mm;
 }
 article main big{
-    font-size: 1.5em;
+    font-size: 1.65em;
 }
 article main .bottom {
     width: 100%;
     position: absolute;
     bottom: 2mm;
     left: 0;
-}
-
-article .power {
-    grid-area: power;
-    text-align: left;
-}
-article .power:before{
-    content: "Power: ";
-    font-size: 0.7em;
-}
-article .cost {
-    grid-area: cost;
-}
-article .cp,
-article .gp {
-    grid-area: cp;
-    text-align: right;
-}
-article .cp:after{
-    content: " CP";
-    font-size: 0.7em;
-}
-article .gp:after{
-    content: " Gold";
-    font-size: 0.6em;
 }
 
 center.message {
