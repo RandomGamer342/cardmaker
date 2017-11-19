@@ -10,6 +10,7 @@ def readfile(path, binary=False):
     with open(path, "rb" if binary else "r") as f:
         return f.read()
 
+#template helpers:
 def escape_html(data, break_newlines=True):
     if type(data) is list:
         data = "\n".join(data)
@@ -23,6 +24,7 @@ def escape_html(data, break_newlines=True):
 def escape_url(data):
     return "ølailsf"#todo
 
+#decorators:
 def memoize(func):#a decorator
     class Memoizer(dict):
         def getter(self, *args, **kwargs):
@@ -49,6 +51,7 @@ def wrap_output(type):#decorator with parameters
 def call(func):#decorator
     return func()
 
+#types:
 class Model:
     def __setattr__(self, name, value):
         if not hasattr(self, name):
@@ -59,6 +62,7 @@ class Model:
             ", ".join(f"{i}={getattr(self, i)!r}" for i in dir(self) if "_" not in i)
     __str__ = __repr__
 
+#fileloader:
 class VelocityFileLoader:
     _cache = {}#static cache, shared between instances
     def get_file(self, filename):
