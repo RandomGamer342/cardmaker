@@ -54,23 +54,39 @@
         <small>$escape_html($match)</small>
     </div>
 #end
+#macro(effectList $effects)
+    <ul>
+        #foreach($effect in $effects)
+            #if($effect)
+                <li>$escape_html($effect)</li>
+            #end
+        #end
+    </ul>
+#end
 
 <title>Cards</title>
 
 #foreach($card in $cards)
-<article #if($card.effects) class="effects"#end onclick="location.href='creator?filename=$escape_html($card.filename)'">
+
+#set($card_is_item = false)
+#foreach($flag in ["Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card"])
+    #if($card.flags.__contains__($flag)) #set($card_is_item = true) #end
+    #if($card.flags.__contains__($flag.lower())) #set($card_is_item = true) #end
+#end
+
+#if($card_is_item)
+<article #if class="item" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+#elseif($card.effects)
+<article #if class="effects" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+#else
+<article onclick="location.href='creator?filename=$escape_html($card.filename)'">
+#end
     <h1>$escape_html($card.title)</h1>
     <figure>
         #figure($card)
     </figure>
-    #if($card.effects)
-        <ul>
-            #foreach($effect in $card.effects)
-                #if($effect)
-                    <li>$escape_html($effect)</li>
-                #end
-            #end
-        </ul>
+    #if($card.effects && ! $card_is_item)
+        #effectList($card.effects)
     #end
     
     <section>
@@ -109,6 +125,9 @@
                     #end
                 #end
             </ol>
+        #end
+        #if($card.effects && $card_is_item)
+            #effectList($card.effects)
         #end
         #if($card.flags)
             <div class="bottom">

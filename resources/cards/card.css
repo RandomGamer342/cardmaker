@@ -59,6 +59,14 @@ article.effects {
         "bar bar"
         "info info";
 }
+article.item {
+    grid-template-rows: 2em 36mm 2.5em auto;
+    grid-template-areas:
+        "header"
+        "figure"
+        "bar"
+        "info";
+}
 
 article >* {
     background-color: #ddd;
@@ -105,11 +113,19 @@ article figure .material-icons.figure {
     font-size: 20mm;
     line-height: 22mm;
 }
+article.item figure .mdi,
+article.item figure .fa,
+article.item figure .material-icons.figure {
+    font-size: 38mm;
+    line-height: 40mm;
+}
 
 article ul {
     grid-area: effects;
     list-style-type: none;
     padding: 1mm 0;
+}
+article.effects ul {
     margin-left: -1.5mm;
 }
 
@@ -179,13 +195,17 @@ article main ol {
 article main ol li + li{
     margin-top: 0.5mm;
 }
+article.item main ul {
+    margin-top: 1mm;
+}
 article main big{
     font-size: 1.65em;
 }
 article main .bottom {
     width: 100%;
     position: absolute;
-    bottom: 2mm;
+    line-height: 1.1em;
+    bottom: 1mm;
     left: 0;
 }
 
