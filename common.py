@@ -115,6 +115,9 @@ def mergeTemplate(path):
                     
             objects = await func(*args, **kwargs)
             
+            if type(objects) is response.HTTPResponse:
+                return objects
+            
             objects.update({
                 "strip_unit": strip_unit,
                 "escape_html": escape_html,
