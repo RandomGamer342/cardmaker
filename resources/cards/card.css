@@ -64,30 +64,7 @@ article {
 }
 
 article.effects {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        "header header"
-        "figure effects"
-        "bar bar"
-        "info info";
-}
-article.effects.cost {
     grid-template-columns: 2em auto auto auto auto 2em;
-    grid-template-areas:
-            "header header header header header cost"
-            "figure figure figure effects effects effects"
-            "bar bar bar bar bar bar"
-            "info info info info info info";
-}
-article.effects.emblem {
-    grid-template-columns: 2em auto auto auto auto 2em;
-    grid-template-areas:
-            "emblem header header header header header"
-            "figure figure figure effects effects effects"
-            "bar bar bar bar bar bar"
-            "info info info info info info";
-}
-article.effects.emblem.cost {
     grid-template-areas:
             "emblem header header header header cost"
             "figure figure figure effects effects effects"
@@ -115,12 +92,22 @@ article >* {
 
 article h1 {
     grid-area: header;
+    grid-column-start: emblem;
+    grid-column-end: cost;
     padding: 1mm 0;
     font-size: 1.2em;
     line-height: 1.1em;
     font-weight: 600;
     background-color: var(--color-header-bg);
     color: var(--color-header);
+}
+
+article.cost > h1 {
+    grid-column-end: header;
+}
+
+article.emblem > h1 {
+    grid-column-start: header;
 }
 
 article .cp {
