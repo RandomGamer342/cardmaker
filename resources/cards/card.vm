@@ -5,19 +5,27 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 #macro(figure $card)
-    #if($card.figure_source == "material-icons")
+    #if($card.figure.__contains__(","))
+        #figure_embed($card.figure.split(",").get(1).strip(), $card.figure_source, "111")
+        #figure_embed($card.figure.split(",").get(0).strip(), $card.figure_source, "aaa")
+    #else
+        #figure_embed($card.figure, $card.figure_source, "aaa")
+    #end
+#end
+#macro(figure_embed $figure $source $color)
+    #if($source == "material-icons")
         <!--https://material.io/icons/-->
-        <i class="material-icons figure">$escape_html($card.figure)</i>
-    #elseif($card.figure_source == "mdi")
+        <i class="material-icons figure">$escape_html($label)</i>
+    #elseif($source == "mdi")
         <!--https://materialdesignicons.com/-->
-        <i class="mdi mdi-$escape_html($card.figure)"></i>
-    #elseif($card.figure_source == "fa")
+        <i class="mdi mdi-$escape_html($figure)"></i>
+    #elseif($source == "fa")
         <!--http://fontawesome.io/icons/-->
-        <i class="fa fa-$escape_html($card.figure)"></i>
-    #elseif($card.figure_source == "svg")
+        <i class="fa fa-$escape_html($figure)"></i>
+    #elseif($source == "svg")
         <!--/cards/svg-->
-        <!--<img class="svg_filter" src="/svg/${escape_html($card.figure)}.svg">-->
-        <img src="/svg/${escape_html($card.figure)}.svg?color=999">
+        <!--<img class="svg_filter" src="/svg/${escape_html($figure)}.svg">-->
+        <img src="/svg/${escape_html($figure)}.svg?color=$color">
     #end
 #end
 #macro(specialFlags $card)
@@ -67,19 +75,18 @@
 <title>Cards</title>
 
 #foreach($card in $cards)
-
 #set($card_is_item = false)
-#foreach($flag in ["Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card"])
+#foreach($flag in ["Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card", "Passive", "Melee Weapon", "Arc Weapon", "LoS Weapon"])
     #if($card.flags.__contains__($flag)) #set($card_is_item = true) #end
     #if($card.flags.__contains__($flag.lower())) #set($card_is_item = true) #end
 #end
 
 #if($card_is_item)
-<article #if class="item" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+<article id="$escape_html($card.filename)" #if class="item" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #elseif($card.effects)
-<article #if class="effects" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+<article id="$escape_html($card.filename)" #if class="effects" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #else
-<article onclick="location.href='creator?filename=$escape_html($card.filename)'">
+<article id="$escape_html($card.filename)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #end
     <h1>$escape_html($card.title)</h1>
     <figure>

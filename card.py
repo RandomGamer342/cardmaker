@@ -68,7 +68,7 @@ def to_yaml(card):
 def from_dir(path):
     return [from_file(i, in_carddir=False) for i in glob.glob(os.path.join(path, "*.yaml"))]
 
-def from_form(form):
+def from_form(form):#sanic's request.form
     card = Card()
     for key, val in form.items():
         if not val[0]: continue
@@ -88,6 +88,13 @@ def is_filename_vacant(filename, in_carddir=True):
     if filename[-5:] != ".yaml":
         filename += ".yaml"
     return not os.path.exists(filename)
+
+def get_vacant_filename():
+    i = 1
+    while 1:
+        if is_filename_vacant("card-%s" % str(i).zfill(4)):
+            return "card-%s" % str(i).zfill(4)
+        i += 1
 
 class open_file:#contextmanager
     def __init__(self, filename):

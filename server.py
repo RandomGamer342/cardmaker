@@ -65,14 +65,7 @@ async def show_creator(request):
         initialcard = card.from_file(str(request.args["filename"][0])+".yaml")
     else:
         initialcard = card.Card()
-        
-        #find vacant fileame:
-        i = 1
-        while 1:
-            if card.is_filename_vacant("card-%s" % str(i).zfill(4)):
-                initialcard.filename = "card-%s" % str(i).zfill(4)
-                break
-            i += 1
+        initialcard.filename = card.get_vacant_filename()
         #initialcard.power = ""
         #initialcard.cp = ""
         #initialcard.steps = ""
@@ -88,25 +81,23 @@ async def show_creator(request):#not used atm
     
     #find vacant fileame:
     if not initialcard.filename:
-        i = 1
-        while 1:
-            if card.is_filename_vacant("card-%s" % str(i).zfill(4)):
-                initialcard.filename = "card-%s" % str(i).zfill(4)
-                break
-            i += 1
+        initialcard.filename = card.get_vacant_filename()
+    
     return {"card":initialcard}
 
 @app.get('/cards/show')
 @mergeTemplate("cards/card.vm")
 async def show_cards(request):
-    if "card" not in request.args:
-        return response.redirect('/cards/')
-
     cards = []
-    for i in request.args["card"]:
-        if "/" in i or "\\" in i:
-            return response.redirect('/cards/')
-        cards.append(card.from_file(i+".yaml"))
+    if "card" in request.args:
+        for i in request.args["card"]:
+            if "/" in i or "\\" in i: return response.redirect('/cards/')
+            cards.append(card.from_file(i+".yaml"))
+    elif "stock" in request.args:
+        for i in card.from_dir(config.carddir):
+            cards.extend([i]*int(i.copies_owned))
+    else:  
+        return response.redirect('/cards/')
     return locals()
 
 @app.post('/cards/preview')
@@ -114,6 +105,8 @@ async def show_cards(request):
 async def preview_card(request):
     cards = [card.from_form(request.form)]
     if "save" in request.form:
+        if not cards[0].filename:
+            cards[0].filename = card.get_vacant_filename()
         card.to_file(cards[0])
         was_saved = True
     if "delete" in request.form:
@@ -148,6 +141,11 @@ async def svg_add(request):
     file = request.files.get("file")
     name = request.form.get("name") or file.name
     if name[-4:] == ".svg": name = name[:-4]
+    
+    page = 1
+    current_collection = None
+    collections = svg.list_collections()
+    filter = None
     
     svg.store(name, file.body)
     
