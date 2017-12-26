@@ -101,7 +101,8 @@
     #if($card.effects && ! $card_is_item)
         #effectList($card.effects)
     #end
-    
+
+    <!--
     <section>
         #if($card.gp)
             <div class="gp">$escape_html($card.gp)</div>
@@ -125,7 +126,8 @@
             <div class="power">#statIcons($escape_html($card.power))</div>
         #end
     </section>
-    
+    -->
+
     <main>
         $escape_html($card.description)
         #if($card.steps)

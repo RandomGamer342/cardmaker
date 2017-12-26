@@ -36,11 +36,10 @@ article {
     height: 8.9cm;
 
     display: grid;
-    grid-template-rows: 2em 18mm 2.5em auto;
+    grid-template-rows: 2em 105px auto;
     grid-template-areas:
         "header"
         "figure"
-        "bar"
         "info";
 
     border-radius: 2mm;
@@ -68,7 +67,6 @@ article.effects {
     grid-template-areas:
             "emblem header header header header cost"
             "figure figure figure effects effects effects"
-            "bar bar bar bar bar bar"
             "info info info info info info";
 }
 
@@ -77,7 +75,6 @@ article.item {
     grid-template-areas:
         "header"
         "figure"
-        "bar"
         "info";
 }
 
@@ -111,6 +108,7 @@ article.emblem > h1 {
 }
 
 article .cp {
+    /*TODO: Align text*/
     grid-area: cost;
     background-image: url(../svg/game-icons/seven-pointed-star.svg?color=888);
 }
@@ -123,7 +121,6 @@ article figure {
     grid-area: figure;
     background: var(--color-figure-bg);
     border-radius: 0;
-    margin: -1.5mm 1.5mm;
     overflow: hidden;
     position: relative;
 }
@@ -165,7 +162,6 @@ article ul {
     padding: 1mm 0;
 }
 article.effects ul {
-    margin-left: -1.5mm;
 }
 
 article section {
