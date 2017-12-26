@@ -62,14 +62,39 @@ article {
     --color-costbar-bg: #111;
     --color-costbar: #eee;
 }
+
 article.effects {
-    grid-template-columns: 4fr 3fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "header header"
         "figure effects"
         "bar bar"
         "info info";
 }
+article.effects.cost {
+    grid-template-columns: 2em auto auto auto auto 2em;
+    grid-template-areas:
+            "header header header header header cost"
+            "figure figure figure effects effects effects"
+            "bar bar bar bar bar bar"
+            "info info info info info info";
+}
+article.effects.emblem {
+    grid-template-columns: 2em auto auto auto auto 2em;
+    grid-template-areas:
+            "emblem header header header header header"
+            "figure figure figure effects effects effects"
+            "bar bar bar bar bar bar"
+            "info info info info info info";
+}
+article.effects.emblem.cost {
+    grid-template-areas:
+            "emblem header header header header cost"
+            "figure figure figure effects effects effects"
+            "bar bar bar bar bar bar"
+            "info info info info info info";
+}
+
 article.item {
     grid-template-rows: 2em 36mm 2.5em auto;
     grid-template-areas:
@@ -96,6 +121,15 @@ article h1 {
     font-weight: 600;
     background-color: var(--color-header-bg);
     color: var(--color-header);
+}
+
+article .cp {
+    grid-area: cost;
+    background-image: url(../svg/game-icons/seven-pointed-star.svg?color=888);
+}
+
+article .emblem {
+    grid-area: emblem;
 }
 
 article figure {
@@ -165,7 +199,6 @@ article section .cost {
 }
 article section .costunit,
 article section .power,
-article section .cp,
 article section .gp {
     flex: none;
     padding-top: 1mm;
