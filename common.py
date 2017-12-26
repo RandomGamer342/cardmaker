@@ -63,8 +63,8 @@ class Model:
             raise Exception(f"{self.__class__.__name__} has no attribute {name!r}")
         super(Model, self).__setattr__(name, value)
     def __repr__(self):
-        return "Card(%s)" % \
-            ", ".join(f"{i}={getattr(self, i)!r}" for i in dir(self) if "_" not in i)
+        return self.__class__.__name__ + "(%s)" % \
+            ", ".join(f"{i}={getattr(self, i)!r}" for i in dir(self) if "_" not in (i[0], i[-1]))
     __str__ = __repr__
 
 #fileloader:
