@@ -3,6 +3,7 @@ import sys, os, airspeed, glob
 from sanic import Sanic, response
 from common import mergeTemplate, withResource, call
 import card
+import colorscheme
 import svg
 import config
 
@@ -113,6 +114,46 @@ async def preview_card(request):
         card.del_file(cards[0])
         was_deleted = True
     return locals()
+
+@app.get("/cards/colors")
+@mergeTemplate("cards/colors.vm")
+async def get_color_picker(request):
+    colorschemes = colorscheme.list_all()
+    print(colorschemes)
+    return locals()
+
+@app.get("/card/colors/preview")
+@mergeTemplate("cards/card.vm")
+async def get_color_preview(request):
+    cards = [card.Card()]
+    cards[0].colorscheme = request.args.get(schemename) or ""
+    cards[0].title = cards[0].colorscheme or "Default Colors"
+    cards[0].figure = ""
+    cards[0].figure_source = ""
+    cards[0].description = "This is a description"
+    cards[0].steps = ["Do A", "Then B"]
+    cards[0].cost = "Something"
+    cards[0].power = 5
+    cards[0].cp = 50
+    
+    return locals()
+
+@app.post("/card/colors/preview")
+@mergeTemplate("cards/card.vm")
+async def get_color_preview(request):
+    cards = [card.Card()]
+    cards[0].colorscheme = request.args.get(schemename) or ""
+    cards[0].title = cards[0].colorscheme or "Default Colors"
+    cards[0].figure = ""
+    cards[0].figure_source = ""
+    cards[0].description = "This is a description"
+    cards[0].steps = ["Do A", "Then B"]
+    cards[0].cost = "Something"
+    cards[0].power = 5
+    cards[0].cp = 50
+    
+    return locals()
+
 
 @app.get("/cards/svg")
 @mergeTemplate("cards/svg.vm")

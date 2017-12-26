@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="colors.css">
+
+#foreach($colorscheme in $colorschemes)
+<section>
+	#if($colorscheme.filename)
+		$escape_html($colorscheme.filename)
+	#else
+		Default Scheme
+	#end
+	<iframe>
+	</iframe>
+</section>
+#end

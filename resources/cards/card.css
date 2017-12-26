@@ -47,9 +47,20 @@ article {
     grid-gap: 1.5mm 1.5mm;
     border-style: solid;
     border-width: 2mm;
-    border-color: #4a4a4a;
-    background-color: #4a4a4a;
+    border-color: var(--color-border);
+    background-color: var(--color-card-bg);
     cursor: pointer;
+    
+    --color-border: #4a4a4a;
+    --color-card-bg: #4a4a4a;
+    --color-main: #000;
+    --color-main-bg: #ddd;
+    --color-header-bg: #111;
+    --color-header: #ddd;
+    --color-figure-bg: #2a2a2a;
+    --color-figure: #aaa;
+    --color-costbar-bg: #111;
+    --color-costbar: #eee;
 }
 article.effects {
     grid-template-columns: 4fr 3fr;
@@ -69,7 +80,8 @@ article.item {
 }
 
 article >* {
-    background-color: #ddd;
+    color: var(--color-main);
+    background-color: var(--color-main-bg);
     text-align: center;
     line-height: 1.4em;
     padding: 0 1mm;
@@ -82,26 +94,32 @@ article h1 {
     font-size: 1.2em;
     line-height: 1.1em;
     font-weight: 600;
+    background-color: var(--color-header-bg);
+    color: var(--color-header);
 }
 
 article figure {
     grid-area: figure;
-    background: #2f2f2f;
+    background: var(--color-figure-bg);
     border-radius: 0;
     margin: -1.5mm 1.5mm;
     overflow: hidden;
+    position: relative;
 }
 
-article figure * {
-    color: #999;
+article figure >* {
+    color: var(--color-figure);
+    position: absolute;
+    top:0;right:0;left:0;bottom:0;
 }
-article figure img{
+article figure img {
     padding: 1mm 0;
     display: block;
     height: calc(100% - 2mm);
     margin: auto auto;
 }
 article figure img.svg_filter{
+    /*causes DPI issues when printing*/
     filter:
         brightness(0)
         invert(1)
@@ -131,10 +149,10 @@ article.effects ul {
 
 article section {
     grid-area: bar;
-    background-color: #111;
+    background-color: var(--color-costbar-bg);
     border-radius: 0;
     margin: 0 -2mm;
-    color: #eee;
+    color: var(--color-costbar);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

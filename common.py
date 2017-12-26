@@ -4,6 +4,7 @@ try:
     from html5print import HTMLBeautifier
 except ModuleNotFoundError:
     pass
+#import colorscheme#imported later instead to avoid problems with cyclic imports
 import config
 
 def readfile(path, binary=False):
@@ -102,6 +103,8 @@ def withResource(path, binary=False):
     return decorator
 
 def mergeTemplate(path):
+    import colorscheme
+
     filename = os.path.join(config.resourcedir, path)
     if config.cache:
         template = airspeed.Template(readfile(filename), filename)
@@ -121,7 +124,8 @@ def mergeTemplate(path):
             objects.update({
                 "strip_unit": strip_unit,
                 "escape_html": escape_html,
-                "escape_url":escape_url})
+                "escape_url": escape_url,
+                "get_colorscheme":colorscheme.get})
             
             if config.prettifyHTML:
                 return response.html(HTMLBeautifier.beautify(
