@@ -104,9 +104,9 @@
     #end
 
     <section>
-        #if($card.power.split(" x "))
-            #statIcons($escape_html($card.power.split(" x ").get(0)))
-            <div class="value">$escape_html($card.power.split(" x ").get(1))</div>
+        #if($card.power.split("*"))
+            #statIcons($escape_html($card.power.split("*").get(0)))
+            <div class="value">$escape_html($card.power.split("*").get(1))</div>
         #end
         <img src="../svg/game-icons/sands-of-time.svg?color=000">
         <div class="value">0</div>
