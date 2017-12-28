@@ -17,6 +17,7 @@ class Card(Model):
     steps = []
     effects = []
     cost = ""
+    stats = {}
     power = None
     cp = None
     gp = None#gold
@@ -71,12 +72,18 @@ def from_dir(path):
 def from_form(form):#sanic's request.form
     card = Card()
     for key, val in form.items():
+        print(key, ",", val)
         if not val[0]: continue
         if key in ("save", "delete"): continue
         if type(getattr(Card, key)) in (tuple, list):
             if len(val) == 1 and "\n" in val[0]:
                 val = val[0].strip().replace("\r\n", "\n").split("\n")
                 #val = [i for i in val if i]
+            setattr(card, key, val)
+        elif type(getattr(Card, key)) is dict:
+            if len(val) == 1 and "\n" in val[0]:
+                val = val[0].strip().replace("\r\n", "\n").split("\n")
+            val = dict([x.split(":") for x in val])
             setattr(card, key, val)
         else:
             setattr(card, key, val[0].strip().replace("\r\n", "\n"))

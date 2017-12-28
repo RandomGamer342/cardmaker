@@ -13,6 +13,9 @@
 
 <form id="cardform" action="preview" method="post" target="preview">
     <input type="hidden" name="copies_owned" value="$card.copies_owned">
+    <!-- Compatibility -->
+    <input type="hidden" name="effects" value="$escape_html($card.effects)">
+    <input type="hidden" name="power" value="$escape_html($card.power)">
     <ul>
         <li>
             Title:<br>
@@ -52,28 +55,27 @@
             <a href="svg">svg</a>
         </li>
         <li>
-            Description:<br>
-            <textarea name="description" rows="5" #update_preview()>$escape_html($card.description, False)</textarea>
-        </li>
-        <li>
             Steps:<br>
             <textarea name="steps" rows="5" #update_preview()>$escape_html($card.steps, False)</textarea>
         </li>
         <li>
-            Effects:<br>
-            <textarea name="effects" rows="5" #update_preview()>$escape_html($card.effects, False)</textarea>
+            Stats:<br>
+            <textarea name="stats" rows="5" #update_preview()>$escape_html($card.stats, False)</textarea>
+        </li>
+        <li>
+            Description:<br>
+            <textarea name="description" rows="5" #update_preview()>$escape_html($card.description, False)</textarea>
         </li>
         <li>
             Flags/Properties:<br>
             <textarea name="flags" rows="5" #update_preview()>$escape_html($card.flags, False)</textarea>
         </li>
         <li>
-            Cost:<br>
-            <input type="text" name="cost" value="$escape_html($card.cost)" #update_preview()>
+            Temp<br>
         </li>
         <li>
-            Power<br>
-            <input type="text" name="power" value="$escape_html($card.power)" #update_preview()>
+            Cost:<br>
+            <input type="text" name="cost" value="$escape_html($card.cost)" #update_preview()>
         </li>
         <li>
             Notes:<span style="opacity:0.4;">(Not shown)</span><br>
