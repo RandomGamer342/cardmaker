@@ -63,7 +63,7 @@ article {
 }
 
 article.effects {
-    grid-template-columns: 2em auto auto auto auto 2em;
+    grid-template-columns: 2em 1fr 1fr 1fr 1fr 2em;
     grid-template-areas:
             "emblem header header header header cost"
             "figure figure figure effects effects effects"
@@ -83,7 +83,6 @@ article >* {
     background-color: var(--color-main-bg);
     text-align: center;
     line-height: 1.4em;
-    padding: 0 1mm;
     border-radius: 1mm;
 }
 
@@ -99,7 +98,7 @@ article h1 {
     color: var(--color-header);
 }
 
-article.cost > h1 {
+article.price > h1 {
     grid-column-end: header;
 }
 
@@ -107,7 +106,8 @@ article.emblem > h1 {
     grid-column-start: header;
 }
 
-article .cp {
+article .cp,
+article .gp {
     /*TODO: Align text*/
     grid-area: cost;
     background-image: url(../svg/game-icons/seven-pointed-star.svg?color=888);
@@ -157,7 +157,7 @@ article.item figure .material-icons.figure {
 }
 
 article ul {
-    grid-area: effects;
+    grid-area: info;
     list-style-type: none;
     padding: 1mm 0;
 }
@@ -165,30 +165,49 @@ article.effects ul {
 }
 
 article section {
-    grid-area: bar;
-    background-color: var(--color-costbar-bg);
-    border-radius: 0;
-    margin: 0 -2mm;
-    color: var(--color-costbar);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    grid-area: effects;
+    padding: 1px 1px;
+    display: grid;
+    grid-template-columns: 2em 1fr 2em 1fr;
+    grid-template-rows: 2em [cost]minmax(2em, min-content) repeat(auto-fit, 2em);
+    grid-row-gap: 1px;
     justify-content: center;
+    /*overflow: hidden;*/
 }
-article section .cost {
-    align-self: center; 
-    margin: 0 1.5mm;
-    line-height: 1.25em;
+article section img {
+    max-width: 90%;
+    max-height: 90%;
+    padding: 5% 5%;
 }
-article section .costunit,
-article section .power,
-article section .gp {
-    flex: none;
-    padding-top: 1mm;
+article section .value {
+    /*TODO: Text align*/
     text-align: center;
     font-size: 1.2em;
+    align-self: center;
+}
+article section .cost {
+    grid-area: cost;
+    grid-column-start: 2;
+    grid-column-end: 5; /* I haven't got the slightest clue why this is necessary */
+    display: flex;
+    flex-direction: column;
+    align-self: center; 
+    line-height: 1.25em;
+}
+
+article section img.cost {
+    grid-area: cost;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+article section .costunit {
+    flex: none;
+    padding: 0.5mm 0;
+    text-align: center;
+    font-size: 0.8em;
     line-height: 0.8em;
-    margin: 0 1mm;
+    align-self: center;
 }
 article section >* small {
     font-size: 0.8em;

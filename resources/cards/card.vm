@@ -47,13 +47,13 @@
 #macro(statIcons $text)
     #foreach($word in $text.split())
         #if($word == "BODY")
-            <i class="mdi mdi-human"></i>
+            <img src="../svg/game-icons/strong.svg?color=000">
         #elseif($word == "TEC")
-            <i class="fa fa-wrench"></i>
+            <img src="../svg/game-icons/gear-hammer.svg?color=000">
         #elseif($word == "MAG")
-            <i class="fa fa-magic"></i>
+            <img src="../svg/game-icons/fairy-wand.svg?color=000">
         #elseif($word == "ATT")
-            <small>ATT</small>
+            <img src="../svg/game-icons/broadsword.svg?color=000">
         #else
             $word
         #end
@@ -61,8 +61,7 @@
 #end
 #macro(handleCostUnit $cost $match)
     <div class="costunit">
-        $escape_html($strip_unit($cost, $match))<br/>
-        <small>$escape_html($match)</small>
+        $escape_html($strip_unit($cost, $match)) $escape_html($match)
     </div>
 #end
 #macro(effectList $effects)
@@ -85,15 +84,17 @@
 #end
 
 #if($card_is_item)
-<article id="$escape_html($card.filename)" class="item #if($card.cp) cost #end"" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+<article id="$escape_html($card.filename)" class="item #if($card.cp or $card.gp) price #end"" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #elseif($card.effects)
-<article id="$escape_html($card.filename)" class="effects #if($card.cp) cost #end" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+<article id="$escape_html($card.filename)" class="effects #if($card.cp or $card.gp) price #end" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #else
 <article id="$escape_html($card.filename)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
 #end
     <h1>$escape_html($card.title)</h1>
     #if($card.cp)
         <div class="cp">$escape_html($card.cp)</div>
+    #elseif($card.gp)
+        <div class="gp">$escape_html($card.gp)</div>
     #end
     <figure>
         #figure($card)
@@ -102,31 +103,31 @@
         #effectList($card.effects)
     #end
 
-    <!--
     <section>
-        #if($card.gp)
-            <div class="gp">$escape_html($card.gp)</div>
+        #if($card.power.split(" x "))
+            #statIcons($escape_html($card.power.split(" x ").get(0)))
+            <div class="value">$escape_html($card.power.split(" x ").get(1))</div>
         #end
-        #foreach($cost in $card.cost.split(","))
-            #if($cost.upper().endswith(" ACT"))
-                #handleCostUnit($cost, "ACT")
-            #elseif($cost.upper().endswith(" OVERDRIVE"))
-                #handleCostUnit($cost, "OVERDRIVE")
-            #elseif($cost.upper().endswith(" COMBO"))
-                #handleCostUnit($cost, "COMBO")
-            #elseif($cost.upper().endswith(" DIFFICULTY"))
-                #handleCostUnit($cost, "DIFFICULTY")
-            #else
-                #if($cost.strip())
-                    <div class="cost">$escape_html($cost.split())</div>
-                #end
+        <img src="../svg/game-icons/sands-of-time.svg?color=000">
+        <div class="value">0</div>
+        #if($card.cost)
+            <img class="cost" src="../svg/game-icons/electric.svg?color=000">
+            <div class="cost">
+            #foreach($cost in $card.cost.split(","))
+                <div class="costunit">$escape_html($cost)</div>
             #end
+            </div>
         #end
-        #if($card.power)
-            <div class="power">#statIcons($escape_html($card.power))</div>
-        #end
+        <img src="../svg/game-icons/sands-of-time.svg?color=000">
+        <div class="value">0</div>
+        <img src="../svg/game-icons/sands-of-time.svg?color=000">
+        <div class="value">0</div>
+        <img src="../svg/game-icons/sands-of-time.svg?color=000">
+        <div class="value">0</div>
+        <img src="../svg/game-icons/sands-of-time.svg?color=000">
+        <div class="value">0</div>
+
     </section>
-    -->
 
     <main>
         $escape_html($card.description)
