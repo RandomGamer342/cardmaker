@@ -231,31 +231,44 @@ article section .gp:after { content: "\AGold"; }
 
 
 article main {
-    padding: 2mm 1mm;
+    padding: 1mm 1mm;
     grid-area: info;
     position: relative;
-    font-size: 0.9em;
+    font-size: 0.8em;
+    line-height: 1.2em;
+    display: grid;
+    grid-template-rows: [top]auto [bottom]min-content;
 }
-article main ol {
-    margin-top: 1mm;
-    text-align: left;
-    padding-left: 5mm;
+
+article main >* {
+    grid-area: top;
+    display: flex;
+    flex-direction: column;
 }
-article main ol li + li{
-    margin-top: 0.5mm;
+
+article main >* >* {
+    flex: none;
+    padding: 0 0;
+    text-align: center;
 }
-article.item main ul {
-    margin-top: 1mm;
+
+article main .steps {
+}
+article main .description {
 }
 article main big{
+    padding-top: 0.5mm;
     font-size: 1.65em;
+    line-height: 1em;
 }
+
 article main .bottom {
-    width: 100%;
-    position: absolute;
+    grid-area: bottom;
     line-height: 1.1em;
-    bottom: 1mm;
-    left: 0;
+}
+
+article main .discipline {
+    padding-top: 1mm;
 }
 
 center.message {

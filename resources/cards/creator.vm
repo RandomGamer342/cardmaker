@@ -71,7 +71,9 @@
             <textarea name="flags" rows="5" #update_preview()>$escape_html($card.flags, False)</textarea>
         </li>
         <li>
-            Temp<br>
+            Flavour Text:<br>
+            <input type="text" name="trivia" value="$escape_html($card.trivia)" #update_preview()>
+
         </li>
         <li>
             Cost:<br>

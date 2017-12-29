@@ -13,8 +13,9 @@ class Card(Model):
         #mdi            = https://materialdesignicons.com/
         #fa             = http://fontawesome.io/icons/
         #svg            = the svgs/ folder
-    description = ""
+    description = []
     steps = []
+    trivia = ""
     effects = []
     cost = ""
     stats = {}
