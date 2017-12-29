@@ -41,8 +41,18 @@
         </big>
     #end
 #end
-#macro(cp $card)
-
+#macro(handlePower $text)
+    #if($text.__contains__("*"))
+        #statIcons($escape_html($text.split("*").get(0)))
+        #set($text = $escape_html($text.split("*").get(1)))
+    #else
+        <img src="../svg/game-icons/power-button.svg?color=000">
+    #end
+    <div class="list">
+        #foreach($line in $text.split("/"))
+            <small class="listelem">$escape_html($line)</small>
+        #end
+    </div>
 #end
 #macro(statIcons $text)
     #foreach($word in $text.split())
@@ -104,29 +114,25 @@
     #end
 
     <section>
-        #if($card.power.split("*"))
-            #statIcons($escape_html($card.power.split("*").get(0)))
-            <div class="value">$escape_html($card.power.split("*").get(1))</div>
+        #if($card.stats.power)
+            #handlePower($card.stats.power)
+        #elseif($card.power)
+            #handlePower($card.power)
         #end
-        <img src="../svg/game-icons/sands-of-time.svg?color=000">
-        <div class="value">0</div>
+
+        #if($card.stats.duration and $card.stats.duration != 0)
+            <img src="../svg/game-icons/sands-of-time.svg?color=000">
+            <div class="value">$escape_html($card.stats.duration)</div>
+        #end
+
         #if($card.cost)
             <img class="cost" src="../svg/game-icons/electric.svg?color=000">
-            <div class="cost">
+            <div class="list cost">
             #foreach($cost in $card.cost.split(","))
-                <div class="costunit">$escape_html($cost)</div>
+                <div class="listelem">$escape_html($cost)</div>
             #end
             </div>
         #end
-        <img src="../svg/game-icons/sands-of-time.svg?color=000">
-        <div class="value">0</div>
-        <img src="../svg/game-icons/sands-of-time.svg?color=000">
-        <div class="value">0</div>
-        <img src="../svg/game-icons/sands-of-time.svg?color=000">
-        <div class="value">0</div>
-        <img src="../svg/game-icons/sands-of-time.svg?color=000">
-        <div class="value">0</div>
-
     </section>
 
     <main>

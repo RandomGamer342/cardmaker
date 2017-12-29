@@ -16,7 +16,7 @@ def escape_html(data, break_newlines=True):
     if type(data) is list:
         data = "\n".join(data)
     if type(data) is dict:
-        data = "\n".join([":".join(x) for x in data.items()])
+        data = "\n".join([": ".join(x) for x in data.items()])
     if data is None:
         data = ""
     if break_newlines:

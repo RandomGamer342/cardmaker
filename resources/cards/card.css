@@ -174,25 +174,22 @@ article section {
     justify-content: center;
     /*overflow: hidden;*/
 }
+article section >* {
+    align-self: center;
+}
 article section img {
     max-width: 90%;
     max-height: 90%;
     padding: 5% 5%;
 }
-article section .value {
-    /*TODO: Text align*/
-    text-align: center;
-    font-size: 1.2em;
-    align-self: center;
+article section .list {
+    display: flex;
+    flex-direction: column;
 }
 article section .cost {
     grid-area: cost;
     grid-column-start: 2;
     grid-column-end: 5; /* I haven't got the slightest clue why this is necessary */
-    display: flex;
-    flex-direction: column;
-    align-self: center; 
-    line-height: 1.25em;
 }
 
 article section img.cost {
@@ -201,13 +198,12 @@ article section img.cost {
     grid-column-end: 2;
 
 }
-article section .costunit {
+article section .listelem {
     flex: none;
     padding: 0.5mm 0;
     text-align: center;
     font-size: 0.8em;
     line-height: 0.8em;
-    align-self: center;
 }
 article section >* small {
     font-size: 0.8em;
