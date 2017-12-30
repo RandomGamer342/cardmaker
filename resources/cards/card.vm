@@ -107,7 +107,7 @@
 #end
 
 <article id="$escape_html($card.filename)" class="#cardClasses($card)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
-    <h1>$escape_html($card.title)</h1>
+    <div class="title"><h1>$escape_html($card.title)</h1></div>
     #if($card.cp)
         <div class="cp"><img src="../svg/game-icons/seven-pointed-star.svg?color=292A30"></div>
         <div class="cp text">$escape_html($card.cp)</div>
@@ -132,6 +132,23 @@
             #handlePower($card.power)
         #end
 
+        #if($card.stats.duration and $card.stats.duration != 0)
+            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
+            <div class="value">$escape_html($card.stats.duration)</div>
+        #end
+
+        #if($card.stats.duration and $card.stats.duration != 0)
+            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
+            <div class="value">$escape_html($card.stats.duration)</div>
+        #end
+        #if($card.stats.duration and $card.stats.duration != 0)
+            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
+            <div class="value">$escape_html($card.stats.duration)</div>
+        #end
+        #if($card.stats.duration and $card.stats.duration != 0)
+            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
+            <div class="value">$escape_html($card.stats.duration)</div>
+        #end
         #if($card.stats.duration and $card.stats.duration != 0)
             <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
             <div class="value">$escape_html($card.stats.duration)</div>

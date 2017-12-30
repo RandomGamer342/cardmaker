@@ -3,7 +3,7 @@
 }
 
 @page {
-  size: A4;
+    size: A4;
 }
 @media print {
     body {
@@ -13,14 +13,14 @@
         margin-left: 1.2cm;
     }
     /*manual alignment ftw*/
-    
+
     article:nth-child(9n) {
         margin-bottom: 4.55cm;
         margin-bottom: 1.8cm;
         margin-bottom: 2.93cm;
         margin-bottom: 3.5cm;
     }
-    
+
 }
 :root {
     font-family: sans-serif;
@@ -34,6 +34,7 @@ article {
     float: left;
     width: 5.6cm;
     height: 8.9cm;
+    padding: 1mm 1mm;
 
     display: grid;
     grid-template-rows: 2em 105px auto;
@@ -43,23 +44,24 @@ article {
             "figure figure figure effects effects effects"
             "info info info info info info";
 
-    border-radius: 2mm;
-    grid-gap: 1.5mm 1.5mm;
+    border-radius: 0;
+    grid-gap: 1mm 1mm;
     border-style: solid;
-    border-width: 2mm;
+    border-width: 1mm;
     border-color: var(--color-border);
     background-color: var(--color-card-bg);
     cursor: pointer;
-    
-    --color-border: #4a4a4a;
-    --color-card-bg: #4a4a4a;
-    --color-main: #000;
-    --color-main-bg: #ddd;
-    --color-header-bg: #111;
-    --color-header: #ddd;
+
+    --color-border: #292A30;
+    /*--color-card-bg: #4a4a4a;*/
+    --color-card-bg: #f29d32;
+    --color-main: #292A30;
+    --color-main-bg: #FEFEFE;
+    --color-header-bg: #E1E7F2;
+    --color-header: #292A30;
     --color-figure-bg: #2a2a2a;
-    --color-figure: #aaa;
-    --color-figure-text:#eee;
+    --color-figure: #424242;
+    --color-figure-text:#FEFEFE;
     --color-costbar-bg: #111;
     --color-costbar: #eee;
 
@@ -69,9 +71,9 @@ article {
 article.item {
     grid-template-rows: 2em 36mm 2.5em auto;
     grid-template-areas:
-        "header"
-        "figure"
-        "info";
+            "header"
+            "figure"
+            "info";
 }
 
 article >* {
@@ -79,26 +81,32 @@ article >* {
     background-color: var(--color-main-bg);
     text-align: center;
     line-height: 1.4em;
-    border-radius: 1mm;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--color-border);
 }
 
-article h1 {
+article .title {
     grid-area: header;
     grid-column-start: emblem;
     grid-column-end: cost;
-    padding: 1mm 0;
+    background-color: var(--color-header-bg);
+    color: var(--color-header);
+    padding-top: 0.5mm;
+}
+
+article h1 {
+    align-self: center;
     font-size: 1.2em;
     line-height: 1.1em;
     font-weight: 600;
-    background-color: var(--color-header-bg);
-    color: var(--color-header);
 }
 
-article.price > h1 {
+article.price > .title {
     grid-column-end: header;
 }
 
-article.emblem > h1 {
+article.emblem > .title {
     grid-column-start: header;
 }
 
@@ -127,6 +135,7 @@ article .emblem {
 article figure {
     grid-area: figure;
     background: var(--color-figure-bg);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0;
     overflow: hidden;
     position: relative;
@@ -138,17 +147,16 @@ article figure >* {
     top:0;right:0;left:0;bottom:0;
 }
 article figure img {
-    padding: 1mm 0;
     display: block;
-    height: calc(100% - 2mm);
-    margin: auto auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 article figure img.svg_filter{
     /*causes DPI issues when printing*/
     filter:
-        brightness(0)
-        invert(1)
-        opacity(0.5);
+            brightness(0)
+            invert(1)
+            opacity(0.5);
 }
 article figure .mdi,
 article figure .fa,
