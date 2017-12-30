@@ -83,7 +83,7 @@ def from_form(form):#sanic's request.form
         elif type(getattr(Card, key)) is dict:
             if len(val) == 1 and "\n" in val[0]:
                 val = val[0].strip().replace("\r\n", "\n").split("\n")
-            val = dict([x.split(": ") for x in val])
+            val = dict([[y.strip() for y in x.split(":")] for x in val])
             setattr(card, key, val)
         else:
             setattr(card, key, val[0].strip().replace("\r\n", "\n"))
