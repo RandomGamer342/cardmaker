@@ -5,11 +5,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 #macro(figure $card)
-    #if($card.figure.__contains__(","))
-        #figure_embed($card.figure.split(",").get(1).strip(), $card.figure_source, "111")
-        #figure_embed($card.figure.split(",").get(0).strip(), $card.figure_source, "aaa")
-    #else
-        #figure_embed($card.figure, $card.figure_source, "aaa")
+    #foreach($figure in $card.figure.split(","))
+        #set($color = "111")
+        #if($figure.__contains__("?"))
+            #set($color = $figure.split("?").get(1).strip())
+        #end
+        #figure_embed($figure.split("?").get(0).strip(), $card.figure_source, $color)
     #end
 #end
 #macro(figure_embed $figure $source $color)
