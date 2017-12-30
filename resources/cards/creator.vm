@@ -55,7 +55,7 @@
             <a href="svg">svg</a>
         </li>
         <li>
-            Steps:<br>
+            Info:<br>
             <textarea name="steps" rows="5" #update_preview()>$escape_html($card.steps, False)</textarea>
         </li>
         <li>
@@ -71,22 +71,17 @@
             <textarea name="flags" rows="5" #update_preview()>$escape_html($card.flags, False)</textarea>
         </li>
         <li>
-            Flavour Text:<br>
-            <input type="text" name="trivia" value="$escape_html($card.trivia)" #update_preview()>
-
-        </li>
-        <li>
-            Cost:<br>
+            Playing cost:<br>
             <input type="text" name="cost" value="$escape_html($card.cost)" #update_preview()>
-        </li>
-        <li>
-            Notes:<span style="opacity:0.4;">(Not shown)</span><br>
-            <textarea name="notes" rows="10">$escape_html($card.notes, False)</textarea>
         </li>
         <li>
             Worth: CP or Gold<span style="opacity:0.4;">(GP)</span>:<br>
             <input type="text" name="cp" value="$escape_html($card.cp)" placeholder="CP" #update_preview()>
             <input type="text" name="gp" value="$escape_html($card.gp)" placeholder="gold" #update_preview()>
+        </li>
+        <li>
+            Notes:<span style="opacity:0.4;">(Not shown)</span><br>
+            <textarea name="notes" rows="10">$escape_html($card.notes, False)</textarea>
         </li>
         <li>
             <br>

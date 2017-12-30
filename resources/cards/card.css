@@ -37,10 +37,11 @@ article {
 
     display: grid;
     grid-template-rows: 2em 105px auto;
+    grid-template-columns: 2em 1fr 1fr 1fr 1fr 2em;
     grid-template-areas:
-        "header"
-        "figure"
-        "info";
+            "emblem header header header header cost"
+            "figure figure figure effects effects effects"
+            "info info info info info info";
 
     border-radius: 2mm;
     grid-gap: 1.5mm 1.5mm;
@@ -58,16 +59,11 @@ article {
     --color-header: #ddd;
     --color-figure-bg: #2a2a2a;
     --color-figure: #aaa;
+    --color-figure-text:#eee;
     --color-costbar-bg: #111;
     --color-costbar: #eee;
-}
 
-article.effects {
-    grid-template-columns: 2em 1fr 1fr 1fr 1fr 2em;
-    grid-template-areas:
-            "emblem header header header header cost"
-            "figure figure figure effects effects effects"
-            "info info info info info info";
+    -webkit-print-color-adjust:exact;
 }
 
 article.item {
@@ -108,13 +104,24 @@ article.emblem > h1 {
 
 article .cp,
 article .gp {
-    /*TODO: Align text*/
     grid-area: cost;
-    background-image: url(../svg/game-icons/seven-pointed-star.svg?color=888);
+    max-height: 100%;
+    max-width: 100%;
+    color: var(--color-figure-text);
+    background-color: var(--color-header-bg);
+}
+
+article .cp.text {
+    font-size:0.5em;
+    line-height:1em;
+    align-self: center;
+    border:transparent;
+    background-color:transparent;
 }
 
 article .emblem {
     grid-area: emblem;
+    background-color: var(--color-header-bg);
 }
 
 article figure {
