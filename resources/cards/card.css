@@ -32,8 +32,8 @@
 article {
     margin: 0.1mm 0.1mm;
     float: left;
-    width: 5.6cm;
-    height: 8.9cm;
+    width: 5.5cm;
+    height: 8.8cm;
     padding: 1mm 1mm;
 
     display: grid;
@@ -47,7 +47,7 @@ article {
     border-radius: 0;
     grid-gap: 1mm 1mm;
     border-style: solid;
-    border-width: 1mm;
+    border-width: 1.5mm;
     border-color: var(--color-border);
     background-color: var(--color-card-bg);
     cursor: pointer;
@@ -68,6 +68,7 @@ article {
     -webkit-print-color-adjust:exact;
 }
 
+/*
 article.item {
     grid-template-rows: 2em 36mm 2.5em auto;
     grid-template-areas:
@@ -75,6 +76,7 @@ article.item {
             "figure"
             "info";
 }
+*/
 
 article >* {
     color: var(--color-main);
