@@ -3,12 +3,14 @@ import glob, os
 from yaml import load, dump
 from common import Model
 import config
+from figure import Figure
 
 class Card(Model):
     filename = ""#filename without extentions
     title = "title"
-    figure = "code"
+    figure = ["code"]
     figure_source = "material-icons"
+    figure_parsed = []
         #material-icons = https://material.io/icons/
         #mdi            = https://materialdesignicons.com/
         #fa             = http://fontawesome.io/icons/
@@ -28,6 +30,55 @@ class Card(Model):
     
     def has_flag(self, flag):
         return flag.lower() in map(lambda x: x.lower(), self.flags)
+
+    # def parse_figures(self):
+    #     parsed = []
+    #     for line in self.figure:
+    #         line = line.split(",")
+    #         fig = {"filename": line[0], "top":0, "bottom":0, "left":0, "right":0}
+    #         if len(line) > 1:
+    #             for key, val in [[y.strip() for y in x.split(":")] for x in line]:
+    #                 if key.lower() in ("top", "bottom", "left", "right"):
+    #                     val = float(val)
+    #                 fig[key] = val
+    #
+    #         l = 0
+    #         r = 0
+    #         t = 0
+    #         b = 0
+    #         s = 100
+    #
+    #         s = s - fig["top"] - fig["bottom"]
+    #         l += (fig["top"] + fig["bottom"]) / 2
+    #         r += (fig["top"] + fig["bottom"]) / 2
+    #
+    #         if fig["left"] <= r:
+    #             r -= fig["left"]
+    #         else:
+    #             temp = fig["left"] - r
+    #             r = 0
+    #             s -= temp
+    #             t += temp / 2
+    #             b += temp / 2
+    #
+    #         if fig["right"] <= l:
+    #             l -= fig["right"]
+    #         else:
+    #             temp = fig["right"] - l
+    #             l = 0
+    #             s -= temp / 2
+    #             t += temp / 2
+    #             b += temp / 2
+    #
+    #
+    #         fig["left"] += l
+    #         fig["right"] += r
+    #         fig["top"] += t
+    #         fig["bottom"] += b
+    #
+    #         parsed.append(fig)
+    #     self.figure_parsed = parsed
+
 
 #todo: make the relevant ones into coroutines:
 
@@ -55,12 +106,14 @@ def from_yaml(data, filename="from_yaml"):
     card.filename = filename
     for key, val in load(data).items():
         setattr(card, key, val)
+        if key == "figure":
+            setattr(card, "figure_parsed", [Figure(line) for line in val])
     return card
 
 def to_yaml(card):
     out = {}
     for key in dir(card):
-        if "_" not in key[0] and key not in ("filename","has_flag"):
+        if "_" not in key[0] and key not in ("filename", "has_flag", "figure_parsed"):
             val = getattr(card, key)
             if (val or val==0) and val != getattr(Card, key):
                 out[key] = val
@@ -87,6 +140,7 @@ def from_form(form):#sanic's request.form
             setattr(card, key, val)
         else:
             setattr(card, key, val[0].strip().replace("\r\n", "\n"))
+    setattr(card, "figure_parsed", [Figure(line) for line in getattr(card, "figure")])
     return card
 
 def is_filename_vacant(filename, in_carddir=True):

@@ -5,15 +5,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 #macro(figure $card)
-    #foreach($figure in $card.figure.split(","))
-        #set($color = "111")
-        #if($figure.__contains__("?"))
-            #set($color = $figure.split("?").get(1).strip())
-        #end
-        #figure_embed($figure.split("?").get(0).strip(), $card.figure_source, $color)
+    #foreach($figure in $card.figure_parsed)
+        <img src="../svg/${figure.filename}.svg?color=$figure.color" style="padding-bottom:$figure.bottom%;padding-top:$figure.top%;padding-left:$figure.left%;padding-right:$figure.right%;width:$figure.size%">
     #end
 #end
-#macro(figure_embed $figure $source $color)
+#macro(figure_style $figure $source $color)
     #if($source == "material-icons")
         <!--https://material.io/icons/-->
         <i class="material-icons figure">$escape_html($label)</i>

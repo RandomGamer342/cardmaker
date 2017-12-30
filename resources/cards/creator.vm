@@ -23,8 +23,7 @@
         </li>
         <li>
             Figure:<br>
-            <input type="text" name="figure" value="$escape_html($card.figure)" #update_preview()><br>
-            
+            <textarea name="figure" rows="3" #update_preview()>$escape_html($card.figure, False)</textarea>
             Source:
             #if($card.figure_source=="material-icons")
                 <input checked type="radio" name="figure_source" value="material-icons" #update_preview()>
