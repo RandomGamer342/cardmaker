@@ -83,28 +83,38 @@
         #end
     </ul>
 #end
+#macro(cardClasses $card)
+    #if($card_is_item)item #end
+    #if($card.effects)effects #end
+    #if($card_has_emblem)emblem #end
+    #if($card.cp)price #end
+#end
 
 <title>Cards</title>
 
 #foreach($card in $cards)
+
 #set($card_is_item = false)
 #foreach($flag in ["Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card", "Passive", "Melee Weapon", "Arc Weapon", "LoS Weapon"])
     #if($card.flags.__contains__($flag)) #set($card_is_item = true) #end
     #if($card.flags.__contains__($flag.lower())) #set($card_is_item = true) #end
 #end
 
-#if($card_is_item)
-<article id="$escape_html($card.filename)" class="item #if($card.cp or $card.gp) price #end"" onclick="location.href='creator?filename=$escape_html($card.filename)'">
-#elseif($card.effects)
-<article id="$escape_html($card.filename)" class="effects #if($card.cp or $card.gp) price #end" onclick="location.href='creator?filename=$escape_html($card.filename)'">
-#else
-<article id="$escape_html($card.filename)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
+#set($card_has_emblem = false)
+#foreach($flag in ["Mastered"])
+    #if($card.flags.__contains__($flag)) #set($card_has_emblem = true) #end
+    #if($card.flags.__contains__($flag.lower())) #set($card_has_emblem = true) #end
 #end
+
+<article id="$escape_html($card.filename)" class="#cardClasses($card)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
     <h1>$escape_html($card.title)</h1>
     #if($card.cp)
         <div class="cp">$escape_html($card.cp)</div>
     #elseif($card.gp)
         <div class="gp">$escape_html($card.gp)</div>
+    #end
+    #if($card.has_flag("Mastered"))
+        <div class="emblem"><img src="../svg/game-icons/stars-stack.svg?color=000"></div>
     #end
     <figure>
         #figure($card)
@@ -119,7 +129,7 @@
         #elseif($card.power)
             #handlePower($card.power)
         #end
-
+        
         #if($card.stats.duration and $card.stats.duration != 0)
             <img src="../svg/game-icons/sands-of-time.svg?color=000">
             <div class="value">$escape_html($card.stats.duration)</div>
