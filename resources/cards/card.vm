@@ -111,9 +111,6 @@
     #if($card.cp)
         <div class="cp"><img src="../svg/game-icons/seven-pointed-star.svg?color=292A30"></div>
         <div class="cp text">$escape_html($card.cp)</div>
-
-    #elseif($card.gp)
-        <div class="gp">$escape_html($card.gp)</div>
     #end
     #if($card.has_flag("Mastered"))
         <div class="emblem"><img src="../svg/game-icons/stars-stack.svg?color=292A30"></div>
@@ -137,23 +134,6 @@
             <div class="value">$escape_html($card.stats.duration)</div>
         #end
 
-        #if($card.stats.duration and $card.stats.duration != 0)
-            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
-            <div class="value">$escape_html($card.stats.duration)</div>
-        #end
-        #if($card.stats.duration and $card.stats.duration != 0)
-            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
-            <div class="value">$escape_html($card.stats.duration)</div>
-        #end
-        #if($card.stats.duration and $card.stats.duration != 0)
-            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
-            <div class="value">$escape_html($card.stats.duration)</div>
-        #end
-        #if($card.stats.duration and $card.stats.duration != 0)
-            <img src="../svg/game-icons/sands-of-time.svg?color=292A30">
-            <div class="value">$escape_html($card.stats.duration)</div>
-        #end
-
         #if($card.cost)
             <img class="cost" src="../svg/game-icons/electric.svg?color=292A30">
             <div class="list cost">
@@ -161,6 +141,11 @@
                 <div class="listelem">$escape_html($cost)</div>
             #end
             </div>
+        #end
+
+        #if($card.gp)
+            <img class="price" src="../svg/game-icons/cash.svg?color=292A30">
+            <div class="price">$card.gp</div>
         #end
     </section>
 
