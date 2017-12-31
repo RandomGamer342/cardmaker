@@ -11,14 +11,12 @@
         height: 29.7cm;
         margin-top: 1.2cm;
         margin-left: 1.2cm;
+        -webkit-print-color-adjust:exact;
     }
     /*manual alignment ftw*/
 
     article:nth-child(9n) {
-        margin-bottom: 4.55cm;
-        margin-bottom: 1.8cm;
-        margin-bottom: 2.93cm;
-        margin-bottom: 3.5cm;
+        margin-bottom: 5cm;
     }
 
 }
@@ -37,8 +35,8 @@ article {
     padding: 1mm 1mm;
 
     display: grid;
-    grid-template-rows: 2em 102px auto;
-    grid-template-columns: 2em 1fr 1fr 1fr 1fr 2em;
+    grid-template-rows: 24px 102px auto;
+    grid-template-columns: 24px 1fr 1fr 1fr 1fr 24px;
     grid-template-areas:
             "emblem header header header header cost"
             "figure figure figure effects effects effects"
@@ -67,9 +65,6 @@ article {
     --color-header: #292A30;
     --color-figure: #424242;
     --color-figure-text:#FEFEFE;
-
-
-    -webkit-print-color-adjust:exact;
 }
 
 article.duration {
@@ -118,7 +113,7 @@ article .title {
     grid-column-end: cost;
     background-color: var(--color-header-bg);
     color: var(--color-header);
-    padding-top: 0.5mm;
+    padding-top: 1mm;
 }
 
 article h1 {
@@ -146,8 +141,9 @@ article .gp {
 }
 
 article .cp.text {
-    font-size:0.5em;
+    font-size:0.6em;
     line-height:1em;
+    font-weight:bold;
     align-self: center;
     border:transparent;
     background-color:transparent;
@@ -225,10 +221,10 @@ article section .list {
 }
 article section .listelem {
     flex: none;
-    padding: 0.5mm 0;
+    padding: 0 0;
     text-align: center;
     font-size: 0.8em;
-    line-height: 0.8em;
+    line-height: 1em;
 }
 
 article section img.cost {

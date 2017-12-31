@@ -79,6 +79,8 @@
             <img src="../svg/game-icons/fairy-wand.svg?color=292A30">
         #elseif($word == "ATT")
             <img src="../svg/game-icons/broadsword.svg?color=292A30">
+        #elseif($word == "MIND")
+            <img src="../svg/game-icons/brain.svg?color=292A30">
         #else
             $word
         #end
