@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="creator.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 <script src="creator.js"></script>
 
 #macro(update_preview)onkeyup="submit_preview(this.form)" onchange="submit_preview(this.form)"#end
@@ -22,36 +23,47 @@
             <input type="text" name="title" value="$escape_html($card.title)" #update_preview()>
         </li>
         <li>
-            Figure:<br>
+            Figure:
+            <i class="tooltip mdi mdi-help-circle">
+                <div class="tooltiptext">Possible attributes:
+                    <small><br>Top, left, bottom, right: x%
+                        <br>Colour: xxxxxxxx
+                        <br>Rotation: x deg
+                        <br>Size: x% OR auto
+                        <br>Source: svg, mdi...
+                    </small>
+                </div>
+            </i>
             <textarea name="figure" rows="3" #update_preview()>$escape_html($card.figure, False)</textarea>
-            Source:
-            #if($card.figure_source=="material-icons")
-                <input checked type="radio" name="figure_source" value="material-icons" #update_preview()>
-            #else
-                <input type="radio" name="figure_source" value="material-icons" #update_preview()>
-            #end
-            <a href="https://material.io/icons/">material-icons</a>
-            
-            #if($card.figure_source=="mdi")
-                <input checked type="radio" name="figure_source" value="mdi" #update_preview()>
-            #else
-                <input type="radio" name="figure_source" value="mdi" #update_preview()>
-            #end
-            <a href="https://materialdesignicons.com/">mdi</a>
-            
-            #if($card.figure_source=="fa")
-                <input checked type="radio" name="figure_source" value="fa" #update_preview()>
-            #else
-                <input type="radio" name="figure_source" value="fa" #update_preview()>
-            #end
-            <a href="http://fontawesome.io/icons/">fa</a>
-            
-            #if($card.figure_source=="svg")
-                <input checked type="radio" name="figure_source" value="svg" #update_preview()>
-            #else
-                <input type="radio" name="figure_source" value="svg" #update_preview()>
-            #end
-            <a href="svg">svg</a>
+            <small>Default source:
+                #if($card.figure_source=="material-icons")
+                    <input checked type="radio" name="figure_source" value="material-icons" #update_preview()>
+                #else
+                    <input type="radio" name="figure_source" value="material-icons" #update_preview()>
+                #end
+                <a href="https://material.io/icons/">material-icons</a>
+
+                #if($card.figure_source=="mdi")
+                    <input checked type="radio" name="figure_source" value="mdi" #update_preview()>
+                #else
+                    <input type="radio" name="figure_source" value="mdi" #update_preview()>
+                #end
+                <a href="https://materialdesignicons.com/">mdi</a>
+
+                #if($card.figure_source=="fa")
+                    <input checked type="radio" name="figure_source" value="fa" #update_preview()>
+                #else
+                    <input type="radio" name="figure_source" value="fa" #update_preview()>
+                #end
+                <a href="http://fontawesome.io/icons/">fa</a>
+
+                #if($card.figure_source=="svg")
+                    <input checked type="radio" name="figure_source" value="svg" #update_preview()>
+                #else
+                    <input type="radio" name="figure_source" value="svg" #update_preview()>
+                #end
+                <a href="svg">svg</a>
+            </small>
         </li>
         <li>
             Info:<br>

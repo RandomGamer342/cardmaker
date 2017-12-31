@@ -41,3 +41,33 @@ ul li input[type=text][name=tag],
 ul li input[type=text][name=filename] {
     width: 3.8cm;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    font-size: inherit;
+    line-height: inherit;
+    float:right;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #292A30;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .tooltiptext {
+    top: -5px;
+    left: 150%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
