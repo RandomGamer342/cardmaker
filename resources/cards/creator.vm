@@ -29,7 +29,7 @@
                     <small><br>Top, left, bottom, right: x%
                         <br>Colour: xxxxxxxx
                         <br>Rotation: x deg
-                        <br>Size: x% OR auto
+                        ##<br>Size: x% OR auto**
                         <br>Source: svg, mdi...
                     </small>
                 </div>
