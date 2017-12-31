@@ -6,24 +6,30 @@
 
 #macro(figure $card)
     #foreach($figure in $card.figure_parsed)
-        <img src="../svg/${figure.filename}.svg?color=$figure.color" style="padding-bottom:$figure.bottom%;padding-top:$figure.top%;padding-left:$figure.left%;padding-right:$figure.right%;width:$figure.size%">
+        #figure_embed($figure.filename, $figure.source, $figure.top, $figure.right, $figure.bottom, $figure.left, $figure.size, $figure.color)
     #end
 #end
-#macro(figure_style $figure $source $color)
+#macro(figure_embed $figure $source $top $right $bottom $left $size $color)
     #if($source == "material-icons")
         <!--https://material.io/icons/-->
-        <i class="material-icons figure">$escape_html($label)</i>
+        <i class="material-icons figure" #figure_style($top, $right, $bottom, $left, $size)>$escape_html($label)</i>
     #elseif($source == "mdi")
         <!--https://materialdesignicons.com/-->
-        <i class="mdi mdi-$escape_html($figure)"></i>
+        <i class="mdi mdi-$escape_html($figure)" #figure_style($top, $right, $bottom, $left, $size)></i>
     #elseif($source == "fa")
         <!--http://fontawesome.io/icons/-->
-        <i class="fa fa-$escape_html($figure)"></i>
+        <i class="fa fa-$escape_html($figure)" #figure_style($top, $right, $bottom, $left, $size)></i>
     #elseif($source == "svg")
         <!--/cards/svg-->
         <!--<img class="svg_filter" src="/svg/${escape_html($figure)}.svg">-->
-        <img src="/svg/${escape_html($figure)}.svg?color=$color">
+        #if($color)
+            #set($color = "?color=${color}")
+        #end
+        <img src="/svg/${escape_html($figure)}.svg$color" #figure_style($top, $right, $bottom, $left, $size)>
     #end
+#end
+#macro(figure_style $top $right $bottom $left $size)
+    style="padding:$top% $right% $bottom% $left%;width:$size%;height:$size%;"
 #end
 #macro(specialFlags $card)
     #if($card.has_flag("mastery"))

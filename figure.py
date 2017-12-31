@@ -14,14 +14,17 @@ class Figure(Model):
     right = 0.
     size = 100.
 
-    def __init__(self, line):
+    def __init__(self, line, source = ""):
         data = line.split(",")
         self.filename = data[0].strip()
         if len(data) > 1:
             for key, val in [[y.strip() for y in x.split(":")] for x in data[1:]]:
-                if key in ("top", "bottom", "left", "right"):
+                if key in ("top", "bottom", "left", "right", "size"):
                     val = float(val)
                 setattr(self, key, val)
+
+        if not self.source:
+            self.source = source
 
         l = 0
         r = 0
