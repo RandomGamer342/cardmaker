@@ -36,8 +36,8 @@
             margin:${fig.top}px ${fig.right}px ${fig.bottom}px ${fig.left}px;
             width:calc(100% - ${fig.size}px);height:calc(100% - ${fig.size}px);
         #else
-            margin-top:calc(${fig.scale}% / 2 + ${fig.top}px - ${fig.bottom}px);
-            margin-left:calc(${fig.scale}% / 2 + ${fig.right}px - ${fig.left}px);
+            margin-top:calc((100% - ${fig.scale}%) / 2 + ${fig.top}px - ${fig.bottom}px);
+            margin-left:calc((100% - ${fig.scale}%) / 2 + ${fig.right}px - ${fig.left}px);
             width:${fig.scale}%;height:${fig.scale}%;
         #end
     #end
