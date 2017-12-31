@@ -49,23 +49,47 @@ article {
     border-style: solid;
     border-width: 1.5mm;
     border-color: var(--color-border);
-    background-color: var(--color-card-bg);
+    background-color: var(--color-card-standard);
     cursor: pointer;
 
+    --color-card-standard: #DEDEDE;
+    --color-card-free: #86C116;
+    --color-card-duration: #F29D32;
+    --color-card-stance: #DBC997;
+    --color-card-item: #FDE65A;
+    --color-card-special: #6b96db;
+
     --color-border: #292A30;
-    /*--color-card-bg: #4a4a4a;*/
-    --color-card-bg: #f29d32;
+    --color-card-bg: var(--color-card-standard);
     --color-main: #292A30;
     --color-main-bg: #FEFEFE;
     --color-header-bg: #E1E7F2;
     --color-header: #292A30;
-    --color-figure-bg: #2a2a2a;
     --color-figure: #424242;
     --color-figure-text:#FEFEFE;
-    --color-costbar-bg: #111;
-    --color-costbar: #eee;
+
 
     -webkit-print-color-adjust:exact;
+}
+
+article.duration {
+    background-color: var(--color-card-duration);
+}
+
+article.free {
+    background-color: var(--color-card-free);
+}
+
+article.stance {
+    background-color: var(--color-card-stance);
+}
+
+article.item {
+    background-color: var(--color-card-item);
+}
+
+article.special {
+    background-color: var(--color-card-special);
 }
 
 /*
@@ -256,10 +280,13 @@ article main {
     font-size: 0.8em;
     line-height: 1.2em;
     display: grid;
-    grid-template-rows: [top]auto [bottom]min-content;
+    grid-template-areas: "top"
+    "bottom";
+    grid-template-rows: auto min-content;
 }
 
 article main >* {
+    width: 100%;
     grid-area: top;
     display: flex;
     flex-direction: column;
@@ -279,6 +306,10 @@ article main big{
     padding-top: 0.5mm;
     font-size: 1.65em;
     line-height: 1em;
+}
+
+article main .top {
+    grid-area: top;
 }
 
 article main .bottom {

@@ -36,7 +36,7 @@
             margin:${fig.top}px ${fig.right}px ${fig.bottom}px ${fig.left}px;
             width:calc(100% - ${fig.size}px);height:calc(100% - ${fig.size}px);
         #else
-            style="margin-top:calc(${fig.scale}% / 2 + ${fig.top}px - ${fig.bottom}px);
+            margin-top:calc(${fig.scale}% / 2 + ${fig.top}px - ${fig.bottom}px);
             margin-left:calc(${fig.scale}% / 2 + ${fig.right}px - ${fig.left}px);
             width:${fig.scale}%;height:${fig.scale}%;
         #end
@@ -99,6 +99,17 @@
     </ul>
 #end
 #macro(cardClasses $card)
+    #if($card.has_flag("standard"))
+        standard
+    #elseif($card.has_flag("special"))
+        special
+    #elseif($card.has_flag("stance"))
+        stance
+    #elseif($card.has_flag("free"))
+        free
+    #elseif($card.stats.duration)
+        duration
+    #end
     #if($card_is_item)item #end
     #if($card.effects)effects #end
     #if($card_has_emblem)emblem #end
