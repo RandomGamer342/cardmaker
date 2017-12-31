@@ -29,7 +29,7 @@
     #end
 #end
 #macro(figure_style $top $right $bottom $left $size $rotate)
-    style="padding:${top}px ${right}px ${bottom}px ${left}px;width:calc(100% - ${size}px);height:calc(100% - ${size}px);transform:rotate(${rotate}deg)"
+    style="margin:${top}px ${right}px ${bottom}px ${left}px;width:calc(100% - ${size}px);height:calc(100% - ${size}px);transform:rotate(${rotate}deg)"
 #end
 #macro(specialFlags $card)
     #if($card.has_flag("mastery"))
