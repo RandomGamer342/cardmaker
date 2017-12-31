@@ -37,7 +37,7 @@
 
                 </div>
             </i>
-            <textarea name="figure" rows="3" #update_preview()>$escape_html($card.figure, False)</textarea>
+            <textarea name="figure" rows="10" #update_preview()>$escape_html($card.figure, False)</textarea>
             <small>Default source:
                 #if($card.figure_source=="material-icons")
                     <input checked type="radio" name="figure_source" value="material-icons" #update_preview()>
@@ -70,19 +70,19 @@
         </li>
         <li>
             Info:<br>
-            <textarea name="steps" rows="5" #update_preview()>$escape_html($card.steps, False)</textarea>
+            <textarea name="steps" rows="10" #update_preview()>$escape_html($card.steps, False)</textarea>
         </li>
         <li>
             Stats:<br>
-            <textarea name="stats" rows="5" #update_preview()>$escape_html($card.stats, False)</textarea>
+            <textarea name="stats" rows="10" #update_preview()>$escape_html($card.stats, False)</textarea>
         </li>
         <li>
             Description:<br>
-            <textarea name="description" rows="5" #update_preview()>$escape_html($card.description, False)</textarea>
+            <textarea name="description" rows="10" #update_preview()>$escape_html($card.description, False)</textarea>
         </li>
         <li>
             Flags/Properties:<br>
-            <textarea name="flags" rows="5" #update_preview()>$escape_html($card.flags, False)</textarea>
+            <textarea name="flags" rows="10" #update_preview()>$escape_html($card.flags, False)</textarea>
         </li>
         <li>
             Playing cost:<br>
@@ -95,7 +95,7 @@
         </li>
         <li>
             Notes:<span style="opacity:0.4;">(Not shown)</span><br>
-            <textarea name="notes" rows="10">$escape_html($card.notes, False)</textarea>
+            <textarea name="notes" rows="15">$escape_html($card.notes, False)</textarea>
         </li>
         <li>
             <br>

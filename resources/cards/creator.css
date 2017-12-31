@@ -30,6 +30,8 @@ ul li {
 
 ul li input[type=text],
 ul li textarea {
+    font-size:0.9em;
+    line-height:1.05em;
     width: 100%;
 }
 
