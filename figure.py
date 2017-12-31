@@ -7,12 +7,13 @@ class Figure(Model):
         # mdi            = https://materialdesignicons.com/
         # fa             = http://fontawesome.io/icons/
         # svg            = the svgs/ folder
-    color = "aaa"
+    color = ""
     top = 0.
     bottom = 0.
     left = 0.
     right = 0.
     size = 100.
+    rotate = 0
 
     def __init__(self, line, source = ""):
         data = line.split(",")
@@ -21,6 +22,8 @@ class Figure(Model):
             for key, val in [[y.strip() for y in x.split(":")] for x in data[1:]]:
                 if key in ("top", "bottom", "left", "right", "size"):
                     val = float(val)
+                if key in ("rotate"):
+                    val = int(val)
                 setattr(self, key, val)
 
         if not self.source:
