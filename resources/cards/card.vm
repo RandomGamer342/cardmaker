@@ -6,30 +6,42 @@
 
 #macro(figure $card)
     #foreach($figure in $card.figure_parsed)
-        #figure_embed($figure.filename, $figure.source, $figure.top, $figure.right, $figure.bottom, $figure.left, $figure.size, $figure.rotate, $figure.color)
+        #figure_embed($figure)
     #end
 #end
-#macro(figure_embed $figure $source $top $right $bottom $left $size $rotate $color)
-    #if($source == "material-icons")
+#macro(figure_embed $fig)
+    #if($fig.source == "material-icons")
         <!--https://material.io/icons/-->
-        <i class="material-icons figure" #figure_style($top, $right, $bottom, $left, $size, $rotate)>$escape_html($label)</i>
-    #elseif($source == "mdi")
+        <i class="material-icons figure" #figure_style($fig)>$escape_html($label)</i>
+    #elseif($fig.source == "mdi")
         <!--https://materialdesignicons.com/-->
-        <i class="mdi mdi-$escape_html($figure)" #figure_style($top, $right, $bottom, $left, $size, $rotate)></i>
-    #elseif($source == "fa")
+        <i class="mdi mdi-$escape_html($fig.filename)" #figure_style($fig)></i>
+    #elseif($fig.source == "fa")
         <!--http://fontawesome.io/icons/-->
-        <i class="fa fa-$escape_html($figure)" #figure_style($top, $right, $bottom, $left, $size, $rotate)></i>
-    #elseif($source == "svg")
+        <i class="fa fa-$escape_html($fig.filename)"  #figure_style($fig)></i>
+    #elseif($fig.source == "svg")
         <!--/cards/svg-->
         <!--<img class="svg_filter" src="/svg/${escape_html($figure)}.svg">-->
-        #if($color)
-            #set($color = "?color=${color}")
+        #set($color = "")
+        #if($fig.color)
+            #set($color = "?color=${fig.color}")
         #end
-        <img src="/svg/${escape_html($figure)}.svg$color" #figure_style($top, $right, $bottom, $left, $size, $rotate)>
+        <img src="/svg/${escape_html($fig.filename)}.svg$color" #figure_style($fig)>
     #end
 #end
-#macro(figure_style $top $right $bottom $left $size $rotate)
-    style="margin:${top}px ${right}px ${bottom}px ${left}px;width:calc(100% - ${size}px);height:calc(100% - ${size}px);transform:rotate(${rotate}deg)"
+#macro(figure_style $fig)
+    style="
+    #if($fig.source == "svg") ## Unsupported with other sources due to being fonts, not images **
+        #if($fig.autoscale)
+            margin:${fig.top}px ${fig.right}px ${fig.bottom}px ${fig.left}px;
+            width:calc(100% - ${fig.size}px);height:calc(100% - ${fig.size}px);
+        #else
+            style="margin-top:calc(${fig.scale}% / 2 + ${fig.top}px - ${fig.bottom}px);
+            margin-left:calc(${fig.scale}% / 2 + ${fig.right}px - ${fig.left}px);
+            width:${fig.scale}%;height:${fig.scale}%;
+        #end
+    #end
+    transform:rotate(${fig.rotate}deg)"
 #end
 #macro(specialFlags $card)
     #if($card.has_flag("mastery"))

@@ -25,13 +25,16 @@
         <li>
             Figure:
             <i class="tooltip mdi mdi-help-circle">
-                <div class="tooltiptext">Possible attributes:
-                    <small><br>Top, left, bottom, right: x%
+                <div class="tooltiptext">
+                    figure, attribute:value, ...
+                    <br><br><big>Possible attributes:</big>
+                    <br>Top, left, bottom, right: x px
                         <br>Colour: xxxxxxxx
                         <br>Rotation: x deg
-                        ##<br>Size: x% OR auto**
+                        <br>Scale: x % <small>(Leave blank for auto)</small>
                         <br>Source: svg, mdi...
-                    </small>
+                        <br><br><small>NOTE: Only rotation works for<br> sources other than svg!</small>
+
                 </div>
             </i>
             <textarea name="figure" rows="3" #update_preview()>$escape_html($card.figure, False)</textarea>
