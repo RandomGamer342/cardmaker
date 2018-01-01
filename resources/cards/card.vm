@@ -32,13 +32,14 @@
 #macro(figure_style $fig)
     style="
     #if($fig.source == "svg") ## Unsupported with other sources due to being fonts, not images **
+        top:${fig.top}px;
+        right:${fig.right}px;
+        bottom:${fig.bottom}px;
+        left:${fig.left}px;
         #if($fig.autoscale)
-            margin:${fig.top}px ${fig.right}px ${fig.bottom}px ${fig.left}px;
-            width:calc(100% - ${fig.size}px);height:calc(100% - ${fig.size}px);
+            height:calc(100% - ${fig.size}px);
         #else
-            margin-top:calc((100% - ${fig.scale}%) / 2 + ${fig.top}px - ${fig.bottom}px);
-            margin-left:calc((100% - ${fig.scale}%) / 2 + ${fig.left}px - ${fig.right}px);
-            width:${fig.scale}%;height:${fig.scale}%;
+            height:${fig.scale}%;
         #end
     #end
     transform:rotate(${fig.rotate}deg)"
