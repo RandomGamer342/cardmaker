@@ -110,8 +110,8 @@
             <br>
         </li>
         <li>
-            Tag:
-            <input type="text" name="tag" value="$escape_html($card.tag)">
+            Tags:<br>
+            <textarea name="tags" rows="5" #update_preview()>$escape_html($card.tags, False)</textarea>
         </li>
     </ul>
 </form>

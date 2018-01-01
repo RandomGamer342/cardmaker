@@ -24,13 +24,22 @@ async def show_cardlist(request):
             elif request.form.get("action") == "decrement_stock":
                 c.copies_owned = int(c.copies_owned) - 1
     cards = card.from_dir(config.carddir)
+
+    filter_keys = []
+    if "filter" in request.args:
+        filter_keys = [x.lower() for x in request.args["filter"]]
+    if "filter" in request.form:
+        filter_keys = [x.lower() for x in request.form["filter"]]
     
+    if filter_keys:
+        cards = [c for c in cards if c.has_tags(filter_keys)]
+
     sorting_key = ""
     if "sort" in request.args:
         sorting_key = request.args["sort"][0]
     if "sort" in request.form:
         sorting_key = request.form["sort"][0]
-    
+
     if sorting_key:
         if sorting_key == "filename":
             cards = sorted(cards, key=lambda x: x.filename.lower())
@@ -42,17 +51,17 @@ async def show_cardlist(request):
             cards = sorted(cards, key=lambda x: -int(x.copies_owned))
         elif sorting_key == "title":
             cards = sorted(cards, key=lambda x: x.title.lower())
-        elif sorting_key == "tag":
-            cards = sorted(cards, key=lambda x: x.tag or "\0")
-
-    filter_key = ""
-    if "filter" in request.args:
-        filter_key = request.args["filter"][0]
-    if "filter" in request.form:
-        filter_key = request.form["filter"][0]
-    
-    if filter_key:
-        cards = [i for i in cards if i.tag.lower() == filter_key.lower()]
+        elif sorting_key == "tags":
+            if filter_keys:
+                def nonfilteredTag(card):
+                    if card.tags:
+                        for tag in sorted(card.tags):
+                            if tag not in filter_keys:
+                                return tag
+                    return "\0"
+                cards = sorted(cards, key=lambda x: nonfilteredTag(x))
+            else:
+                cards = sorted(cards, key=lambda x: x.tags[0].lower() if x.tags else "\0")
     
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)

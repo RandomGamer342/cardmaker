@@ -26,10 +26,19 @@ class Card(Model):
     flags = []
     notes = ""#not shown, but used to keep track of things
     copies_owned = 1
-    tag = ""
+    tags = [""]
     
     def has_flag(self, flag):
         return flag.lower() in map(lambda x: x.lower(), self.flags)
+
+    def has_tag(self, tag):
+        return tag.lower() in map(lambda x: x.lower(), self.tags)
+
+    def has_tags(self, tags):
+        for tag in tags:
+            if not self.has_tag(tag):
+                return False
+        return True
 
 
 #todo: make the relevant ones into coroutines:
@@ -57,6 +66,9 @@ def from_yaml(data, filename="from_yaml"):
     card = Card()
     card.filename = filename
     for key, val in load(data).items():
+        if key == "tag":
+            setattr(card, "tags", [val])
+            continue
         setattr(card, key, val)
     setattr(card, "figure_parsed", [Figure(line, getattr(card, "figure_source")) for line in getattr(card, "figure")])
     return card
@@ -64,7 +76,7 @@ def from_yaml(data, filename="from_yaml"):
 def to_yaml(card):
     out = {}
     for key in dir(card):
-        if "_" not in key[0] and key not in ("filename", "has_flag", "figure_parsed"):
+        if "_" not in key[0] and key not in ("filename", "has_flag", "has_tag", "has_tags", "figure_parsed"):
             val = getattr(card, key)
             if (val or val==0) and val != getattr(Card, key):
                 out[key] = val

@@ -39,10 +39,13 @@ ul li input[type=text][name=gp],
 ul li input[type=text][name=cp] {
     width: 4.09cm;
 }
-ul li input[type=text][name=tag],
 ul li input[type=text][name=filename] {
     width: 3.8cm;
 }
+ul li textarea[name=tag]{
+    width: 3cm;
+}
+
 
 .tooltip {
     position: relative;
