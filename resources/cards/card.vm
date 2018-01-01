@@ -12,7 +12,7 @@
 #macro(figure_embed $fig)
     #if($fig.source == "material-icons")
         <!--https://material.io/icons/-->
-        <i class="material-icons figure" #figure_style($fig)>$escape_html($label)</i>
+        <i class="material-icons figure" #figure_style($fig)>$escape_html($fig.filename)</i>
     #elseif($fig.source == "mdi")
         <!--https://materialdesignicons.com/-->
         <i class="mdi mdi-$escape_html($fig.filename)" #figure_style($fig)></i>
@@ -31,16 +31,19 @@
 #end
 #macro(figure_style $fig)
     style="
+    top:${fig.top}px;
+    right:${fig.right}px;
+    bottom:${fig.bottom}px;
+    left:${fig.left}px;
     #if($fig.source == "svg") ## Unsupported with other sources due to being fonts, not images **
-        top:${fig.top}px;
-        right:${fig.right}px;
-        bottom:${fig.bottom}px;
-        left:${fig.left}px;
         #if($fig.autoscale)
             height:calc(100% - ${fig.size}px);
         #else
             height:${fig.scale}%;
         #end
+    #elseif($fig.color)
+        #set($H = "#") ## Easiest way to escape the # character **
+        color: ${H}${fig.color};
     #end
     transform:rotate(${fig.rotate}deg)"
 #end
