@@ -154,6 +154,17 @@ article .emblem {
     background-color: var(--color-header-bg);
 }
 
+article div.split {
+    margin:2px;
+    grid-area: figure;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 98px 98px;
+    border-color: transparent transparent var(--color-card-duration) var(--color-card-standard);
+}
+
 article figure {
     grid-area: figure;
     background-color: rgba(255, 255, 255, 0.5);

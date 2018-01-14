@@ -147,6 +147,9 @@
     #if($card.has_flag("Mastered"))
         <div class="emblem"><img src="../svg/game-icons/stars-stack.svg?color=292A30"></div>
     #end
+    #if($card.has_flag("split"))
+        <div class="split"></div>
+    #end
     <figure>
         #figure($card)
     </figure>
