@@ -72,6 +72,8 @@ def from_yaml(data, filename="from_yaml"):
         if key == "tag":
             setattr(card, "tags", [val])
             continue
+        if type(getattr(Card, key)) is int:
+            val = int(val)
         setattr(card, key, val)
     setattr(card, "figure_parsed", [Figure(line, getattr(card, "figure_source")) for line in getattr(card, "figure")])
     return card
@@ -82,6 +84,8 @@ def to_yaml(card):
         if "_" not in key[0] and key not in ("filename", "has_flag", "has_tag", "has_tags", "figure_parsed", "get_sorted_tags"):
             val = getattr(card, key)
             if (val or val==0) and val != getattr(Card, key):
+                if type(getattr(Card, key)) is int:
+                    val = int(val)
                 out[key] = val
     return dump(out, default_flow_style=False)
 
