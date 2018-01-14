@@ -100,7 +100,9 @@ async def show_cards(request):
     if "card" in request.args:
         for i in request.args["card"]:
             if "/" in i or "\\" in i: return response.redirect('/cards/')
-            cards.append(card.from_file(i+".yaml"))
+            c = card.from_file(i+".yaml")
+            for _ in range(abs(c.copies_owned)):
+                cards.append(c)
     elif "stock" in request.args:
         for i in card.from_dir(config.carddir):
             cards.extend([i]*int(i.copies_owned))
