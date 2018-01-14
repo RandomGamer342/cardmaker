@@ -52,17 +52,15 @@ async def show_cardlist(request):
         elif sorting_key == "title":
             cards = sorted(cards, key=lambda x: x.title.lower())
         elif sorting_key == "tags":
+            cards = sorted(cards, key=lambda x: [t.lower() for t in sorted(x.tags)] if x.tags else ["\0"])
             if filter_keys:
-                def nonfilteredTag(card):
-                    if card.tags:
-                        for tag in sorted(card.tags):
-                            if tag not in filter_keys:
-                                return tag
-                    return "\0"
-                cards = sorted(cards, key=lambda x: nonfilteredTag(x))
-            else:
-                cards = sorted(cards, key=lambda x: x.tags[0].lower() if x.tags else "\0")
-    
+                def order_tags(card):
+                    if len(filter_keys) == len(card.tags):
+                        return ["\0"]
+                    else:
+                        return [t for t in card.tags if t.lower() not in filter_keys]
+                cards = sorted(cards, key=lambda x: order_tags(x))
+
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)
     

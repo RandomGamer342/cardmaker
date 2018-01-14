@@ -74,22 +74,30 @@
             </td>
             <td>$escape_html($card.description.split("\n").get(0))</td>
             <td>
-                #foreach($tag in $card.tags)
-                    #if($filter_keys.__contains__($tag.lower()))
-                        $escape_html($tag).lower()#*
-                        *##if($foreach.hasNext)#*
-                            *#,#*
-                        *##end
-                    #end
+                #if($sorting_key == "tags")
+                    #set($tags = $card.get_sorted_tags())
+                #else
+                    #set($tags = $card.tags)
                 #end
-                #foreach($tag in $card.tags)
-                    #if(not $filter_keys.__contains__($tag.lower()))
-                        <a href="../cards/?sort=${sorting_key}#filterKeys($filter_keys)&amp;filter=$escape_html($tag).lower()">$escape_html($tag).lower()</a>#*
-                        *##if($foreach.hasNext)#*
-                            *#,#*
-                        *##end
-                    #end
-                #end
+                #set($first = true)#*
+                *##foreach($tag in $tags)#*
+                    *##if($filter_keys.__contains__($tag.lower()))#*
+                        *##if($first == false)#*
+                            *#, #*
+                        *##end#*
+                        *#$escape_html($tag).lower()#*
+                        *##set($first = false)#*
+                    *##end#*
+                *##end#*
+                *##foreach($tag in $tags)#*
+                    *##if(not $filter_keys.__contains__($tag.lower()))#*
+                        *##if($first == false)#*
+                            *#, #*
+                        *##end#*
+                        *#<a href="../cards/?sort=${sorting_key}#filterKeys($filter_keys)&amp;filter=$escape_html($tag).lower()">$escape_html($tag).lower()</a>#*
+                        *##set($first = false)#*
+                    *##end#*
+                *##end
             </td>
         </tr>
     #end

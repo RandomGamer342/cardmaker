@@ -40,6 +40,9 @@ class Card(Model):
                 return False
         return True
 
+    def get_sorted_tags(self):
+        return sorted(self.tags) if self.tags else ["\0"]
+
 
 #todo: make the relevant ones into coroutines:
 
@@ -76,7 +79,7 @@ def from_yaml(data, filename="from_yaml"):
 def to_yaml(card):
     out = {}
     for key in dir(card):
-        if "_" not in key[0] and key not in ("filename", "has_flag", "has_tag", "has_tags", "figure_parsed"):
+        if "_" not in key[0] and key not in ("filename", "has_flag", "has_tag", "has_tags", "figure_parsed", "get_sorted_tags"):
             val = getattr(card, key)
             if (val or val==0) and val != getattr(Card, key):
                 out[key] = val
