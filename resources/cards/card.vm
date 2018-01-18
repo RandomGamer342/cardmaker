@@ -129,7 +129,7 @@
 #foreach($card in $cards)
 
 #set($card_is_item = false)
-#foreach($flag in ["Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card", "Passive", "Melee Weapon", "Arc Weapon", "LoS Weapon"])
+#foreach($flag in ["Item", "Consumable", "Title", "Food", "Trinket", "Crafting Material", "Collectible", "Alchemy Material", "Ammo", "Splash", "Thrown", "Draw Card", "Passive", "Melee Weapon", "Arc Weapon", "LoS Weapon"])
     #if($card.flags.__contains__($flag)) #set($card_is_item = true) #end
     #if($card.flags.__contains__($flag.lower())) #set($card_is_item = true) #end
 #end
@@ -180,9 +180,14 @@
             </div>
         #end
 
+        #if($card.has_flag("stack"))
+            <img class="wide" src="../svg/game-icons/stack.svg?color=292A30">
+            <div class="wide"></div>
+        #end
+
         #if($card.gp)
-            <img class="price" src="../svg/game-icons/cash.svg?color=292A30">
-            <div class="price">$card.gp</div>
+            <img class="wide" src="../svg/game-icons/cash.svg?color=292A30">
+            <div class="wide">$card.gp</div>
         #end
     </section>
 

@@ -213,7 +213,7 @@ article section {
     padding: 1px 1px;
     display: grid;
     grid-template-columns: 2em 1fr 2em 1fr;
-    grid-template-rows: 2em [cost]minmax(2em, min-content) [price]2em repeat(auto-fit, 2em);
+    grid-template-rows: 2em [cost]minmax(2em, min-content) repeat(auto-fit, 2em);
     grid-row-gap: 1px;
     justify-content: center;
     /*overflow: hidden;*/
@@ -247,14 +247,14 @@ article section div.cost {
     grid-column: 2 / 5; /* I haven't got the slightest clue why specifying the end is necessary */
 }
 
-article section img.price {
-    grid-area: price;
+article section img.wide {
     grid-column: 1 / 2;
 }
-article section div.price {
-    grid-area: price;
+
+article section div.wide {
     grid-column: 2 / 5;
 }
+
 article section >* small {
     font-size: 0.8em;
     line-height: 0.8em;
