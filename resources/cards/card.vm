@@ -45,7 +45,9 @@
         #set($H = "#") ## Easiest way to escape the # character **
         color: ${H}${fig.color};
     #end
-    transform:rotate(${fig.rotate}deg)"
+    transform:rotate(${fig.rotate}deg)
+    scaleX(${fig.flipx})
+    scaleY(${fig.flipy});"
 #end
 #macro(specialFlags $card)
     #if($card.has_flag("mastery"))

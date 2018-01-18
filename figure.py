@@ -14,6 +14,8 @@ class Figure(Model):
     right = 0
     size = 0
     autoscale = True
+    flipx = 1
+    flipy = 1
     scale = 100.
     width = 0
     height = 0
@@ -24,7 +26,7 @@ class Figure(Model):
         self.filename = data[0].strip()
         if len(data) > 1:
             for key, val in [[y.strip() for y in x.split(":")] for x in data[1:]]:
-                if key in ("width", "height", "size", "autoscale"):
+                if key in ("width", "height", "size", "autoscale", "flipx", "flipy"):
                     continue
                 elif key in ("top", "bottom", "left", "right", "scale"):
                     if key == "scale" and val != "auto":
@@ -32,7 +34,13 @@ class Figure(Model):
                     val = float(val)
                 elif key in ("rotate"):
                     val = int(val)
-                if key:
+
+                if key in ("flip"):
+                    if val.lower().strip() == "x":
+                        self.flipx = -1
+                    elif val.lower().strip() == "y":
+                        self.flipy = -1
+                elif key:
                     setattr(self, key, val)
 
         if not self.source:

@@ -31,6 +31,7 @@
                     <br>Top, left, bottom, right: x px
                         <br>Colour: xxxxxxxx
                         <br>Rotation: x deg
+                        <br>Flip: X or Y
                         <br>Scale: x % <small>(Leave blank for auto)</small>
                         <br>Source: svg, mdi...
                         <br><br><small>NOTE: svg source required for attributes other than rotation!</small>
