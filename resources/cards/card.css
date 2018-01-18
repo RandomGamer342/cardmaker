@@ -16,7 +16,7 @@
     /*manual alignment ftw*/
 
     article:nth-child(9n) {
-        margin-bottom: 5cm;
+        margin-bottom: 1.3cm;
     }
 
 }
