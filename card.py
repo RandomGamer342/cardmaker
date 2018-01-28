@@ -8,7 +8,7 @@ from figure import Figure
 class Card(Model):
     filename = ""#filename without extentions
     title = "title"
-    figure = ["code"]
+    figure = []
     figure_source = "material-icons"
     figure_parsed = []
         #material-icons = https://material.io/icons/

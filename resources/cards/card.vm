@@ -87,6 +87,8 @@
             <img src="../svg/game-icons/broadsword.svg?color=292A30">
         #elseif($word == "MIND")
             <img src="../svg/game-icons/brain.svg?color=292A30">
+        #elseif($word == "ITEM")
+            <img src="../svg/game-icons/corked-tube.svg?color=292A30">
         #else
             $word
         #end
@@ -141,7 +143,13 @@
 #end
 
 <article id="$escape_html($card.filename)" class="#cardClasses($card)" onclick="location.href='creator?filename=$escape_html($card.filename)'">
-    <div class="title"><h1>$escape_html($card.title)</h1></div>
+    <div class="title">
+        <h1>
+            #if(not $card.has_flag("blank"))
+                $escape_html($card.title)
+            #end
+        </h1>
+    </div>
     #if($card.cp)
         <div class="cp"><img src="../svg/game-icons/seven-pointed-star.svg?color=292A30"></div>
         <div class="cp text">$escape_html($card.cp)</div>
@@ -153,7 +161,9 @@
         <div class="split"></div>
     #end
     <figure>
-        #figure($card)
+        #if($card.figure)
+            #figure($card)
+        #end
     </figure>
     #if($card.effects && ! $card_is_item)
         #effectList($card.effects)
@@ -185,9 +195,9 @@
             <div class="wide"></div>
         #end
 
-        #if($card.gp)
+        #if($card.gp or $card.has_flag("gold"))
             <img class="wide" src="../svg/game-icons/cash.svg?color=292A30">
-            <div class="wide">$card.gp</div>
+            <div class="wide">$escape_html($card.gp)</div>
         #end
     </section>
 
