@@ -41,7 +41,7 @@ class Card(Model):
         return True
 
     def get_sorted_tags(self):
-        return sorted(self.tags) if self.tags else ["\0"]
+        return sorted(self.tags, key=lambda t: t.lower()) if self.tags else ["\0"]
 
 
 #todo: make the relevant ones into coroutines:

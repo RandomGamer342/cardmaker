@@ -52,7 +52,7 @@ async def show_cardlist(request):
         elif sorting_key == "title":
             cards = sorted(cards, key=lambda x: x.title.lower())
         elif sorting_key == "tags":
-            cards = sorted(cards, key=lambda x: [t.lower() for t in sorted(x.tags)] if x.tags else ["\0"])
+            cards = sorted(cards, key=lambda x: [t.lower() for t in sorted(x.tags, key=lambda t: t.lower())] if x.tags else ["\0"])
             if filter_keys:
                 def order_tags(card):
                     if len(filter_keys) == len(card.tags):
