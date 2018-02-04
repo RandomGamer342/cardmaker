@@ -217,12 +217,17 @@
                     #if($item.startswith("+"))
                         <div class="steps">$escape_html($item)</div>
                     #else
-                        <div class="description">$escape_html($item)</div>
+                        #if(not $item)
+                            <div class="space"></div>
+                        #else
+                            <div class="description">$escape_html($item)</div>
+                        #end
                     #end
                 #end
             #end
             #if($card.has_flag("discipline"))
-                <div class="description discipline">Alternatively:</div>
+                <div class="space"></div>
+                <div class="descriptio">Alternatively:</div>
                 <div class="description">Discard this card instead of playing it, and draw a new card.</div>
             #end
             #if($card.effects && $card_is_item)
