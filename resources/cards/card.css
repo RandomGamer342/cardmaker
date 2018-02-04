@@ -9,14 +9,14 @@
     body {
         width: 21cm;
         height: 29.7cm;
-        margin-top: 0.75cm;
-        margin-left: 1.5cm;
+        margin-top: 0.1cm;
+        margin-left: 0.8cm;
         -webkit-print-color-adjust:exact;
     }
     /*manual alignment ftw*/
 
     article:nth-child(9n) {
-        margin-bottom: 1.47cm;
+        margin-bottom: 0.17cm;
     }
 
 }
@@ -30,13 +30,13 @@
 article {
     margin: 0.1mm 0.1mm;
     float: left;
-    width: 5.9cm;
-    height: 9.5cm;
+    width: 6.2cm;
+    height: 9.9cm;
     padding: 1mm 1mm;
 
     display: grid;
-    grid-template-rows: 24px 110px auto;
-    grid-template-columns: 24px 1fr 1fr 1fr 1fr 24px;
+    grid-template-rows: 28px 115px auto;
+    grid-template-columns: 28px 1fr 1fr 1fr 1fr 28px;
     grid-template-areas:
             "emblem header header header header cost"
             "figure figure figure effects effects effects"
@@ -45,7 +45,7 @@ article {
     border-radius: 0;
     grid-gap: 1mm 1mm;
     border-style: solid;
-    border-width: 1.5mm;
+    border-width: 2mm;
     border-color: var(--color-border);
     background-color: var(--color-card-standard);
     cursor: pointer;
@@ -118,8 +118,8 @@ article .title {
 
 article h1 {
     align-self: center;
-    font-size: 1.2em;
-    line-height: 1.1em;
+    font-size: 1.3em;
+    line-height: 1.2em;
     font-weight: 600;
 }
 
@@ -141,8 +141,9 @@ article .gp {
 }
 
 article .cp.text {
-    font-size:0.6em;
+    font-size:0.65em;
     line-height:1em;
+    padding-top:1px;
     font-weight:bold;
     align-self: center;
     border:transparent;
@@ -161,7 +162,7 @@ article div.split {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 0 106px 105px;
+    border-width: 0 0 111px 111px;
     border-color: transparent transparent var(--color-card-duration) var(--color-card-standard);
 }
 
