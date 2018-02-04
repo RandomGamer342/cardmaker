@@ -191,13 +191,22 @@
         #end
 
         #if($card.has_flag("stack"))
-            <img class="wide" src="../svg/game-icons/stack.svg?color=292A30">
-            <div class="wide"></div>
+            <img src="../svg/game-icons/stack.svg?color=292A30">
+            <div></div>
         #end
 
         #if($card.gp or $card.has_flag("gold"))
             <img class="wide" src="../svg/game-icons/cash.svg?color=292A30">
             <div class="wide">$escape_html($card.gp)</div>
+        #end
+
+        #if($card.properties)
+            <div class="text list">
+                <div class="listelem"><big>Properties:</big></div>
+                #foreach($property in $card.properties)
+                    <div class="listelem">$property</div>
+                #end
+            </div>
         #end
     </section>
 

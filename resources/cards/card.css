@@ -113,13 +113,13 @@ article .title {
     grid-column-end: cost;
     background-color: var(--color-header-bg);
     color: var(--color-header);
-    padding-top: 1mm;
+    padding-top: 1.5mm;
 }
 
 article h1 {
     align-self: center;
     font-size: 1.3em;
-    line-height: 1.2em;
+    line-height: 1em;
     font-weight: 600;
 }
 
@@ -214,7 +214,7 @@ article section {
     padding: 1px 1px;
     display: grid;
     grid-template-columns: 2em 1fr 2em 1fr;
-    grid-template-rows: 2em [cost]minmax(2em, min-content) repeat(auto-fit, 2em);
+    grid-template-rows: 2em [cost]minmax(2em, min-content) repeat(auto-fit, min-content);
     grid-row-gap: 1px;
     justify-content: center;
     /*overflow: hidden;*/
@@ -254,6 +254,15 @@ article section img.wide {
 
 article section div.wide {
     grid-column: 2 / 5;
+}
+
+article section .text {
+    grid-column: 1 / 5;
+    font-size: 0.8em;
+}
+
+article section .text >* {
+    line-height: 1em;
 }
 
 article section >* small {

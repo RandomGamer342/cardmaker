@@ -82,7 +82,7 @@
             <textarea name="description" rows="10" #update_preview()>$escape_html($card.description, False)</textarea>
         </li>
         <li>
-            Flags/Properties:<br>
+            Flags:<br>
             <textarea name="flags" rows="10" #update_preview()>$escape_html($card.flags, False)</textarea>
         </li>
         <li>
@@ -95,8 +95,16 @@
             <input type="text" name="gp" value="$escape_html($card.gp)" placeholder="gold" #update_preview()>
         </li>
         <li>
+            Properties:<br>
+            <textarea name="properties" rows="15" #update_preview()>$escape_html($card.properties, False)</textarea>
+        </li>
+        <li>
             Notes:<span style="opacity:0.4;">(Not shown)</span><br>
             <textarea name="notes" rows="15">$escape_html($card.notes, False)</textarea>
+        </li>
+        <li>
+            Tags:<br>
+            <textarea name="tags" rows="5" #update_preview()>$escape_html($card.tags, False)</textarea>
         </li>
         <li>
             <br>
@@ -109,10 +117,6 @@
             <input type="submit" name="delete" value="Delete">
             
             <br>
-        </li>
-        <li>
-            Tags:<br>
-            <textarea name="tags" rows="5" #update_preview()>$escape_html($card.tags, False)</textarea>
         </li>
     </ul>
 </form>

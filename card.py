@@ -19,6 +19,7 @@ class Card(Model):
     steps = []
     effects = []
     cost = ""
+    properties = []
     stats = {}
     power = None
     cp = None
