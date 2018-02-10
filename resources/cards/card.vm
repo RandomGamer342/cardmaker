@@ -182,8 +182,8 @@
         #end
 
         #if($card.cost)
-            <img class="cost" src="../svg/game-icons/electric.svg?color=292A30">
-            <div class="list cost">
+            <img class="wide" src="../svg/game-icons/electric.svg?color=292A30">
+            <div class="list wide">
             #foreach($cost in $card.cost.split(","))
                 <div class="listelem">$escape_html($cost)</div>
             #end

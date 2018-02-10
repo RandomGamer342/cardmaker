@@ -214,7 +214,7 @@ article section {
     padding: 1px 1px;
     display: grid;
     grid-template-columns: 2em 1fr 2em 1fr;
-    grid-template-rows: 2em [cost]minmax(2em, min-content) repeat(auto-fit, 2em) [text]minmax(2em, min-content);
+    grid-template-rows: minmax(2em, min-content) minmax(2em, min-content) minmax(2em, min-content) repeat(auto-fit, 2em);
     grid-row-gap: 1px;
     justify-content: center;
     /*overflow: hidden;*/
@@ -239,15 +239,6 @@ article section .listelem {
     line-height: 1em;
 }
 
-article section img.cost {
-    grid-area: cost;
-    grid-column: 1 / 2;
-}
-article section div.cost {
-    grid-area: cost;
-    grid-column: 2 / 5; /* I haven't got the slightest clue why specifying the end is necessary */
-}
-
 article section img.wide {
     grid-column: 1 / 2;
 }
@@ -257,7 +248,6 @@ article section div.wide {
 }
 
 article section .text {
-    grid-area:text;
     grid-column: 1 / 5;
     font-size: 0.8em;
 }
