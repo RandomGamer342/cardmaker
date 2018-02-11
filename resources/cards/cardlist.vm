@@ -72,7 +72,7 @@
                 $escape_html($card.copies_owned)
                 <button type="button" class="small" onclick="document.getElementById('$escape_html($card.filename)_inc').submit()">+</button>
             </td>
-            <td>$escape_html($card.description.split("\n").get(0))</td>
+            <td>$escape_html($card.description.split("\n").get(0).split(". ").get(0))</td>
             <td>
                 #if($sorting_key == "tags")
                     #set($tags = $card.get_sorted_tags())
