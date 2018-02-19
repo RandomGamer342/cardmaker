@@ -170,6 +170,15 @@
     #end
 
     <section>
+        #if($card.cost)
+            <img class="wide" src="../svg/game-icons/electric.svg?color=292A30">
+            <div class="list wide">
+                #foreach($cost in $card.cost.split(","))
+                    <div class="listelem">$escape_html($cost)</div>
+                #end
+            </div>
+        #end
+
         #if($card.stats.power)
             #handlePower($card.stats.power)
         #elseif($card.power)
@@ -181,23 +190,14 @@
             <div class="value">$escape_html($card.stats.duration)</div>
         #end
 
-        #if($card.cost)
-            <img class="wide" src="../svg/game-icons/electric.svg?color=292A30">
-            <div class="list wide">
-            #foreach($cost in $card.cost.split(","))
-                <div class="listelem">$escape_html($cost)</div>
-            #end
-            </div>
-        #end
-
         #if($card.has_flag("stack"))
             <img src="../svg/game-icons/stack.svg?color=292A30">
             <div></div>
         #end
 
         #if($card.gp or $card.has_flag("gold"))
-            <img class="wide" src="../svg/game-icons/cash.svg?color=292A30">
-            <div class="wide">$escape_html($card.gp)</div>
+            <img src="../svg/game-icons/cash.svg?color=292A30">
+            <div>$escape_html($card.gp)</div>
         #end
 
         #if($card.properties)

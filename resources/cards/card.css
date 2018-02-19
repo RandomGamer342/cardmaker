@@ -244,7 +244,7 @@ article section img.wide {
 }
 
 article section div.wide {
-    grid-column: 2 / 5;
+    grid-column-end:span 3;
 }
 
 article section .text {
