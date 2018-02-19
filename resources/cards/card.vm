@@ -227,7 +227,7 @@
             #end
             #if($card.has_flag("discipline"))
                 <div class="space"></div>
-                <div class="descriptio">Alternatively:</div>
+                <div class="description">Alternatively:</div>
                 <div class="description">Discard this card instead of playing it, and draw a new card.</div>
             #end
             #if($card.effects && $card_is_item)

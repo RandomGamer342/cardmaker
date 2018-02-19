@@ -234,11 +234,15 @@ article section .list {
 article section .listelem {
     flex: none;
     padding: 0 0;
+    height: 1.1em;
     text-align: center;
     font-size: 0.8em;
     line-height: 1em;
 }
 
+article section .listelem:first-child {
+    padding-top:2px;
+}
 article section img.wide {
     grid-column: 1 / 2;
 }
@@ -287,7 +291,7 @@ article main {
     grid-area: info;
     position: relative;
     font-size: 0.8em;
-    line-height: 1.05em;
+    line-height: 1.1em;
     display: grid;
     grid-template-areas: "top"
     "bottom";
