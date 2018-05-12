@@ -113,7 +113,7 @@
                         *##end
                     #end
                     <br>
-                    <a href="../cards/?sort=${sorting_key}&amp;filter=">(remove filter)</a>
+                    <a href="../cards/?sort=${sorting_key}&amp;removefilter=1">(remove filter)</a>
                 </td>
             #end
         </tr>

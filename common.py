@@ -140,6 +140,11 @@ def mergeTemplate(path):
                 for cookie, value in objects["write_cookies"].items():
                     res.cookies[cookie] = value
 
+            if "delete_cookies" in objects and isinstance(objects["delete_cookies"], list):
+                print(objects["delete_cookies"])
+                for cookie in objects["delete_cookies"]:
+                    del res.cookies[cookie]
+
             return res
         return newfunc
     return decorator

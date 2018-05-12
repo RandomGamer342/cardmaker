@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import sys, os, airspeed, glob
+import sys, os, airspeed, glob, json
 from sanic import Sanic, response
 from common import mergeTemplate, withResource, call
 import card
@@ -25,15 +25,28 @@ async def show_cardlist(request):
                 c.copies_owned = int(c.copies_owned) - 1
     cards = card.from_dir(config.carddir)
 
+    write_cookies = {}
+    delete_cookies = []
+
+    if "removefilter" in request.args:
+        delete_cookies.append("filter")
+
     filter_keys = []
-    if "filter" in request.args:
-        filter_keys = [x.lower() for x in request.args["filter"]]
+    if "removefilter" not in request.args:
+        if "filter" in request.args:
+            filter_keys = [x.lower() for x in request.args["filter"]]
+        if "filter" in request.cookies:
+            if not filter_keys:
+                filter_keys = json.loads(request.cookies.get("filter"))
+            elif filter_keys != json.loads(request.cookies.get("filter")):
+                write_cookies["filter"] = json.dumps(filter_keys)
+        elif filter_keys:
+            write_cookies["filter"] = json.dumps(filter_keys)
 
     if filter_keys:
         cards = [c for c in cards if c.has_tags(filter_keys)]
 
     sorting_key = ""
-    write_cookies = {}
     if "sort" in request.args:
         sorting_key = request.args["sort"][0]
     if "sort" in request.cookies:
