@@ -28,9 +28,7 @@ async def show_cardlist(request):
     filter_keys = []
     if "filter" in request.args:
         filter_keys = [x.lower() for x in request.args["filter"]]
-    if "filter" in request.form:
-        filter_keys = [x.lower() for x in request.form["filter"]]
-    
+
     if filter_keys:
         cards = [c for c in cards if c.has_tags(filter_keys)]
 
@@ -38,8 +36,6 @@ async def show_cardlist(request):
     write_cookies = {}
     if "sort" in request.args:
         sorting_key = request.args["sort"][0]
-    if "sort" in request.form:
-        sorting_key = request.form["sort"][0]
     if "sort" in request.cookies:
         if not sorting_key:
             sorting_key = request.cookies.get("sort")

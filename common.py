@@ -137,10 +137,9 @@ def mergeTemplate(path):
                 res = response.html(tem.merge(objects, loader=VelocityFileLoader()))
 
             if "write_cookies" in objects and isinstance(objects["write_cookies"], dict):
-                print(objects["write_cookies"])
                 for cookie, value in objects["write_cookies"].items():
                     res.cookies[cookie] = value
-            print(res.cookies)
+
             return res
         return newfunc
     return decorator

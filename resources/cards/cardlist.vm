@@ -27,22 +27,10 @@
 <form id="$escape_html($card.filename)_inc" action="" method="post">
     <input type="hidden" name="filename" value="$escape_html($card.filename)">
     <input type="hidden" name="action" value="increment_stock">
-    #if($sorting_key)
-        <input type="hidden" name="sort" value="$sorting_key">
-    #end
-    #if($filter_keys)
-        <input type="hidden" name="filter" value="$filter_keys">
-    #end
 </form>
 <form id="$escape_html($card.filename)_dec" action="" method="post">
     <input type="hidden" name="filename" value="$escape_html($card.filename)">
     <input type="hidden" name="action" value="decrement_stock">
-    #if($sorting_key)
-        <input type="hidden" name="sort" value="$sorting_key">
-    #end
-    #if($filter_keys)
-        <input type="hidden" name="filter" value="$filter_keys">
-    #end
 </form>
 #end
 
