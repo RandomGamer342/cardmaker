@@ -225,10 +225,16 @@
                     #end
                 #end
             #end
-            #if($card.has_flag("discipline"))
+            #if($card.has_flag("discipline") or $card.has_flag("concentration"))
                 <div class="space"></div>
                 <div class="description">Alternatively:</div>
-                <div class="description">Discard this card instead of playing it, and draw a new card.</div>
+                #if($card.has_flag("discipline"))
+                    <div class="description">Discard this card instead of playing it, and draw a new card.</div>
+                #end
+                #if($card.has_flag("concentration"))
+                    <div class="description">If this card is on your hand during cleanup, you may set it aside.
+                        You may take it back at any time, ignoring this card for your hand-size limit until next turn.</div>
+                #end
             #end
             #if($card.effects && $card_is_item)
                 #effectList($card.effects)
