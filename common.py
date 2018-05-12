@@ -130,10 +130,17 @@ def mergeTemplate(path):
                 "get_colorscheme":colorscheme.get})
             
             if config.prettifyHTML:
-                return response.html(HTMLBeautifier.beautify(
+                res = response.html(HTMLBeautifier.beautify(
                     tem.merge(objects, loader=VelocityFileLoader()),
                     indent = 4))#.replace("/>", ">")
             else:
-                return response.html(tem.merge(objects, loader=VelocityFileLoader()))
+                res = response.html(tem.merge(objects, loader=VelocityFileLoader()))
+
+            if "write_cookies" in objects and isinstance(objects["write_cookies"], dict):
+                print(objects["write_cookies"])
+                for cookie, value in objects["write_cookies"].items():
+                    res.cookies[cookie] = value
+            print(res.cookies)
+            return res
         return newfunc
     return decorator

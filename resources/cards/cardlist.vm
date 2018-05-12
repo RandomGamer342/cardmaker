@@ -19,6 +19,10 @@
     *##end#*
 *##end
 
+#macro(sortingKey $key)#*
+    *#$key#if($key == $sorting_key)asc#end
+#end
+
 #foreach($card in $cards)
 <form id="$escape_html($card.filename)_inc" action="" method="post">
     <input type="hidden" name="filename" value="$escape_html($card.filename)">
@@ -46,12 +50,12 @@
     <table>
         <tr>
             <th></th>
-            <th><a href="../cards/?sort=title#filterKeys($filter_keys)">Title</a></th>
-            <th><a href="../cards/?sort=filename#filterKeys($filter_keys)" >Filename</a></th>
-            <th style="text-align: center;"><a href="../cards/?sort=cp&apm;filter=$escape_html($filter_keys).lower()">CP</a></th>
-            <th><a href="../cards/?sort=copies#filterKeys($filter_keys)">Copies owned</a></th>
-            <th><a href="../cards/?sort=description#filterKeys($filter_keys)">Description</a></th>
-            <th><a href="../cards/?sort=tags#filterKeys($filter_keys)">Tags</a></th>
+            <th><a href="../cards/?sort=#sortingKey("title")#filterKeys($filter_keys)">Title</a></th>
+            <th><a href="../cards/?sort=#sortingKey("filename")#filterKeys($filter_keys)" >Filename</a></th>
+            <th style="text-align: center;"><a href="../cards/?sort=#sortingKey("cp")#filterKeys($filter_keys)">CP</a></th>
+            <th><a href="../cards/?sort=#sortingKey("copies")#filterKeys($filter_keys)">Copies owned</a></th>
+            <th><a href="../cards/?sort=#sortingKey("description")#filterKeys($filter_keys)">Description</a></th>
+            <th><a href="../cards/?sort=#sortingKey("tags")#filterKeys($filter_keys)">Tags</a></th>
         </tr>
 
     #foreach($card in $cards)

@@ -35,24 +35,36 @@ async def show_cardlist(request):
         cards = [c for c in cards if c.has_tags(filter_keys)]
 
     sorting_key = ""
+    write_cookies = {}
     if "sort" in request.args:
         sorting_key = request.args["sort"][0]
     if "sort" in request.form:
         sorting_key = request.form["sort"][0]
+    if "sort" in request.cookies:
+        if not sorting_key:
+            sorting_key = request.cookies.get("sort")
+        elif sorting_key != request.cookies.get("sort"):
+            write_cookies["sort"] = sorting_key
+    elif sorting_key:
+        write_cookies["sort"] = sorting_key
 
     if sorting_key:
-        if sorting_key == "filename":
-            cards = sorted(cards, key=lambda x: x.filename.lower())
+        reverse = False
+        if sorting_key.endswith("asc"):
+            reverse = True
+            sorting_key = sorting_key[:-3]
+        if sorting_key.startswith("filename"):
+            cards = sorted(cards, key=lambda x: x.filename.lower(), reverse=reverse)
         elif sorting_key == "cp":
-            cards = sorted(cards, key=lambda x: -int(x.cp or 0))
+            cards = sorted(cards, key=lambda x: -int(x.cp or 0), reverse=reverse)
         elif sorting_key == "description":
-            cards = sorted(cards, key=lambda x: x.description or "")
+            cards = sorted(cards, key=lambda x: x.description or "", reverse=reverse)
         elif sorting_key == "copies":
-            cards = sorted(cards, key=lambda x: -int(x.copies_owned))
+            cards = sorted(cards, key=lambda x: -int(x.copies_owned), reverse=reverse)
         elif sorting_key == "title":
-            cards = sorted(cards, key=lambda x: x.title.lower())
+            cards = sorted(cards, key=lambda x: x.title.lower(), reverse=reverse)
         elif sorting_key == "tags":
-            cards = sorted(cards, key=lambda x: sorted(map(lambda t: t.lower(), x.tags)) if x.tags else ["\0"])
+            cards = sorted(cards, key=lambda x: sorted(map(lambda t: t.lower(), x.tags)) if x.tags else ["\0"], reverse=reverse)
             if filter_keys:
                 def order_tags(card):
                     if len(filter_keys) == len(card.tags):
@@ -60,10 +72,12 @@ async def show_cardlist(request):
                     else:
                         return [t for t in card.tags if t.lower() not in filter_keys]
                 cards = sorted(cards, key=lambda x: order_tags(x))
+        if reverse:
+            sorting_key += "asc"
 
     sum_cp = sum(int(i.copies_owned) * int(i.cp or 0) for i in cards)
     sum_copies = sum(int(i.copies_owned) for i in cards)
-    
+
     return locals()
 
 @app.get('/cards/creator')
