@@ -139,7 +139,7 @@
 #end
 
 #set($card_has_emblem = false)
-#foreach($flag in ["Mastered"])
+#foreach($flag in ["Mastered", "Black Mage", "White Mage"])
     #if($card.flags.__contains__($flag)) #set($card_has_emblem = true) #end
     #if($card.flags.__contains__($flag.lower())) #set($card_has_emblem = true) #end
 #end
@@ -158,6 +158,10 @@
     #end
     #if($card.has_flag("Mastered"))
         <div class="emblem"><img src="../svg/game-icons/stars-stack.svg?color=292A30"></div>
+    #elseif($card.has_flag("Black Mage"))
+        <div class="emblem black"><img src="../svg/game-icons/voodoo-doll.svg?color=fff"></div>
+    #elseif($card.has_flag("White Mage"))
+        <div class="emblem white"><img src="../svg/game-icons/crucifix.svg?color=000"></div>
     #end
     #if($card.has_flag("split"))
         <div class="split"></div>
