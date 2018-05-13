@@ -5,6 +5,7 @@ from common import mergeTemplate, withResource, call
 import card
 import colorscheme
 import svg
+import img
 import config
 
 app = Sanic()
@@ -252,6 +253,32 @@ async def get_svg(request, name):
 async def get_svg(request, collection, name):
     color = request.args.get("color")
     return response.text(svg.get(os.path.join(collection, name), color), headers={"Content-Type": "image/svg+xml"})
+
+#add images:
+@app.get(f"/img/<name>.png")
+async def get_img(request, name):
+    return response.raw(img.get(f"{name}", "png"), headers={"Content-Type": f"image/png"})
+
+@app.get(f"/img/<collection>/<name>.png")
+async def get_img(request, collection, name):
+    return response.raw(img.get(os.path.join(collection, name), "png"), headers={"Content-Type": f"image/png"})
+
+@app.get(f"/img/<name>.jpg")
+async def get_img(request, name):
+    return response.raw(img.get(f"{name}", "jpg"), headers={"Content-Type": f"image/jpeg"})
+
+@app.get(f"/img/<collection>/<name>.jpg")
+async def get_img(request, collection, name):
+    return response.raw(img.get(os.path.join(collection, name), "jpg"), headers={"Content-Type": f"image/jpeg"})
+
+@app.get(f"/img/<name>.gif")
+async def get_img(request, name):
+    return response.raw(img.get(f"{name}", "gif"), headers={"Content-Type": f"image/gif"})
+
+@app.get(f"/img/<collection>/<name>.gif")
+async def get_img(request, collection, name):
+    return response.raw(img.get(os.path.join(collection, name), "gif"), headers={"Content-Type": f"image/gif"})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

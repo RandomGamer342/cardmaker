@@ -27,6 +27,8 @@
             #set($color = "?color=${fig.color}")
         #end
         <img src="/svg/${escape_html($fig.filename)}.svg$color" #figure_style($fig)>
+    #elseif($fig.source == "img")
+        <img src="/img/${escape_html($fig.filename)}" #figure_style($fig)>
     #end
 #end
 #macro(figure_style $fig)
@@ -35,7 +37,7 @@
     right:${fig.right}px;
     bottom:${fig.bottom}px;
     left:${fig.left}px;
-    #if($fig.source == "svg") ## Unsupported with other sources due to being fonts, not images **
+    #if($fig.source == "svg" or $fig.source == "img") ## Unsupported with other sources due to being fonts, not images **
         #if($fig.autoscale)
             height:calc(100% - ${fig.size}px);
         #else

@@ -45,7 +45,7 @@
                 #else
                     <input type="radio" name="figure_source" value="material-icons" #update_preview()>
                 #end
-                <a href="https://material.io/icons/">material-icons</a>
+                <a href="https://material.io/icons/">mi</a>
 
                 #if($card.figure_source=="mdi")
                     <input checked type="radio" name="figure_source" value="mdi" #update_preview()>
@@ -67,6 +67,14 @@
                     <input type="radio" name="figure_source" value="svg" #update_preview()>
                 #end
                 <a href="svg">svg</a>
+
+                #if($card.figure_source=="img")
+                    <input checked type="radio" name="figure_source" value="img" #update_preview()>
+                #else
+                    <input type="radio" name="figure_source" value="img" #update_preview()>
+                #end
+                img
+
             </small>
         </li>
         <li>
